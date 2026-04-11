@@ -1,0 +1,2872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TranslateHub — The Best Free Translation Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+<style>
+  :root {
+    --bg: #0b0e14;
+    --bg2: #12161f;
+    --bg3: #1a1f2e;
+    --card: #161b27;
+    --gold: #e8a825;
+    --gold2: #f5c84a;
+    --teal: #2dd4bf;
+    --rose: #fb7185;
+    --violet: #a78bfa;
+    --text: #e8e4d9;
+    --muted: #8a8a9a;
+    --border: rgba(232,168,37,0.15);
+    --border2: rgba(232,168,37,0.3);
+    --shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 68px; /* nav height + breathing room */
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* --- NOISE TEXTURE OVERLAY --- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* --- HERO + TRANSLATOR GRID --- */
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 56px);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    align-items: stretch;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 2.5rem 2.5rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 2.5rem 2rem;
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,168,37,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(45,212,191,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 80% 20%, rgba(167,139,250,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .glyphs {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.06;
+  }
+  .glyph {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 8vw, 10rem);
+    color: var(--gold);
+    animation: drift linear infinite;
+  }
+  @keyframes drift {
+    from { transform: translateY(110vh) rotate(-10deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    to { transform: translateY(-20vh) rotate(10deg); opacity: 0; }
+  }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold2);
+  }
+  .hero-sub {
+    max-width: 480px;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--gold2);
+    display: block;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* --- JUMP NAV --- */
+  .jump-nav {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .jump-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.55rem 1.4rem;
+    border-radius: 50px;
+    border: 1px solid;
+    transition: all 0.3s;
+    cursor: pointer;
+    background: transparent;
+  }
+  .jump-btn.beginner { color: var(--teal); border-color: rgba(45,212,191,0.3); }
+  .jump-btn.beginner:hover { background: rgba(45,212,191,0.1); border-color: var(--teal); }
+  .jump-btn.average { color: var(--gold2); border-color: var(--border2); }
+  .jump-btn.average:hover { background: rgba(232,168,37,0.1); border-color: var(--gold); }
+  .jump-btn.pro { color: var(--violet); border-color: rgba(167,139,250,0.3); }
+  .jump-btn.pro:hover { background: rgba(167,139,250,0.1); border-color: var(--violet); }
+
+  /* --- MAIN CONTENT --- */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* --- SECTION --- */
+  .section {
+    margin-bottom: 6rem;
+    scroll-margin-top: 72px;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .section-header-left {}
+  .tier-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .tier-label .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .section-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 360px;
+    text-align: right;
+  }
+
+  /* --- GRID --- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* --- CARD --- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.3s, transform 0.25s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border2);
+    box-shadow: var(--shadow);
+  }
+  .card.b:hover { border-color: rgba(45,212,191,0.35); }
+  .card.a:hover { border-color: rgba(232,168,37,0.4); }
+  .card.p:hover { border-color: rgba(167,139,250,0.35); }
+  .card.b::before { background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(45,212,191,0.05), transparent); }
+  .card.a::before { background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(232,168,37,0.06), transparent); }
+  .card.p::before { background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(167,139,250,0.06), transparent); }
+  .card:hover::before { opacity: 1; }
+  .card.hidden { display: none; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .b .card-icon { background: rgba(45,212,191,0.1); }
+  .a .card-icon { background: rgba(232,168,37,0.1); }
+  .p .card-icon { background: rgba(167,139,250,0.1); }
+  .card-tier-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    border: 1px solid;
+    flex-shrink: 0;
+  }
+  .b .card-tier-badge { color: var(--teal); border-color: rgba(45,212,191,0.3); background: rgba(45,212,191,0.07); }
+  .a .card-tier-badge { color: var(--gold2); border-color: var(--border2); background: rgba(232,168,37,0.07); }
+  .p .card-tier-badge { color: var(--violet); border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.07); }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .card-tagline {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  .card-desc {
+    font-size: 0.92rem;
+    color: rgba(232,228,217,0.75);
+    font-weight: 300;
+    line-height: 1.65;
+    flex: 1;
+  }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.07);
+    font-weight: 400;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .langs-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .langs-badge strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .go-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.55rem 1.3rem;
+    border-radius: 50px;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid;
+  }
+  .b .go-btn { color: var(--teal); border-color: rgba(45,212,191,0.3); }
+  .b .go-btn:hover { background: rgba(45,212,191,0.12); border-color: var(--teal); }
+  .a .go-btn { color: var(--gold2); border-color: var(--border2); }
+  .a .go-btn:hover { background: rgba(232,168,37,0.12); border-color: var(--gold); }
+  .p .go-btn { color: var(--violet); border-color: rgba(167,139,250,0.3); }
+  .p .go-btn:hover { background: rgba(167,139,250,0.12); border-color: var(--violet); }
+  .arrow { display: inline-block; transition: transform 0.2s; }
+  .go-btn:hover .arrow { transform: translate(2px, -2px); }
+
+  /* special badges */
+  .best-pick {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: #1a1200;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  /* --- NO RESULTS --- */
+  #no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: none;
+    grid-column: 1/-1;
+  }
+  #no-results p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 1;
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* --- STICKY NAV --- */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11,14,20,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--gold2);
+    letter-spacing: -0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    transition: all 0.2s;
+    color: var(--muted);
+    border: 1px solid transparent;
+  }
+  .nav-link:hover { color: var(--text); border-color: var(--border); }
+  .nav-search {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.4rem 1rem;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    outline: none;
+    width: 200px;
+    transition: border-color 0.2s;
+  }
+  .nav-search::placeholder { color: var(--muted); }
+  .nav-search:focus { border-color: var(--gold); }
+
+  /* --- DIVIDER --- */
+  .divider {
+    text-align: center;
+    margin: 1rem 0 3rem;
+    position: relative;
+  }
+  .divider::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider span {
+    position: relative;
+    background: var(--bg);
+    padding: 0 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+
+  /* --- TRANSLATOR (inside hero-right) --- */
+  .translator-inner { width: 100%; }
+  .translator-compact-label {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--violet);
+    margin-bottom: 0.75rem;
+  }
+  .translator-compact-label .dot { width:7px;height:7px;border-radius:50%;background:var(--violet);display:inline-block; }
+
+  .mode-tabs { display: flex; gap: 0.3rem; margin-bottom: 0.75rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 0.3rem; }
+  .mode-tab { flex: 1; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0.3rem; border-radius: 9px; border: none; background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+  .mode-tab.active { background: var(--violet); color: #0d0a1f; }
+  .mode-tab:not(.active):hover { color: var(--text); background: rgba(255,255,255,0.05); }
+  .mode-panel { display: block; }
+  .mode-panel.hidden { display: none; }
+
+  .tr-controls { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .lang-select-wrap { flex: 1; min-width: 180px; position: relative; }
+  .lang-select-wrap::after { content: '▾'; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 0.8rem; }
+  select.lang-select { width: 100%; appearance: none; background: var(--bg3); border: 1px solid var(--border2); border-radius: 10px; padding: 0.75rem 2.5rem 0.75rem 1rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.95rem; font-weight: 400; outline: none; cursor: pointer; transition: border-color 0.25s; }
+  select.lang-select:focus { border-color: var(--violet); }
+  select.lang-select option { background: #1a1f2e; color: var(--text); }
+  .swap-btn { background: var(--bg3); border: 1px solid var(--border2); border-radius: 10px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--muted); font-size: 1.1rem; transition: all 0.25s; flex-shrink: 0; }
+  .swap-btn:hover { border-color: var(--violet); color: var(--violet); transform: rotate(180deg); }
+
+  .tr-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .tr-panels { grid-template-columns: 1fr; } }
+  .tr-panel { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color 0.3s; display: flex; flex-direction: column; }
+  .tr-panel.active { border-color: rgba(167,139,250,0.4); }
+  .tr-panel-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 0.8rem 1.2rem 0.4rem; }
+  textarea.tr-input { flex: 1; width: 100%; min-height: 140px; background: transparent; border: none; outline: none; padding: 0.5rem 1.2rem 1rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 1.05rem; font-weight: 300; line-height: 1.7; resize: vertical; }
+  textarea.tr-input::placeholder { color: rgba(138,138,154,0.5); }
+  .tr-output { flex: 1; min-height: 140px; padding: 0.5rem 1.2rem 1rem; font-family: 'Barlow', sans-serif; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-break: break-word; overflow-y: auto; }
+  .tr-output.placeholder { color: rgba(138,138,154,0.4); font-style: italic; }
+  .tr-panel-footer { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem 0.8rem; border-top: 1px solid var(--border); gap: 0.5rem; flex-wrap: wrap; }
+  .char-count { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: var(--muted); }
+  .char-count.warn { color: var(--rose); }
+  .icon-btn { background: transparent; border: 1px solid transparent; border-radius: 8px; padding: 0.3rem 0.7rem; cursor: pointer; color: var(--muted); font-size: 0.78rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 0.35rem; transition: all 0.2s; }
+  .icon-btn:hover { border-color: var(--border2); color: var(--text); }
+  .icon-btn.copied { color: var(--teal); border-color: rgba(45,212,191,0.3); }
+
+  /* Rich text mode */
+  .rt-toolbar { display: flex; flex-wrap: wrap; gap: 0.2rem; align-items: center; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px 12px 0 0; padding: 0.5rem 0.75rem; }
+  .rt-tb-btn { background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 0.3rem 0.6rem; color: var(--muted); cursor: pointer; font-size: 0.82rem; font-family: 'Barlow', sans-serif; transition: all 0.15s; min-width: 28px; text-align: center; }
+  .rt-tb-btn:hover { border-color: var(--border2); color: var(--text); background: rgba(255,255,255,0.05); }
+  .rt-sep { width: 1px; height: 18px; background: var(--border2); margin: 0 0.15rem; flex-shrink: 0; }
+  .rt-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .rt-panels { grid-template-columns: 1fr; } }
+  .rt-editor { background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px; min-height: 140px; padding: 0.8rem 1.2rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 1rem; font-weight: 300; line-height: 1.7; outline: none; word-break: break-word; overflow-y: auto; }
+  .rt-editor:focus { border-color: rgba(167,139,250,0.4); }
+  .rt-editor h1,.rt-output h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 500; margin: 0.5rem 0; color: var(--text); }
+  .rt-editor h2,.rt-output h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 500; margin: 0.4rem 0; color: var(--text); }
+  .rt-editor h3,.rt-output h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 500; margin: 0.3rem 0; }
+  .rt-editor p,.rt-output p { margin: 0.2rem 0; }
+  .rt-editor ul,.rt-editor ol,.rt-output ul,.rt-output ol { margin: 0.3rem 0 0.3rem 1.5rem; }
+  .rt-editor table,.rt-output table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.9rem; }
+  .rt-editor td,.rt-editor th,.rt-output td,.rt-output th { border: 1px solid var(--border2); padding: 0.4rem 0.7rem; min-width: 60px; }
+  .rt-editor th,.rt-output th { background: rgba(167,139,250,0.1); font-weight: 500; }
+  .rt-output { min-height: 140px; padding: 0.8rem 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 1rem; font-weight: 300; line-height: 1.7; word-break: break-word; overflow-y: auto; }
+  .rt-output.placeholder { color: rgba(138,138,154,0.4); font-style: italic; }
+  .rt-panel-footer { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 0 0; }
+
+  /* File upload mode */
+  .file-drop { border: 2px dashed var(--border2); border-radius: 16px; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(167,139,250,0.02); }
+  .file-drop:hover,.file-drop.dragover { border-color: var(--violet); background: rgba(167,139,250,0.07); }
+  .file-drop-icon { font-size: 2.8rem; margin-bottom: 0.75rem; opacity: 0.55; line-height: 1; }
+  .file-drop-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .file-drop-sub { font-size: 0.83rem; color: var(--muted); font-weight: 300; }
+  .file-type-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.8rem; }
+  .file-type-chip { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; background: rgba(167,139,250,0.1); color: var(--violet); border: 1px solid rgba(167,139,250,0.25); }
+  .file-info { margin: 1rem 0 0; }
+  .file-info.hidden { display: none; }
+  .file-info-inner { display: flex; align-items: center; gap: 0.75rem; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; }
+  .file-icon-big { font-size: 1.6rem; flex-shrink: 0; }
+  .file-meta { flex: 1; min-width: 0; }
+  .file-meta strong { display: block; font-size: 0.95rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-meta span { font-size: 0.82rem; color: var(--muted); }
+  .file-preview-wrap { margin: 0.75rem 0 0; }
+  .file-preview-wrap.hidden { display: none; }
+  .file-preview-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .file-preview { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; font-family: 'Barlow', monospace; font-size: 0.8rem; color: var(--muted); white-space: pre-wrap; word-break: break-all; max-height: 110px; overflow: hidden; line-height: 1.5; }
+  .file-output-wrap { margin: 1rem 0 0; }
+  .file-output-wrap.hidden { display: none; }
+  .file-output-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .file-output { background: var(--card); border: 1px solid rgba(167,139,250,0.3); border-radius: 12px 12px 0 0; padding: 1rem 1.2rem; font-size: 0.92rem; color: var(--text); white-space: pre-wrap; word-break: break-word; max-height: 360px; overflow-y: auto; font-weight: 300; line-height: 1.75; }
+  .file-output-footer { background: var(--card); border: 1px solid rgba(167,139,250,0.3); border-top: 1px solid var(--border); border-radius: 0 0 12px 12px; padding: 0.6rem 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+  /* Progress */
+  .tr-progress { margin-top: 0.5rem; }
+  .tr-progress.hidden { display: none; }
+  .progress-bar-wrap { height: 4px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-bottom: 0.5rem; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--violet), #c4b5fd); border-radius: 4px; width: 0%; transition: width 0.4s ease; }
+  .progress-info { display: flex; align-items: center; justify-content: space-between; }
+  .progress-text { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  .translate-btn { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--violet); color: #0d0a1f; border: none; border-radius: 50px; padding: 0.85rem 2.5rem; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; gap: 0.5rem; }
+  .translate-btn:hover { background: #c4b5fd; transform: translateY(-1px); }
+  .translate-btn:active { transform: scale(0.98); }
+  .translate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .translate-btn .btn-icon { display: inline-block; transition: transform 0.3s; }
+  .translate-btn.loading .btn-icon { animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .powered-by span { color: var(--violet); opacity: 0.8; }
+
+  /* special badges */
+  .best-pick { position: absolute; top: 1.2rem; right: 1.2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--gold); color: #1a1200; padding: 0.2rem 0.6rem; border-radius: 4px; }
+  /* --- NO RESULTS --- */
+  #no-results { text-align: center; padding: 4rem 2rem; display: none; grid-column: 1/-1; }
+  #no-results p { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--muted); font-style: italic; }
+  /* --- FOOTER --- */
+  footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; position: relative; z-index: 1; }
+  footer a { color: var(--gold); text-decoration: none; }
+  /* --- STICKY NAV --- */
+  .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(11,14,20,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 500; color: var(--gold2); letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .nav-link { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 0.35rem 0.9rem; border-radius: 50px; transition: all 0.2s; color: var(--muted); border: 1px solid transparent; }
+  .nav-link:hover { color: var(--text); border-color: var(--border); }
+  .nav-search { background: var(--bg3); border: 1px solid var(--border); border-radius: 50px; padding: 0.4rem 1rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.85rem; font-weight: 300; outline: none; width: 200px; transition: border-color 0.2s; }
+  .nav-search::placeholder { color: var(--muted); }
+  .nav-search:focus { border-color: var(--gold); }
+  /* --- DIVIDER --- */
+  .divider { text-align: center; margin: 1rem 0 3rem; position: relative; }
+  .divider::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--border); }
+  .divider span { position: relative; background: var(--bg); padding: 0 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--muted); }
+
+
+  /* --- LEGAL MODAL --- */
+  .legal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(7,9,14,0.88);
+    z-index: 500;
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+  .legal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  .legal-modal {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 780px;
+    margin: auto;
+    overflow: hidden;
+  }
+  .legal-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+  .legal-modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--gold2);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .legal-close-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .legal-close-btn:hover { border-color: var(--rose); color: var(--rose); }
+  .legal-tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+    gap: 0;
+    scrollbar-width: none;
+  }
+  .legal-tabs::-webkit-scrollbar { display: none; }
+  .legal-tab {
+    flex-shrink: 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.1rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+  .legal-tab.active { color: var(--gold2); border-bottom-color: var(--gold); }
+  .legal-tab:hover:not(.active) { color: var(--text); }
+  .legal-body {
+    padding: 2rem;
+    max-height: 65vh;
+    overflow-y: auto;
+  }
+  .legal-panel { display: none; }
+  .legal-panel.active { display: block; }
+  .legal-panel h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--gold2);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .legal-panel h3:first-child { margin-top: 0; }
+  .legal-panel p, .legal-panel li {
+    font-size: 0.9rem;
+    color: rgba(232,228,217,0.75);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+  .legal-panel ul, .legal-panel ol {
+    margin: 0.4rem 0 0.8rem 1.3rem;
+  }
+  .legal-panel li { margin-bottom: 0.2rem; }
+  .legal-panel a { color: var(--gold); text-decoration: none; }
+  .legal-panel a:hover { text-decoration: underline; }
+  .legal-highlight {
+    background: rgba(232,168,37,0.07);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    color: var(--text);
+    font-weight: 300;
+  }
+  .legal-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.8rem 0;
+  }
+  .legal-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+  .legal-badge.green { color: var(--teal); border-color: rgba(45,212,191,0.3); background: rgba(45,212,191,0.07); }
+  .legal-badge.gold { color: var(--gold2); border-color: var(--border2); background: rgba(232,168,37,0.07); }
+  .legal-badge.violet { color: var(--violet); border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.07); }
+  .legal-sep { height: 1px; background: var(--border); margin: 1.5rem 0; }
+  /* UI LANG PICKER */
+  .ui-lang-wrap { position: relative; flex-shrink: 0; }
+  #ui-lang-btn { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: transparent; border: 1px solid var(--border2); border-radius: 50px; color: var(--gold2); padding: 0.35rem 0.9rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  #ui-lang-btn:hover { background: rgba(232,168,37,0.1); }
+  #ui-lang-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ui-lang-panel { position: absolute; right: 0; top: calc(100% + 8px); background: var(--bg2); border: 1px solid var(--border2); border-radius: 14px; width: 230px; z-index: 300; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.55); }
+  .ui-lang-panel.hidden { display: none; }
+  .ui-lang-search-wrap { padding: 0.6rem; border-bottom: 1px solid var(--border); }
+  #ui-lang-search-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.75rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.85rem; font-weight: 300; outline: none; }
+  #ui-lang-search-input:focus { border-color: var(--gold); }
+  #ui-lang-search-input::placeholder { color: var(--muted); }
+  .ui-lang-list { max-height: 200px; overflow-y: auto; padding: 0.3rem; scrollbar-width: thin; scrollbar-color: var(--border2) transparent; }
+  .ui-lang-item { display: block; width: 100%; text-align: left; background: transparent; border: none; border-radius: 7px; padding: 0.4rem 0.75rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.85rem; font-weight: 300; cursor: pointer; transition: background 0.15s; }
+  .ui-lang-item:hover { background: rgba(232,168,37,0.08); color: var(--gold2); }
+  .ui-lang-translating { padding: 0.6rem 0.75rem; font-size: 0.8rem; color: var(--muted); font-family: 'Barlow Condensed', sans-serif; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+  /* Footer extended */
+  .footer-legal-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+  .footer-legal-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: var(--muted);
+    padding: 0.3rem 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .footer-legal-btn:hover { color: var(--gold2); border-color: var(--border2); }
+
+  /* --- API KEY MODAL --- */
+  #apikey-banner {
+    background: rgba(232,168,37,0.08);
+    border-bottom: 1px solid var(--border2);
+    padding: 0.6rem 2rem;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    font-size: 0.82rem; color: var(--muted);
+    font-family: 'Barlow', sans-serif; font-weight: 300;
+    position: relative; z-index: 90;
+  }
+  #apikey-banner.hidden { display: none; }
+  #apikey-banner strong { color: var(--gold2); font-weight: 500; }
+  #apikey-input {
+    flex: 1; min-width: 240px; max-width: 380px;
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 0.4rem 0.9rem;
+    color: var(--text); font-family: 'Barlow', monospace;
+    font-size: 0.82rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  #apikey-input:focus { border-color: var(--gold); }
+  #apikey-input::placeholder { color: var(--muted); }
+  #apikey-save-btn {
+    background: var(--gold); color: #1a1200;
+    border: none; border-radius: 8px;
+    padding: 0.4rem 1.1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+  }
+  #apikey-save-btn:hover { background: var(--gold2); }
+  #apikey-clear-btn {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.4rem 0.9rem;
+    color: var(--muted); font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  #apikey-clear-btn:hover { color: var(--rose); border-color: rgba(251,113,133,0.4); }
+  #apikey-status { font-size: 0.78rem; flex-shrink: 0; }
+  #apikey-status.ok { color: var(--teal); }
+  #apikey-status.err { color: var(--rose); }
+
+  /* --- UI LANG TOAST --- */
+  #ui-toast {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: 50px; padding: 0.6rem 1.4rem;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.82rem;
+    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text); z-index: 9999;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    white-space: nowrap; max-width: 90vw; text-align: center;
+  }
+  #ui-toast.show { opacity: 1; }
+  #ui-toast.error { border-color: rgba(251,113,133,0.5); color: var(--rose); }
+  #ui-toast.ok { border-color: rgba(45,212,191,0.4); color: var(--teal); }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--border); padding: 2.5rem 1.5rem 2rem; }
+    .hero-right { padding: 1.5rem 1.5rem; }
+  }
+  @media (max-width: 640px) {
+    h1 { font-size: 2rem; }
+    .section-header { flex-direction: column; align-items: flex-start; }
+    .section-desc { text-align: left; max-width: 100%; }
+    .hero-stats { gap: 1rem; }
+    .grid { grid-template-columns: 1fr; }
+    .legal-body { padding: 1.25rem; }
+    .legal-modal-header { padding: 1.1rem 1.25rem; }
+    .tr-panels { grid-template-columns: 1fr; }
+    .rt-panels { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating glyphs background -->
+<div class="glyphs" aria-hidden="true">
+  <span class="glyph" style="left:5%;animation-duration:18s;animation-delay:-4s;font-size:8rem;">α</span>
+  <span class="glyph" style="left:15%;animation-duration:22s;animation-delay:-9s;font-size:6rem;">文</span>
+  <span class="glyph" style="left:30%;animation-duration:25s;animation-delay:-2s;font-size:9rem;">Я</span>
+  <span class="glyph" style="left:50%;animation-duration:20s;animation-delay:-14s;font-size:7rem;">ع</span>
+  <span class="glyph" style="left:65%;animation-duration:17s;animation-delay:-6s;font-size:8.5rem;">δ</span>
+  <span class="glyph" style="left:78%;animation-duration:23s;animation-delay:-11s;font-size:6.5rem;">語</span>
+  <span class="glyph" style="left:88%;animation-duration:19s;animation-delay:-1s;font-size:7.5rem;">Ж</span>
+  <span class="glyph" style="left:42%;animation-duration:28s;animation-delay:-16s;font-size:5rem;">ב</span>
+  <span class="glyph" style="left:60%;animation-duration:24s;animation-delay:-20s;font-size:6rem;">Ω</span>
+</div>
+
+<!-- Sticky Nav -->
+<nav class="sticky-nav">
+  <div class="nav-logo">TranslateHub</div>
+  <div class="nav-links">
+    <a href="#beginners" class="nav-link">Beginners</a>
+    <a href="#average" class="nav-link">Average</a>
+    <a href="#professionals" class="nav-link">Professionals</a>
+    <a href="#translator" class="nav-link" style="color:var(--violet)">Translate</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;">
+    <input type="text" id="search-nav" class="nav-search" placeholder="Search…" autocomplete="off">
+    <div class="ui-lang-wrap" id="ui-lang-wrap">
+      <button id="ui-lang-btn" onclick="openUILang()" title="Interface language">🌐 <span id="ui-lang-label">EN</span></button>
+      <div class="ui-lang-panel hidden" id="ui-lang-panel">
+        <div class="ui-lang-search-wrap">
+          <input type="text" id="ui-lang-search-input" placeholder="Search language…" autocomplete="off">
+        </div>
+        <div class="ui-lang-list" id="ui-lang-list"></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- API KEY BANNER (shown when running locally without key) -->
+<div id="apikey-banner" class="hidden">
+  <span><strong>🔑 Anthropic API key required</strong> — this file runs locally; Claude.ai auth is unavailable.</span>
+  <input type="password" id="apikey-input" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
+  <button id="apikey-save-btn" onclick="saveApiKey()">Save key</button>
+  <button id="apikey-clear-btn" onclick="clearApiKey()">Clear</button>
+  <span id="apikey-status"></span>
+</div>
+
+<!-- Hero + Translator -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <!-- LEFT: branding & directory intro -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">Free Translation Tools</div>
+    <h1>Speak every<br><em>language.</em></h1>
+    <p class="hero-sub">The definitive curated directory of the world's best free machine translators and language tools — from casual use to professional CAT workflows.</p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">20+</span>
+        <span class="stat-label">Curated tools</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Skill levels</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Free to use</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">200+</span>
+        <span class="stat-label">Languages covered</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: AI translator -->
+  <div class="hero-right" id="translator">
+    <div class="translator-inner">
+      <div class="translator-compact-label">
+        <span class="dot"></span>
+        AI-Powered Translation
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="text">✎ Plain Text</button>
+        <button class="mode-tab" data-mode="rich">❡ Rich Text</button>
+        <button class="mode-tab" data-mode="file">⇪ File Upload</button>
+      </div>
+
+      <div class="tr-controls">
+        <div class="lang-select-wrap">
+          <select class="lang-select" id="src-lang">
+            <option value="auto">🔍 Auto-detect</option>
+          </select>
+        </div>
+        <button class="swap-btn" id="swap-btn" title="Swap languages">⇄</button>
+        <div class="lang-select-wrap">
+          <select class="lang-select" id="tgt-lang"></select>
+        </div>
+      </div>
+
+      <!-- === TEXT MODE === -->
+      <div class="mode-panel" id="mode-text">
+        <div class="tr-panels">
+          <div class="tr-panel" id="src-panel">
+            <div class="tr-panel-label">Source text <span id="char-count" style="font-weight:300;font-style:italic;margin-left:0.5rem;text-transform:none;letter-spacing:0">0 chars</span></div>
+            <textarea class="tr-input" id="tr-source" placeholder="Type or paste text here — no character limit. Very large texts are translated in automatic chunks…"></textarea>
+            <div class="tr-panel-footer">
+              <span id="word-count" class="char-count"></span>
+              <button class="icon-btn" id="clear-btn">✕ Clear</button>
+            </div>
+          </div>
+          <div class="tr-panel" id="tgt-panel">
+            <div class="tr-panel-label">Translation</div>
+            <div class="tr-output placeholder" id="tr-output">Translation will appear here…</div>
+            <div class="tr-panel-footer">
+              <span id="detect-badge" class="char-count"></span>
+              <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+                <button class="icon-btn" id="copy-btn">⧉ Copy</button>
+                <button class="icon-btn" id="dl-txt-btn" style="display:none">↓ .txt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === RICH TEXT MODE === -->
+      <div class="mode-panel hidden" id="mode-rich">
+        <div class="rt-toolbar">
+          <button class="rt-tb-btn" data-cmd="bold"><b>B</b></button>
+          <button class="rt-tb-btn" data-cmd="italic"><i>I</i></button>
+          <button class="rt-tb-btn" data-cmd="underline"><u>U</u></button>
+          <div class="rt-sep"></div>
+          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="h1">H1</button>
+          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="h2">H2</button>
+          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="h3">H3</button>
+          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="p">¶</button>
+          <div class="rt-sep"></div>
+          <button class="rt-tb-btn" data-cmd="insertUnorderedList">• List</button>
+          <button class="rt-tb-btn" data-cmd="insertOrderedList">1. List</button>
+          <div class="rt-sep"></div>
+          <button class="rt-tb-btn" id="insert-table-btn">⊞ Table</button>
+          <div class="rt-sep"></div>
+          <button class="rt-tb-btn" id="clear-rt-btn">✕ Clear</button>
+        </div>
+        <div class="rt-panels">
+          <div>
+            <div class="rt-editor" id="rt-source" contenteditable="true" spellcheck="true"><p>Paste or type <strong>formatted text</strong> here. Use the toolbar to add <em>italic</em>, headings, lists, and tables.</p></div>
+            <div style="padding:0.4rem 0 0;"><span id="rt-char-count" class="char-count"></span></div>
+          </div>
+          <div>
+            <div class="rt-output placeholder" id="rt-output">Formatted translation will appear here, preserving all structure…</div>
+            <div class="rt-panel-footer">
+              <button class="icon-btn" id="copy-rt-btn">⧉ Copy text</button>
+              <button class="icon-btn" id="dl-rt-btn">↓ .html</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === FILE MODE === -->
+      <div class="mode-panel hidden" id="mode-file">
+        <div class="file-drop" id="file-drop">
+          <div class="file-drop-icon">⇪</div>
+          <div class="file-drop-title">Drop your file here</div>
+          <div class="file-drop-sub">or click to browse — supports these formats:</div>
+          <div class="file-type-chips">
+            <span class="file-type-chip">.txt</span><span class="file-type-chip">.md</span><span class="file-type-chip">.html</span><span class="file-type-chip">.docx</span><span class="file-type-chip">.srt</span><span class="file-type-chip">.po</span><span class="file-type-chip">.csv</span><span class="file-type-chip">.json</span>
+          </div>
+          <input type="file" id="file-input" accept=".txt,.md,.html,.docx,.srt,.csv,.json,.po" style="display:none">
+        </div>
+        <div class="file-info hidden" id="file-info">
+          <div class="file-info-inner">
+            <span class="file-icon-big" id="file-icon-el">📄</span>
+            <div class="file-meta">
+              <strong id="file-name-el">—</strong>
+              <span id="file-size-el"></span>
+            </div>
+            <button class="icon-btn" id="remove-file-btn">✕ Remove</button>
+          </div>
+        </div>
+        <div class="file-preview-wrap hidden" id="file-preview-wrap">
+          <div class="file-preview-label">Preview</div>
+          <div class="file-preview" id="file-preview"></div>
+        </div>
+        <div class="file-output-wrap hidden" id="file-output-wrap">
+          <div class="file-output-label">Translated output</div>
+          <div class="file-output" id="file-output"></div>
+          <div class="file-output-footer">
+            <button class="icon-btn" id="dl-file-btn">↓ Download translated file</button>
+            <button class="icon-btn" id="copy-file-btn">⧉ Copy text</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS BAR -->
+      <div class="tr-progress hidden" id="tr-progress">
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
+        <div class="progress-info">
+          <span class="progress-text" id="progress-text">Translating…</span>
+          <button class="icon-btn" id="cancel-btn" style="color:var(--rose);border-color:rgba(251,113,133,0.3)">✕ Cancel</button>
+        </div>
+      </div>
+
+      <div class="tr-action-row">
+        <button class="translate-btn" id="translate-btn">
+          <span class="btn-icon">✦</span> Translate
+        </button>
+      </div>
+      <div class="powered-by">Powered by <span>Claude AI</span> — unlimited text · rich formatting · 8 file formats · 500+ languages</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main>
+
+  <!-- ===== BEGINNERS ===== -->
+  <section class="section" id="beginners">
+    <div class="section-header">
+      <div class="section-header-left">
+        <div class="tier-label" style="color:var(--teal)">
+          <span class="dot" style="background:var(--teal)"></span>
+          For Beginners
+        </div>
+        <h2 style="color:var(--text)">Simple & <em style="font-style:italic;color:var(--teal)">instant</em></h2>
+      </div>
+      <p class="section-desc">No sign-up required. Just paste your text and get a translation in seconds.</p>
+    </div>
+    <div class="grid" id="grid-b">
+
+      <div class="card b" data-keywords="google translate voice image camera photo 133 languages">
+        <span class="best-pick">★ Most Popular</span>
+        <div class="card-top">
+          <div class="card-icon">🌐</div>
+          <span class="card-tier-badge">Beginner</span>
+        </div>
+        <div>
+          <div class="card-name">Google Translate</div>
+          <div class="card-tagline">The world's most used translation service</div>
+        </div>
+        <p class="card-desc">Instant text, speech, image, and document translation. Supports handwriting input, camera translation, and offline mode for downloaded languages. The go-to for quick, casual translation needs.</p>
+        <div class="card-meta">
+          <span class="tag">Voice input</span>
+          <span class="tag">Camera / OCR</span>
+          <span class="tag">Offline mode</span>
+          <span class="tag">Conversation mode</span>
+          <span class="tag">Web &amp; mobile</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>133</strong> languages</div>
+          <a href="https://translate.google.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card b" data-keywords="bing microsoft translator 100 languages conversation real-time">
+        <div class="card-top">
+          <div class="card-icon">🔷</div>
+          <span class="card-tier-badge">Beginner</span>
+        </div>
+        <div>
+          <div class="card-name">Microsoft Translator</div>
+          <div class="card-tagline">Clean, powerful translation from Microsoft</div>
+        </div>
+        <p class="card-desc">Elegant interface for text, speech, and image translation. Standout multi-person conversation mode lets up to 100 people chat across languages in real-time. Excellent integration with Office apps.</p>
+        <div class="card-meta">
+          <span class="tag">Conversation mode</span>
+          <span class="tag">Document translation</span>
+          <span class="tag">Phrasebook</span>
+          <span class="tag">Offline</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>100+</strong> languages</div>
+          <a href="https://www.bing.com/translator" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card b" data-keywords="yandex translate russia dictionary site translation 100 languages">
+        <div class="card-top">
+          <div class="card-icon">🟡</div>
+          <span class="card-tier-badge">Beginner</span>
+        </div>
+        <div>
+          <div class="card-name">Yandex Translate</div>
+          <div class="card-tagline">Strong alternative, especially for Slavic languages</div>
+        </div>
+        <p class="card-desc">Yandex's translation engine shines with Eastern European and Slavic language pairs. Includes an integrated dictionary with synonyms and examples, and a website translator that preserves page layout.</p>
+        <div class="card-meta">
+          <span class="tag">Dictionary view</span>
+          <span class="tag">Website translator</span>
+          <span class="tag">Slavic languages</span>
+          <span class="tag">OCR</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>100+</strong> languages</div>
+          <a href="https://translate.yandex.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card b" data-keywords="papago naver korean japanese chinese asian languages">
+        <div class="card-top">
+          <div class="card-icon">🦜</div>
+          <span class="card-tier-badge">Beginner</span>
+        </div>
+        <div>
+          <div class="card-name">Papago</div>
+          <div class="card-tagline">Best-in-class for East Asian languages</div>
+        </div>
+        <p class="card-desc">Built by Naver, Papago consistently outperforms competitors for Korean, Japanese, and Chinese. Features handwriting input, image translation, conversation mode, and a human proofreading service for short texts.</p>
+        <div class="card-meta">
+          <span class="tag">Korean best-in-class</span>
+          <span class="tag">Japanese</span>
+          <span class="tag">Handwriting</span>
+          <span class="tag">Dictionary</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>15</strong> languages</div>
+          <a href="https://papago.naver.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card b" data-keywords="baidu translate chinese simplified traditional 200 languages">
+        <div class="card-top">
+          <div class="card-icon">🔴</div>
+          <span class="card-tier-badge">Beginner</span>
+        </div>
+        <div>
+          <div class="card-name">Baidu Translate</div>
+          <div class="card-tagline">China's leading translation engine</div>
+        </div>
+        <p class="card-desc">The most powerful tool for Chinese ↔ any other language translation. Particularly reliable for Simplified and Traditional Chinese, with a massive database of idiomatic expressions, chengyu, and technical terminology.</p>
+        <div class="card-meta">
+          <span class="tag">Chinese specialist</span>
+          <span class="tag">Idioms</span>
+          <span class="tag">Document</span>
+          <span class="tag">Image OCR</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>200+</strong> languages</div>
+          <a href="https://fanyi.baidu.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><span>Elevate your translation workflow</span></div>
+
+  <!-- ===== AVERAGE USERS ===== -->
+  <section class="section" id="average">
+    <div class="section-header">
+      <div class="section-header-left">
+        <div class="tier-label" style="color:var(--gold2)">
+          <span class="dot" style="background:var(--gold2)"></span>
+          For Average Users
+        </div>
+        <h2>Smarter &amp; <em style="font-style:italic;color:var(--gold2)">contextual</em></h2>
+      </div>
+      <p class="section-desc">Higher quality output with dictionary context, bilingual examples, and community forums.</p>
+    </div>
+    <div class="grid" id="grid-a">
+
+      <div class="card a" data-keywords="deepl neural quality best 31 languages document formal informal">
+        <span class="best-pick">★ Best Quality</span>
+        <div class="card-top">
+          <div class="card-icon">💎</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">DeepL Translator</div>
+          <div class="card-tagline">The gold standard in neural machine translation</div>
+        </div>
+        <p class="card-desc">Consistently rated as the highest quality MT engine for European languages. Understands nuance and context brilliantly, translates Word and PDF documents (free tier: 3 docs/month), and lets you switch between formal/informal register.</p>
+        <div class="card-meta">
+          <span class="tag">Best quality EU langs</span>
+          <span class="tag">Document upload</span>
+          <span class="tag">Formal/informal</span>
+          <span class="tag">Glossary</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>31</strong> languages</div>
+          <a href="https://www.deepl.com/translator" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="linguee bilingual examples corpus real translations context">
+        <div class="card-top">
+          <div class="card-icon">📚</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">Linguee</div>
+          <div class="card-tagline">Millions of real-world translation examples</div>
+        </div>
+        <p class="card-desc">Unique approach: shows how words and phrases are actually translated in real documents, websites, and publications. Instead of one translation, you see dozens of verified examples with full context — invaluable for nuanced word choice.</p>
+        <div class="card-meta">
+          <span class="tag">Corpus examples</span>
+          <span class="tag">Context sentences</span>
+          <span class="tag">Legal &amp; technical</span>
+          <span class="tag">Free forever</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>25+</strong> languages</div>
+          <a href="https://www.linguee.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="wordreference dictionary forum community native speakers spanish french arabic">
+        <div class="card-top">
+          <div class="card-icon">💬</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">WordReference</div>
+          <div class="card-tagline">Dictionaries backed by community expertise</div>
+        </div>
+        <p class="card-desc">The most trusted free bilingual dictionary for Spanish, French, Italian, Portuguese, and more. Its forums contain decades of discussions by native speakers and professional translators debating subtle meaning differences.</p>
+        <div class="card-meta">
+          <span class="tag">Forum discussions</span>
+          <span class="tag">Native speaker input</span>
+          <span class="tag">Multiple dialects</span>
+          <span class="tag">Conjugator</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>17</strong> languages</div>
+          <a href="https://www.wordreference.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="reverso context examples conjugation grammar spelling">
+        <div class="card-top">
+          <div class="card-icon">🔄</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">Reverso Context</div>
+          <div class="card-tagline">Contextual translations with usage examples</div>
+        </div>
+        <p class="card-desc">Translates phrases with rich bilingual examples pulled from real texts. Includes conjugator, grammar checker, and vocabulary practice. The context examples engine is particularly strong for idiomatic expressions and collocations.</p>
+        <div class="card-meta">
+          <span class="tag">Contextual examples</span>
+          <span class="tag">Conjugation</span>
+          <span class="tag">Vocab builder</span>
+          <span class="tag">Grammar check</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>15+</strong> languages</div>
+          <a href="https://context.reverso.net" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="mymemory collaborative translation memory free API human">
+        <div class="card-top">
+          <div class="card-icon">🧠</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">MyMemory</div>
+          <div class="card-tagline">World's largest collaborative translation memory</div>
+        </div>
+        <p class="card-desc">Aggregates translations from professional translators, language agencies, and MT engines into one giant, searchable memory. Offers a free API (1000 words/day), making it popular for developers who need translation in their apps.</p>
+        <div class="card-meta">
+          <span class="tag">Free API</span>
+          <span class="tag">Translation memory</span>
+          <span class="tag">Human + MT mix</span>
+          <span class="tag">Developer-friendly</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>75+</strong> languages</div>
+          <a href="https://mymemory.translated.net" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="translate shell chatgpt ai gpt powered free alternative">
+        <div class="card-top">
+          <div class="card-icon">✨</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">LibreTranslate</div>
+          <div class="card-tagline">Free, open-source, and privacy-first</div>
+        </div>
+        <p class="card-desc">100% open-source translation engine you can use on the web or self-host. No data is sent to commercial servers. Ideal for anyone privacy-conscious or organizations with confidential content. Free public API available.</p>
+        <div class="card-meta">
+          <span class="tag">Open source</span>
+          <span class="tag">Self-hostable</span>
+          <span class="tag">Privacy-first</span>
+          <span class="tag">Free API</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>30+</strong> languages</div>
+          <a href="https://libretranslate.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="argos translate offline desktop local no internet neural">
+        <div class="card-top">
+          <div class="card-icon">📴</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">Argos Translate</div>
+          <div class="card-tagline">Full neural translation — completely offline</div>
+        </div>
+        <p class="card-desc">Download language models and translate entirely on your device, with zero internet connection required. Open-source and GDPR-safe by design. Perfect for sensitive documents, travel without data, or air-gapped environments.</p>
+        <div class="card-meta">
+          <span class="tag">Fully offline</span>
+          <span class="tag">Neural MT</span>
+          <span class="tag">Open source</span>
+          <span class="tag">Desktop app</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>30+</strong> languages</div>
+          <a href="https://www.argosopentech.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card a" data-keywords="apertium open source rule based minority regional languages">
+        <div class="card-top">
+          <div class="card-icon">🏛️</div>
+          <span class="card-tier-badge">Average</span>
+        </div>
+        <div>
+          <div class="card-name">Apertium</div>
+          <div class="card-tagline">Rule-based MT for minority &amp; regional languages</div>
+        </div>
+        <p class="card-desc">The only serious free tool for rare, regional, and minority language pairs (Catalan, Breton, Faroese, Welsh, Occitan…). Rule-based rather than neural, meaning translations are deterministic and fully transparent. Academic-grade open source.</p>
+        <div class="card-meta">
+          <span class="tag">Minority languages</span>
+          <span class="tag">Rule-based</span>
+          <span class="tag">Transparent</span>
+          <span class="tag">Open source</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>40+</strong> pairs</div>
+          <a href="https://www.apertium.org" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><span>Built for translators, linguists &amp; developers</span></div>
+
+  <!-- ===== PROFESSIONALS ===== -->
+  <section class="section" id="professionals">
+    <div class="section-header">
+      <div class="section-header-left">
+        <div class="tier-label" style="color:var(--violet)">
+          <span class="dot" style="background:var(--violet)"></span>
+          For Professionals
+        </div>
+        <h2>CAT tools &amp; <em style="font-style:italic;color:var(--violet)">workflows</em></h2>
+      </div>
+      <p class="section-desc">Full translation memories, terminology management, and collaborative CAT environments.</p>
+    </div>
+    <div class="grid" id="grid-p">
+
+      <div class="card p" data-keywords="matecat cat tool translation memory free professional workflow segments">
+        <span class="best-pick">★ Best Free CAT</span>
+        <div class="card-top">
+          <div class="card-icon">🐱</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">MateCat</div>
+          <div class="card-tagline">Free cloud CAT with built-in MT and TM</div>
+        </div>
+        <p class="card-desc">A fully-featured professional CAT (Computer-Assisted Translation) tool — free, no installation required. Includes MT suggestions from multiple engines, translation memory with fuzzy matching, QA checks, and project management. Used by many professional translation agencies.</p>
+        <div class="card-meta">
+          <span class="tag">Full CAT tool</span>
+          <span class="tag">Translation memory</span>
+          <span class="tag">Multi-engine MT</span>
+          <span class="tag">QA checks</span>
+          <span class="tag">Team collaboration</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>200+</strong> languages</div>
+          <a href="https://www.matecat.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="smartcat cat platform collaboration freelance marketplace free">
+        <div class="card-top">
+          <div class="card-icon">🧩</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">Smartcat</div>
+          <div class="card-tagline">CAT + TMS + freelance marketplace, free tier</div>
+        </div>
+        <p class="card-desc">An all-in-one translation management platform with a generous free tier. CAT editor, translation memory, terminology management, vendor marketplace, and client portal under one roof. Excellent for freelancers and small agencies.</p>
+        <div class="card-meta">
+          <span class="tag">CAT editor</span>
+          <span class="tag">TMS</span>
+          <span class="tag">Freelance marketplace</span>
+          <span class="tag">API</span>
+          <span class="tag">Free tier</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>280+</strong> languages</div>
+          <a href="https://www.smartcat.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="omegat open source desktop cat tool java professional offline free">
+        <div class="card-top">
+          <div class="card-icon">🖥️</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">OmegaT</div>
+          <div class="card-tagline">The legendary open-source desktop CAT tool</div>
+        </div>
+        <p class="card-desc">A mature, powerful desktop CAT tool that has been the open-source standard for two decades. Supports virtually all file formats, full TM management, glossaries, and a plugin ecosystem. Runs fully offline — your data never leaves your machine.</p>
+        <div class="card-meta">
+          <span class="tag">Desktop app</span>
+          <span class="tag">Fully offline</span>
+          <span class="tag">All file formats</span>
+          <span class="tag">Plugin system</span>
+          <span class="tag">XLIFF support</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>All</strong> languages</div>
+          <a href="https://omegat.org" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="weblate software localization continuous integration git open source">
+        <div class="card-top">
+          <div class="card-icon">🌍</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">Weblate</div>
+          <div class="card-tagline">Software &amp; website localization with Git integration</div>
+        </div>
+        <p class="card-desc">The leading free platform for continuous software localization. Integrates directly with Git/GitHub repositories, supports PO, XLIFF, JSON, and 60+ file formats, and includes a web-based translation editor with TM and MT integration. Self-hostable.</p>
+        <div class="card-meta">
+          <span class="tag">Software l10n</span>
+          <span class="tag">Git integration</span>
+          <span class="tag">60+ file formats</span>
+          <span class="tag">Self-hostable</span>
+          <span class="tag">API</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>All</strong> languages</div>
+          <a href="https://weblate.org" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="poedit gettext po mo software translation app desktop gui">
+        <div class="card-top">
+          <div class="card-icon">✏️</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">Poedit</div>
+          <div class="card-tagline">PO/MO file editor for software translators</div>
+        </div>
+        <p class="card-desc">The standard desktop tool for translating GNU gettext PO files — the format used by WordPress, Django, Ruby on Rails, and thousands of open-source projects. Free tier includes TM and MT pre-translation. Clean, focused interface.</p>
+        <div class="card-meta">
+          <span class="tag">PO/MO files</span>
+          <span class="tag">WordPress l10n</span>
+          <span class="tag">Pre-translation</span>
+          <span class="tag">macOS &amp; Windows</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>All</strong> languages</div>
+          <a href="https://poedit.net" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="opus mt helsinki nlp research academic neural machine translation models">
+        <div class="card-top">
+          <div class="card-icon">🔬</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">OPUS-MT / Helsinki NLP</div>
+          <div class="card-tagline">State-of-the-art open NMT models</div>
+        </div>
+        <p class="card-desc">Research-grade neural MT models from the University of Helsinki. Over 1,000 pre-trained translation models freely downloadable, covering an enormous range of language pairs including low-resource languages. The backbone of many open-source MT systems.</p>
+        <div class="card-meta">
+          <span class="tag">1000+ model pairs</span>
+          <span class="tag">Research grade</span>
+          <span class="tag">Low-resource langs</span>
+          <span class="tag">Open weights</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>Hundreds</strong> of pairs</div>
+          <a href="https://opus.nlpl.eu" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="tbx glossary terminology management termbases IATE EU">
+        <div class="card-top">
+          <div class="card-icon">🏛️</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">IATE — EU Termbank</div>
+          <div class="card-tagline">Official EU multilingual terminology database</div>
+        </div>
+        <p class="card-desc">The European Union's Inter-Active Terminology for Europe database. Over 8 million term entries in 24 EU official languages, including legal, medical, technical, and institutional terminology. Freely searchable and downloadable in TBX format.</p>
+        <div class="card-meta">
+          <span class="tag">8M+ term entries</span>
+          <span class="tag">EU law &amp; policy</span>
+          <span class="tag">TBX export</span>
+          <span class="tag">24 EU languages</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>24</strong> EU languages</div>
+          <a href="https://iate.europa.eu" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="eTranslation EC European Commission MT professional secure">
+        <div class="card-top">
+          <div class="card-icon">🇪🇺</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">eTranslation (EC)</div>
+          <div class="card-tagline">The European Commission's official MT service</div>
+        </div>
+        <p class="card-desc">The European Commission's secure MT platform, built on OPUS-MT models trained on EU corpora. Free for public administrations, NGOs, universities, and businesses registered in the EU. Exceptional for legal, administrative, and formal texts.</p>
+        <div class="card-meta">
+          <span class="tag">EU trained corpora</span>
+          <span class="tag">Secure &amp; GDPR</span>
+          <span class="tag">Formal register</span>
+          <span class="tag">API access</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>24</strong> EU languages</div>
+          <a href="https://ec.europa.eu/info/resources-partners/machine-translation-public-administrations-etranslation_en" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <div class="card p" data-keywords="tbxedit termbase management terminology TBX editor free">
+        <div class="card-top">
+          <div class="card-icon">📖</div>
+          <span class="card-tier-badge">Professional</span>
+        </div>
+        <div>
+          <div class="card-name">Glossary &amp; TM resources</div>
+          <div class="card-tagline">GLOSBE · Merriam-Webster API · Termium Plus</div>
+        </div>
+        <p class="card-desc">A trio of essential free reference tools: Glosbe (multilingual dictionary from real texts, 300+ languages), Merriam-Webster Dictionaries API (free tier for developers), and Termium Plus — Canada's 4.5 million-term bilingual EN/FR government termbase, freely searchable.</p>
+        <div class="card-meta">
+          <span class="tag">Glosbe</span>
+          <span class="tag">Termium Plus</span>
+          <span class="tag">M-W API</span>
+          <span class="tag">Reference tools</span>
+        </div>
+        <div class="card-footer">
+          <div class="langs-badge"><strong>300+</strong> languages</div>
+          <a href="https://glosbe.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NO RESULTS -->
+  <div id="no-results">
+    <p>No tools match your search. Try different keywords.</p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--gold2)">TranslateHub</p>
+  <p style="max-width:520px;margin:0 auto 1rem;">Cel mai complet director de unelte gratuite de traducere — de la uz casnic la fluxuri CAT profesionale. Fără publicitate. Fără linkuri afiliate.</p>
+  <div class="footer-legal-row">
+    <button class="footer-legal-btn" onclick="openLegal('gdpr')">🔒 Confidențialitate & GDPR</button>
+    <button class="footer-legal-btn" onclick="openLegal('cookies')">🍪 Politica cookies</button>
+    <button class="footer-legal-btn" onclick="openLegal('impressum')">📋 Impressum</button>
+    <button class="footer-legal-btn" onclick="openLegal('accessibility')">♿ Accesibilitate</button>
+    <button class="footer-legal-btn" onclick="openLegal('tech')">⚙ Tehnologii & transparență</button>
+    <button class="footer-legal-btn" onclick="openLegal('disclaimer')">⚖ Termeni & disclaimer</button>
+  </div>
+  <p style="margin-top:1.25rem;font-size:0.78rem;color:rgba(138,138,154,0.45)">© 2026 TranslateHub · Construit cu grijă pentru comunitatea lingvistică · Jurisdicție: România / Uniunea Europeană</p>
+</footer>
+
+<!-- LEGAL & GDPR MODAL -->
+<div class="legal-overlay" id="legal-overlay" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <div class="legal-modal-title" id="legal-modal-title">⚖ Legal &amp; GDPR</div>
+      <button class="legal-close-btn" onclick="closeLegal()" aria-label="Închide">✕</button>
+    </div>
+    <div class="legal-tabs" role="tablist">
+      <button class="legal-tab active" data-panel="gdpr" role="tab">🔒 GDPR</button>
+      <button class="legal-tab" data-panel="cookies" role="tab">🍪 Cookies</button>
+      <button class="legal-tab" data-panel="impressum" role="tab">📋 Impressum</button>
+      <button class="legal-tab" data-panel="accessibility" role="tab">♿ Accesibilitate</button>
+      <button class="legal-tab" data-panel="tech" role="tab">⚙ Tehnologii</button>
+      <button class="legal-tab" data-panel="disclaimer" role="tab">⚖ Termeni</button>
+    </div>
+    <div class="legal-body">
+
+      <!-- GDPR -->
+      <div class="legal-panel active" id="panel-gdpr">
+        <div class="legal-highlight">TranslateHub nu colectează, nu stochează și nu prelucrează date cu caracter personal. Textele introduse în formularul de traducere sunt transmise direct către API-ul Anthropic (Claude) și nu sunt reținute de acest site.</div>
+        <h3>Temeiul legal (GDPR Art. 6)</h3>
+        <p>Prelucrarea textelor introduse de utilizator în scopul traducerii se realizează exclusiv în baza consimțământului implicit prin utilizarea serviciului (<strong>Art. 6 alin. 1 lit. a</strong>) și a interesului legitim de a furniza funcționalitatea solicitată (<strong>Art. 6 alin. 1 lit. f</strong>).</p>
+        <h3>Ce date procesează TranslateHub</h3>
+        <ul>
+          <li><strong>Textul introdus</strong> — trimis temporar către Anthropic API pentru generarea traducerii. Nu este stocat pe serverele TranslateHub.</li>
+          <li><strong>Fișierele încărcate</strong> — procesate exclusiv în browserul tău (client-side). Nu sunt trimise pe niciun server al TranslateHub.</li>
+          <li><strong>Logs de acces standard</strong> — server-ul web (dacă site-ul este găzduit) poate genera log-uri de acces standard (IP, timestamp, User-Agent) conform practicii normale de hosting. Aceste date nu sunt utilizate pentru profilare.</li>
+        </ul>
+        <h3>Date transmise către Anthropic</h3>
+        <p>Textul tău este trimis către <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">Anthropic, Inc.</a> prin API-ul lor public. Anthropic poate reține conținutul conversațiilor în conformitate cu propria lor politică de confidențialitate. Îți recomandăm să nu introduci date personale sensibile în formularul de traducere.</p>
+        <h3>Drepturile tale (GDPR Cap. III)</h3>
+        <ul>
+          <li>Dreptul de acces (Art. 15)</li>
+          <li>Dreptul la rectificare (Art. 16)</li>
+          <li>Dreptul la ștergere — „dreptul de a fi uitat" (Art. 17)</li>
+          <li>Dreptul la restricționarea prelucrării (Art. 18)</li>
+          <li>Dreptul la portabilitatea datelor (Art. 20)</li>
+          <li>Dreptul de a depune plângere la ANSPDCP (Autoritatea Națională de Supraveghere)</li>
+        </ul>
+        <div class="legal-badge-row">
+          <span class="legal-badge green">GDPR conform</span>
+          <span class="legal-badge green">Fără tracking</span>
+          <span class="legal-badge green">Fără vânzare de date</span>
+          <span class="legal-badge gold">Jurisdicție: România / UE</span>
+        </div>
+      </div>
+
+      <!-- COOKIES -->
+      <div class="legal-panel" id="panel-cookies">
+        <div class="legal-highlight">TranslateHub nu folosește cookie-uri de tracking, publicitate sau profilare. Nu există reclame. Nu există rețele de publicitate terțe.</div>
+        <h3>Cookie-uri tehnice strict necesare</h3>
+        <p>Este posibil ca browserul tău să stocheze local (localStorage/sessionStorage) preferințe de interfață — cum ar fi ultima limbă selectată sau modul de traducere ales. Aceste date rămân exclusiv în browserul tău și nu sunt transmise nicăieri.</p>
+        <h3>Cookie-uri de la terți</h3>
+        <ul>
+          <li><strong>Google Fonts</strong> — fonturile sunt încărcate de pe serverele Google. Google poate seta cookie-uri proprii conform <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politicii lor</a>. Pentru a evita acest lucru, poți folosi o extensie de blocare sau găzdui fonturile local.</li>
+          <li><strong>Anthropic API</strong> — apelurile API nu folosesc cookie-uri, ci autentificare prin header-e.</li>
+        </ul>
+        <h3>Baza legală</h3>
+        <p>Cookie-urile tehnice strict necesare nu necesită consimțământ conform Directivei ePrivacy 2002/58/CE. Niciun cookie de tip analitic sau de marketing nu este utilizat.</p>
+        <div class="legal-badge-row">
+          <span class="legal-badge green">Fără cookie-uri de tracking</span>
+          <span class="legal-badge green">Fără publicitate</span>
+          <span class="legal-badge gold">ePrivacy conform</span>
+        </div>
+      </div>
+
+      <!-- IMPRESSUM -->
+      <div class="legal-panel" id="panel-impressum">
+        <h3>Date editor / Impressum</h3>
+        <div class="legal-highlight">
+          <strong>TranslateHub</strong><br>
+          Proiect independent, necomercial<br>
+          Autor: <a href="/cdn-cgi/l/email-protection#84e5e8e1fcedebc4f0f6ebe9aaf0e2"><span class="__cf_email__" data-cfemail="d8b9b4bda0b1b798acaab7b5f6acbe">[email&#160;protected]</span></a><br>
+          Web: <a href="https://alexio.tf" target="_blank" rel="noopener">alexio.tf</a><br>
+          Locație: București, România<br>
+          Ultimă actualizare: aprilie 2026
+        </div>
+        <h3>Natura juridică</h3>
+        <p>TranslateHub este un proiect editorial independent, necomercial. Nu este o entitate juridică înregistrată. Nu colectează plăți și nu oferă servicii comerciale directe.</p>
+        <h3>Răspundere pentru conținut</h3>
+        <p>Traducerile generate de AI sunt furnizate „ca atare" (as-is), fără garanții de acuratețe, completitudine sau adecvare pentru un scop specific. Utilizatorul este responsabil pentru verificarea și utilizarea conținutului tradus.</p>
+        <h3>Răspundere pentru linkuri externe</h3>
+        <p>TranslateHub conține linkuri către servicii externe (Google Translate, DeepL, MateCat etc.). Aceste servicii sunt independente și au propriile politici de utilizare și confidențialitate. TranslateHub nu are nicio responsabilitate pentru conținutul sau practicile acestora.</p>
+        <h3>Proprietate intelectuală</h3>
+        <p>Codul sursă al interfeței TranslateHub este disponibil pentru inspecție. Conținutul curatorial (descrierile, structura, selecția uneltelor) aparține autorului. Traducerile generate aparțin utilizatorului care le-a solicitat.</p>
+      </div>
+
+      <!-- ACCESIBILITATE -->
+      <div class="legal-panel" id="panel-accessibility">
+        <div class="legal-highlight">TranslateHub se angajează să respecte standardele de accesibilitate web (WCAG 2.1 nivel AA) în măsura posibilităților tehnice ale unui proiect independent.</div>
+        <h3>Funcționalități de accesibilitate implementate</h3>
+        <ul>
+          <li>Navigare completă prin tastatură (Tab, Enter, Esc)</li>
+          <li>Atribute <code>aria-label</code>, <code>role</code> și <code>aria-modal</code> pe elementele interactive</li>
+          <li>Contrast cromatic suficient (raport minim 4.5:1 pentru text normal)</li>
+          <li>Fonturi scalabile (rem/clamp) — funcționează cu zoom de browser până la 200%</li>
+          <li>Etichete descriptive pe toate butoanele și câmpurile de formular</li>
+          <li>Scurtătură tastatură: <kbd>Ctrl</kbd>+<kbd>Enter</kbd> pentru traducere rapidă</li>
+          <li>Buton de închidere modal accesibil prin <kbd>Esc</kbd></li>
+        </ul>
+        <h3>Limitări cunoscute</h3>
+        <ul>
+          <li>Editorul Rich Text (contenteditable) poate avea comportament variabil cu screen reader-ele. Se recomandă modul Plain Text pentru utilizatorii cu screen reader.</li>
+          <li>Animațiile de fundal din hero pot fi deranjante pentru persoane cu sensibilitate la mișcare. Acestea pot fi dezactivate din setările sistemului de operare (prefers-reduced-motion).</li>
+        </ul>
+        <h3>Raportare probleme de accesibilitate</h3>
+        <p>Dacă întâmpini dificultăți de accesibilitate, contactează: <a href="/cdn-cgi/l/email-protection#bbdad7dec3d2d4fbcfc9d4d695cfdd"><span class="__cf_email__" data-cfemail="4e2f222b3627210e3a3c2123603a28">[email&#160;protected]</span></a></p>
+        <div class="legal-badge-row">
+          <span class="legal-badge green">WCAG 2.1 AA (parțial)</span>
+          <span class="legal-badge violet">Navigare tastatură</span>
+          <span class="legal-badge violet">ARIA roles</span>
+        </div>
+      </div>
+
+      <!-- TEHNOLOGII -->
+      <div class="legal-panel" id="panel-tech">
+        <h3>Stack tehnologic</h3>
+        <div class="legal-badge-row">
+          <span class="legal-badge violet">HTML5 · CSS3 · JavaScript ES2022</span>
+          <span class="legal-badge gold">Fără framework-uri frontend</span>
+          <span class="legal-badge green">Single-file app</span>
+        </div>
+        <ul>
+          <li><strong>Claude Sonnet (Anthropic)</strong> — motor de traducere AI, accesat prin API public. Model: <code>claude-sonnet-4-20250514</code>.</li>
+          <li><strong>mammoth.js v1.6</strong> — extragere text din fișiere .docx, rulează exclusiv în browser (client-side, CDN jsdelivr).</li>
+          <li><strong>Google Fonts</strong> — Cormorant Garamond, Barlow, Barlow Condensed. Încărcate din CDN Google.</li>
+          <li><strong>Web APIs native</strong>: Fetch API, Streams API, File API, Clipboard API, Blob API, DOMParser, execCommand (Rich Text), contenteditable.</li>
+        </ul>
+        <h3>Arhitectură & transparență</h3>
+        <ul>
+          <li>TranslateHub este o aplicație single-file HTML. Tot codul sursă este inspectat prin „View Page Source" în browser.</li>
+          <li>Nu există backend propriu. Toate apelurile AI merg direct la <code>api.anthropic.com</code>.</li>
+          <li>Procesarea fișierelor (.docx, .csv, .json, .po, .srt) se face integral în browser, fără upload pe niciun server al TranslateHub.</li>
+          <li>Traducerea textelor lungi folosește un sistem de chunking automat cu fereastră de context de 400 de caractere între segmente, pentru coerență.</li>
+        </ul>
+        <h3>Dependențe externe</h3>
+        <ul>
+          <li><code>api.anthropic.com</code> — API de traducere AI (obligatoriu)</li>
+          <li><code>fonts.googleapis.com</code> — fonturi (opțional, poate fi înlocuit cu fonturi locale)</li>
+          <li><code>cdn.jsdelivr.net</code> — mammoth.js (opțional, necesar doar pentru .docx)</li>
+        </ul>
+        <div class="legal-badge-row">
+          <span class="legal-badge green">Cod sursă inspectabil</span>
+          <span class="legal-badge green">Fără telemetrie proprie</span>
+          <span class="legal-badge gold">Procesare locală fișiere</span>
+        </div>
+      </div>
+
+      <!-- TERMENI & DISCLAIMER -->
+      <div class="legal-panel" id="panel-disclaimer">
+        <div class="legal-highlight">⚠ Traducerile generate de AI pot conține erori. Verifică întotdeauna traducerile critice (medicale, juridice, financiare) cu un translator profesionist uman.</div>
+        <h3>Termeni de utilizare</h3>
+        <p>Prin utilizarea TranslateHub, ești de acord cu următorii termeni:</p>
+        <ul>
+          <li>Serviciul este furnizat gratuit, „ca atare" (as-is), fără nicio garanție expresă sau implicită.</li>
+          <li>Nu introduci date personale sensibile, date medicale, date financiare confidențiale sau secrete comerciale în formularul de traducere.</li>
+          <li>Nu utilizezi serviciul pentru conținut ilegal, discurs instigator la ură, spam sau orice altă utilizare interzisă de <a href="https://www.anthropic.com/legal/usage-policy" target="_blank" rel="noopener">Politica de utilizare Anthropic</a>.</li>
+          <li>Ești responsabil pentru utilizarea și verificarea conținutului tradus.</li>
+        </ul>
+        <h3>Limitarea răspunderii</h3>
+        <p>TranslateHub și autorul său nu pot fi trași la răspundere pentru:</p>
+        <ul>
+          <li>Erori, omisiuni sau inexactități în traducerile generate</li>
+          <li>Pierderi de date cauzate de întreruperi ale serviciului API</li>
+          <li>Daune directe sau indirecte rezultate din utilizarea traducerilor</li>
+          <li>Indisponibilitatea serviciului din cauza întreruperilor Anthropic API</li>
+        </ul>
+        <h3>Drepturi de proprietate intelectuală</h3>
+        <p>Conținutul original introdus de utilizator rămâne proprietatea utilizatorului. Traducerile generate aparțin utilizatorului care le-a solicitat. TranslateHub nu revendică niciun drept asupra conținutului procesat.</p>
+        <h3>Modificări ale termenilor</h3>
+        <p>Acești termeni pot fi actualizați fără notificare prealabilă. Data ultimei modificări este indicată în footer. Continuarea utilizării serviciului după o modificare constituie acceptul noilor termeni.</p>
+        <div class="legal-sep"></div>
+        <p style="font-size:0.8rem;color:var(--muted)">Ultima actualizare: aprilie 2026 · Jurisdicție principală: România / Uniunea Europeană · Contact: <a href="/cdn-cgi/l/email-protection#6b0a070e1302042b1f190406451f0d"><span class="__cf_email__" data-cfemail="d7b6bbb2afbeb897a3a5b8baf9a3b1">[email&#160;protected]</span></a></p>
+      </div>
+
+    </div><!-- /legal-body -->
+  </div><!-- /legal-modal -->
+</div><!-- /legal-overlay -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── CARD SEARCH ── */
+const allCards = document.querySelectorAll('.card');
+function filterCards(q) {
+  q = q.toLowerCase().trim();
+  let vis = 0;
+  allCards.forEach(c => {
+    const hit = !q || ['.card-name','.card-desc','.card-meta'].map(s=>c.querySelector(s)?.textContent.toLowerCase()||'').join(' ').includes(q) || (c.dataset.keywords||'').includes(q);
+    c.classList.toggle('hidden', !hit);
+    if (hit) vis++;
+  });
+  document.getElementById('no-results').style.display = vis===0?'block':'none';
+  ['beginners','average','professionals'].forEach(id=>{
+    const s=document.getElementById(id);
+    if(s) s.style.display=[...s.querySelectorAll('.card')].some(c=>!c.classList.contains('hidden'))?'':'none';
+  });
+}
+const ns=document.getElementById('search-nav');
+ns.addEventListener('input',e=>filterCards(e.target.value));
+
+/* ── LANGUAGE LIST ── */
+const LANGUAGES=[["Abkhazian","ab"],["Afar","aa"],["Afrikaans","af"],["Akan","ak"],["Albanian","sq"],["Amharic","am"],["Arabic","ar"],["Aragonese","an"],["Armenian","hy"],["Assamese","as"],["Avaric","av"],["Avestan","ae"],["Aymara","ay"],["Azerbaijani","az"],["Bambara","bm"],["Bashkir","ba"],["Basque","eu"],["Belarusian","be"],["Bengali","bn"],["Bislama","bi"],["Bosnian","bs"],["Breton","br"],["Bulgarian","bg"],["Burmese","my"],["Catalan","ca"],["Chamorro","ch"],["Chechen","ce"],["Chichewa","ny"],["Chinese (Simplified)","zh-Hans"],["Chinese (Traditional)","zh-Hant"],["Chuvash","cv"],["Cornish","kw"],["Corsican","co"],["Cree","cr"],["Croatian","hr"],["Czech","cs"],["Danish","da"],["Divehi","dv"],["Dutch","nl"],["Dzongkha","dz"],["English","en"],["Esperanto","eo"],["Estonian","et"],["Ewe","ee"],["Faroese","fo"],["Fijian","fj"],["Finnish","fi"],["French","fr"],["Fula","ff"],["Galician","gl"],["Georgian","ka"],["German","de"],["Greek","el"],["Guaraní","gn"],["Gujarati","gu"],["Haitian Creole","ht"],["Hausa","ha"],["Hebrew","he"],["Hindi","hi"],["Hungarian","hu"],["Icelandic","is"],["Ido","io"],["Igbo","ig"],["Indonesian","id"],["Interlingua","ia"],["Irish","ga"],["Italian","it"],["Inuktitut","iu"],["Japanese","ja"],["Javanese","jv"],["Kalaallisut","kl"],["Kannada","kn"],["Kashmiri","ks"],["Kazakh","kk"],["Khmer","km"],["Kinyarwanda","rw"],["Korean","ko"],["Kurdish","ku"],["Kyrgyz","ky"],["Latin","la"],["Latvian","lv"],["Lingala","ln"],["Lithuanian","lt"],["Luxembourgish","lb"],["Macedonian","mk"],["Malagasy","mg"],["Malay","ms"],["Malayalam","ml"],["Maltese","mt"],["Māori","mi"],["Marathi","mr"],["Mongolian","mn"],["Nauru","na"],["Navajo","nv"],["Nepali","ne"],["Norwegian","no"],["Norwegian Bokmål","nb"],["Norwegian Nynorsk","nn"],["Occitan","oc"],["Oromo","om"],["Oriya","or"],["Ossetian","os"],["Punjabi","pa"],["Pashto","ps"],["Persian","fa"],["Polish","pl"],["Portuguese","pt"],["Quechua","qu"],["Romansh","rm"],["Romanian","ro"],["Russian","ru"],["Sanskrit","sa"],["Sardinian","sc"],["Scottish Gaelic","gd"],["Serbian","sr"],["Shona","sn"],["Sindhi","sd"],["Sinhala","si"],["Slovak","sk"],["Slovenian","sl"],["Somali","so"],["Spanish","es"],["Sundanese","su"],["Swahili","sw"],["Swedish","sv"],["Tagalog","tl"],["Tajik","tg"],["Tamil","ta"],["Tatar","tt"],["Telugu","te"],["Thai","th"],["Tibetan","bo"],["Tigrinya","ti"],["Tonga","to"],["Tsonga","ts"],["Tswana","tn"],["Turkish","tr"],["Turkmen","tk"],["Twi","tw"],["Ukrainian","uk"],["Urdu","ur"],["Uzbek","uz"],["Vietnamese","vi"],["Volapük","vo"],["Welsh","cy"],["Wolof","wo"],["Xhosa","xh"],["Yiddish","yi"],["Yoruba","yo"],["Zulu","zu"],["Acehnese","ace"],["Asturian","ast"],["Balinese","ban"],["Buginese","bug"],["Friulian","fur"],["Ligurian","lij"],["Minangkabau","min"],["Mirandese","mwl"],["Neapolitan","nap"],["Papiamento","pap"],["Sardinian","sc"],["Sicilian","scn"],["Tok Pisin","tpi"],["Venetian","vec"],["Nahuatl","nah"],["Maya (Yucatec)","yua"],["Mapuche","arn"],["Ga","gaa"],["Dioula","dyu"],["Mandinka","mnk"],["Soninke","snk"],["Zarma","dje"],["Efik","efi"],["Luo","luo"],["Tumbuka","tum"],["Comorian","swb"],["Seychellois Creole","crs"],["Mauritian Creole","mfe"],["Lojban","jbo"],["Toki Pona","tok"],["Lingua Franca Nova","lfn"],["Klingon","tlh"],["Sindarin","sjn"],["Quenya","qya"],["High Valyrian","hbo"],["Na'vi","mis"],["Dothraki","mis2"]];
+const srcSel=document.getElementById('src-lang'), tgtSel=document.getElementById('tgt-lang');
+LANGUAGES.forEach(([n,c])=>{srcSel.appendChild(new Option(n,c));tgtSel.appendChild(new Option(n,c));});
+tgtSel.value='ro'; if(!tgtSel.value) tgtSel.value='en';
+
+/* ── MODE SWITCHING ── */
+const modePanels={text:document.getElementById('mode-text'),rich:document.getElementById('mode-rich'),file:document.getElementById('mode-file')};
+let currentMode='text';
+document.querySelectorAll('.mode-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.mode-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMode=btn.dataset.mode;
+    Object.values(modePanels).forEach(p=>p.classList.add('hidden'));
+    modePanels[currentMode].classList.remove('hidden');
+  });
+});
+
+/* ── SWAP BUTTON ── */
+document.getElementById('swap-btn').addEventListener('click',()=>{
+  if(srcSel.value==='auto') return;
+  [srcSel.value,tgtSel.value]=[tgtSel.value,srcSel.value];
+  if(currentMode==='text'){
+    const out=document.getElementById('tr-output');
+    const outTxt=out.classList.contains('placeholder')?'':out.textContent.trim();
+    const srcTxt=document.getElementById('tr-source').value.trim();
+    document.getElementById('tr-source').value=outTxt; updateCharCount();
+    if(srcTxt){out.textContent=srcTxt;out.className='tr-output';}
+  }
+});
+
+/* ── TEXT MODE CHAR COUNT ── */
+const srcTA=document.getElementById('tr-source');
+const charCountEl=document.getElementById('char-count');
+const wordCountEl=document.getElementById('word-count');
+function updateCharCount(){
+  const t=srcTA.value;
+  charCountEl.textContent=t.length.toLocaleString()+' chars';
+  const w=t.trim()?t.trim().split(/\s+/).length:0;
+  wordCountEl.textContent=w.toLocaleString()+' words';
+}
+srcTA.addEventListener('input',updateCharCount);
+
+/* ── TEXT CLEAR + COPY + DOWNLOAD ── */
+document.getElementById('clear-btn').addEventListener('click',()=>{
+  srcTA.value=''; updateCharCount();
+  const o=document.getElementById('tr-output');
+  o.textContent='Translation will appear here…'; o.className='tr-output placeholder';
+  document.getElementById('detect-badge').textContent='';
+  document.getElementById('tgt-panel').classList.remove('active');
+  document.getElementById('dl-txt-btn').style.display='none';
+  hideProgress();
+});
+function setupCopyBtn(btnId,getContent){
+  const btn=document.getElementById(btnId);
+  if(!btn) return;
+  btn.addEventListener('click',()=>{
+    const txt=getContent();
+    if(!txt) return;
+    navigator.clipboard.writeText(txt).then(()=>{
+      const orig=btn.textContent; btn.textContent='✓ Copied'; btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2000);
+    });
+  });
+}
+setupCopyBtn('copy-btn',()=>{const o=document.getElementById('tr-output');return o.classList.contains('placeholder')?'':o.textContent;});
+setupCopyBtn('copy-rt-btn',()=>document.getElementById('rt-output').innerText||'');
+setupCopyBtn('copy-file-btn',()=>document.getElementById('file-output').textContent||'');
+
+document.getElementById('dl-txt-btn').addEventListener('click',()=>{
+  const txt=document.getElementById('tr-output').textContent;
+  downloadText(txt,'translation.txt','text/plain');
+});
+
+/* ── RICH TEXT TOOLBAR ── */
+document.querySelectorAll('.rt-tb-btn[data-cmd]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.getElementById('rt-source').focus();
+    const cmd=btn.dataset.cmd, val=btn.dataset.val||null;
+    document.execCommand(cmd,false,val);
+  });
+});
+document.getElementById('insert-table-btn').addEventListener('click',()=>{
+  document.getElementById('rt-source').focus();
+  const rows=2,cols=3;
+  let html='<table><tr>'+Array(cols).fill('<th>Header</th>').join('')+'</tr>';
+  for(let r=1;r<rows;r++) html+='<tr>'+Array(cols).fill('<td>Cell</td>').join('')+'</tr>';
+  html+='</table><p></p>';
+  document.execCommand('insertHTML',false,html);
+});
+document.getElementById('clear-rt-btn').addEventListener('click',()=>{
+  document.getElementById('rt-source').innerHTML='<p></p>';
+  const o=document.getElementById('rt-output');
+  o.textContent='Formatted translation will appear here…'; o.className='rt-output placeholder';
+});
+const rtSrc=document.getElementById('rt-source');
+const rtCharCount=document.getElementById('rt-char-count');
+rtSrc.addEventListener('input',()=>{ rtCharCount.textContent=(rtSrc.innerText||'').length.toLocaleString()+' chars'; });
+
+document.getElementById('dl-rt-btn').addEventListener('click',()=>{
+  const rtOut=document.getElementById('rt-output');
+  if(rtOut.classList.contains('placeholder')) return;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Translation</title><style>body{font-family:Georgia,serif;max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.7;color:#222}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:0.5rem 0.8rem}</style></head><body>${rtOut.innerHTML}</body></html>`;
+  downloadText(html,'translation.html','text/html');
+});
+
+/* ── FILE UPLOAD ── */
+const fileDrop=document.getElementById('file-drop');
+const fileInput=document.getElementById('file-input');
+let loadedFile=null, loadedContent='', loadedType='';
+fileDrop.addEventListener('click',()=>fileInput.click());
+fileDrop.addEventListener('dragover',e=>{e.preventDefault();fileDrop.classList.add('dragover');});
+fileDrop.addEventListener('dragleave',()=>fileDrop.classList.remove('dragover'));
+fileDrop.addEventListener('drop',e=>{e.preventDefault();fileDrop.classList.remove('dragover');if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);});
+fileInput.addEventListener('change',()=>{if(fileInput.files[0]) handleFile(fileInput.files[0]);});
+document.getElementById('remove-file-btn').addEventListener('click',()=>{
+  loadedFile=null;loadedContent='';loadedType='';fileInput.value='';
+  document.getElementById('file-info').classList.add('hidden');
+  document.getElementById('file-preview-wrap').classList.add('hidden');
+  document.getElementById('file-output-wrap').classList.add('hidden');
+});
+const FILE_ICONS={'txt':'📄','md':'📝','html':'🌐','docx':'📘','srt':'🎬','po':'🌍','csv':'📊','json':'📋'};
+async function handleFile(f){
+  loadedFile=f;
+  const ext=f.name.split('.').pop().toLowerCase();
+  loadedType=ext;
+  document.getElementById('file-icon-el').textContent=FILE_ICONS[ext]||'📄';
+  document.getElementById('file-name-el').textContent=f.name;
+  document.getElementById('file-size-el').textContent=formatBytes(f.size);
+  document.getElementById('file-info').classList.remove('hidden');
+  document.getElementById('file-output-wrap').classList.add('hidden');
+  try {
+    if(ext==='docx'){
+      const arr=await f.arrayBuffer();
+      const res=await mammoth.extractRawText({arrayBuffer:arr});
+      loadedContent=res.value;
+    } else {
+      loadedContent=await f.text();
+    }
+    document.getElementById('file-preview').textContent=loadedContent.slice(0,800)+(loadedContent.length>800?'\n…':'');
+    document.getElementById('file-preview-wrap').classList.remove('hidden');
+  } catch(e){ loadedContent=''; document.getElementById('file-preview').textContent='Could not read file: '+e.message; document.getElementById('file-preview-wrap').classList.remove('hidden'); }
+}
+document.getElementById('dl-file-btn').addEventListener('click',()=>{
+  if(!translatedFileContent) return;
+  const ext=loadedType==='docx'?'txt':loadedType;
+  downloadText(translatedFileContent,'translated_'+loadedFile.name.replace(/\.[^.]+$/,'.'+ext),'text/plain');
+});
+
+/* ── DOWNLOAD HELPER ── */
+function downloadText(content,filename,mime){
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([content],{type:mime}));
+  a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+}
+function formatBytes(b){if(b<1024)return b+'B';if(b<1048576)return (b/1024).toFixed(1)+'KB';return (b/1048576).toFixed(1)+'MB';}
+
+/* ── PROGRESS ── */
+function showProgress(text,pct){
+  document.getElementById('tr-progress').classList.remove('hidden');
+  document.getElementById('progress-text').textContent=text;
+  document.getElementById('progress-bar-fill').style.width=Math.round(pct)+'%';
+}
+function hideProgress(){ document.getElementById('tr-progress').classList.add('hidden'); }
+
+let cancelRequested=false;
+document.getElementById('cancel-btn').addEventListener('click',()=>{ cancelRequested=true; hideProgress(); resetBtn(); });
+
+/* ── TEXT CHUNKER ── */
+function chunkText(text,maxLen=2800){
+  const paras=text.split(/\n{2,}/);
+  const chunks=[]; let cur='';
+  for(const p of paras){
+    const joined=cur?cur+'\n\n'+p:p;
+    if(joined.length<=maxLen){cur=joined;}
+    else{
+      if(cur) chunks.push(cur);
+      if(p.length>maxLen){
+        const sents=p.match(/[^.!?…]+[.!?…]+\s*/g)||[p];
+        cur='';
+        for(const s of sents){
+          if((cur+s).length<=maxLen){cur+=s;}
+          else{if(cur) chunks.push(cur.trim()); if(s.length>maxLen){for(let i=0;i<s.length;i+=maxLen) chunks.push(s.slice(i,i+maxLen));cur='';}else{cur=s;}}
+        }
+      } else {cur=p;}
+    }
+  }
+  if(cur.trim()) chunks.push(cur.trim());
+  return chunks.filter(c=>c.trim());
+}
+
+/* ── API CALL (non-streaming, for chunks) ── */
+/* ── API KEY MANAGEMENT ── */
+function getApiKey(){ return localStorage.getItem('th_apikey')||''; }
+function saveApiKey(){
+  const v=(document.getElementById('apikey-input').value||'').trim();
+  if(!v){ showApiKeyStatus('Enter a key first','err'); return; }
+  localStorage.setItem('th_apikey',v);
+  document.getElementById('apikey-input').value='';
+  showApiKeyStatus('✓ Saved — try translating again','ok');
+}
+function clearApiKey(){
+  localStorage.removeItem('th_apikey');
+  document.getElementById('apikey-input').value='';
+  showApiKeyStatus('Key cleared','err');
+}
+function showApiKeyStatus(msg,cls){
+  const el=document.getElementById('apikey-status');
+  if(!el) return;
+  el.textContent=msg; el.className=cls;
+  setTimeout(()=>{ el.textContent=''; el.className=''; },4000);
+}
+function buildHeaders(){
+  const h={'Content-Type':'application/json','anthropic-version':'2023-06-01'};
+  const key=getApiKey();
+  if(key){ h['x-api-key']=key; h['anthropic-dangerous-direct-browser-access']='true'; }
+  return h;
+}
+function checkAndShowBanner(err){
+  // Show API key banner on network/CORS/401 errors
+  const msg=(err&&err.message)||'';
+  if(msg.toLowerCase().includes('fetch')||msg.includes('401')||msg.includes('403')){
+    const b=document.getElementById('apikey-banner');
+    if(b) b.classList.remove('hidden');
+  }
+}
+
+async function callAPI(userMsg,systemPrompt){
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:buildHeaders(),
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4096,system:systemPrompt,messages:[{role:'user',content:userMsg}]})
+  });
+  if(!r.ok){
+    let detail='';
+    try{ const e=await r.json(); detail=e.error&&e.error.message?': '+e.error.message:''; }catch(x){}
+    throw new Error('API '+r.status+detail);
+  }
+  const d=await r.json();
+  return d.content[0].text;
+}
+
+/* ── API CALL STREAMING (single short text) ── */
+async function callAPIStream(userMsg,systemPrompt,onChunk){
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:buildHeaders(),
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4096,stream:true,system:systemPrompt,messages:[{role:'user',content:userMsg}]})
+  });
+  if(!r.ok){ const e=new Error('API '+r.status); checkAndShowBanner(e); throw e; }
+  const reader=r.body.getReader(),dec=new TextDecoder();
+  let buf='';
+  while(true){
+    const{done,value}=await reader.read(); if(done) break;
+    buf+=dec.decode(value,{stream:true});
+    const lines=buf.split('\n'); buf=lines.pop();
+    for(const line of lines){
+      if(!line.startsWith('data: ')) continue;
+      const d=line.slice(6).trim(); if(d==='[DONE]') continue;
+      try{const ev=JSON.parse(d);if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta') onChunk(ev.delta.text);}catch{}
+    }
+  }
+}
+
+function buildSystemPrompt(tgtLang,isAuto,extra=''){
+  return `You are an expert multilingual translator.\nTranslate the provided text into ${tgtLang}.\nRULES:\n- Output ONLY the translated text. No preamble, notes, quotes around the result.\n- Preserve ALL whitespace, blank lines between paragraphs, punctuation style, tone, and register.\n- Translate idioms into natural target-language equivalents.\n- Preserve any HTML tags exactly as-is; translate only the text content within them.\n${isAuto?'- Begin output with exactly one line: [Detected: LANGUAGE_NAME], then a blank line, then the translation.\n':''}${extra}`;
+}
+
+/* ── DETECT BADGE HELPER ── */
+function extractDetected(text){
+  if(!text.startsWith('[Detected:')) return{detected:'',rest:text};
+  const end=text.indexOf(']');
+  if(end===-1) return{detected:'',rest:text};
+  return{detected:text.slice(10,end).trim(),rest:text.slice(end+1).replace(/^\n/,'')};
+}
+
+/* ── BUTTON STATE ── */
+const translateBtn=document.getElementById('translate-btn');
+function setBusy(label='Translating…'){
+  translateBtn.disabled=true; translateBtn.classList.add('loading');
+  translateBtn.innerHTML=`<span class="btn-icon">↻</span> ${label}`;
+  cancelRequested=false;
+}
+function resetBtn(){ translateBtn.disabled=false; translateBtn.classList.remove('loading'); translateBtn.innerHTML='<span class="btn-icon">✦</span> Translate'; }
+
+/* ── TRANSLATE DISPATCHER ── */
+translateBtn.addEventListener('click',doTranslate);
+srcTA.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter') doTranslate();});
+
+async function doTranslate(){
+  const srcName=srcSel.options[srcSel.selectedIndex].text;
+  const tgtName=tgtSel.options[tgtSel.selectedIndex].text;
+  const srcCode=srcSel.value;
+  const isAuto=srcCode==='auto';
+  setBusy();
+  try{
+    if(currentMode==='text') await translateText(srcName,tgtName,isAuto);
+    else if(currentMode==='rich') await translateRich(srcName,tgtName,isAuto);
+    else if(currentMode==='file') await translateFile(srcName,tgtName,isAuto);
+  } catch(e){
+    if(!cancelRequested){
+      const errEl=currentMode==='text'?document.getElementById('tr-output'):currentMode==='rich'?document.getElementById('rt-output'):document.getElementById('file-output');
+      if(errEl){errEl.textContent='⚠ Error: '+e.message;errEl.className=(errEl.className||'').replace('placeholder','');}
+    }
+  } finally{ resetBtn(); hideProgress(); }
+}
+
+/* ── TEXT MODE TRANSLATION ── */
+async function translateText(srcName,tgtName,isAuto){
+  const text=srcTA.value.trim();
+  if(!text) return;
+  const outEl=document.getElementById('tr-output');
+  const badge=document.getElementById('detect-badge');
+  const panel=document.getElementById('tgt-panel');
+  outEl.textContent=''; outEl.className='tr-output'; badge.textContent=''; panel.classList.add('active');
+  const sys=buildSystemPrompt(tgtName,isAuto);
+  const userMsg=isAuto?`Auto-detect source language and translate to ${tgtName}:\n\n${text}`:`Translate from ${srcName} to ${tgtName}:\n\n${text}`;
+
+  if(text.length<3500){
+    // Stream short text
+    let full=''; let detDone=false;
+    await callAPIStream(userMsg,sys,tok=>{
+      full+=tok;
+      if(isAuto&&!detDone){
+        if(full.includes(']')){const{detected,rest}=extractDetected(full);badge.textContent=detected?'🔍 Detected: '+detected:'';outEl.textContent=rest;detDone=true;}
+      } else { outEl.textContent=isAuto?extractDetected(full).rest:full; }
+    });
+  } else {
+    // Chunk large text
+    const chunks=chunkText(text);
+    const results=[];
+    for(let i=0;i<chunks.length;i++){
+      if(cancelRequested) break;
+      showProgress(`Translating chunk ${i+1} of ${chunks.length}…`,((i)/chunks.length)*100);
+      const ctx=results.slice(-1)[0]?.slice(-400)||'';
+      const cSys=sys+(ctx?`\n\nFor continuity, the previous translated passage ended with:\n"${ctx}"`:'')+'\n- Do NOT output [Detected:] lines for subsequent chunks.';
+      const cMsg=`Translate from ${isAuto?'the detected language':srcName} to ${tgtName}:\n\n${chunks[i]}`;
+      let res=await callAPI(cMsg,cSys);
+      if(i===0&&isAuto){const{detected,rest}=extractDetected(res);if(detected) badge.textContent='🔍 Detected: '+detected; res=rest;}
+      results.push(res);
+      outEl.textContent=results.join('\n\n');
+    }
+  }
+  document.getElementById('dl-txt-btn').style.display=outEl.textContent.trim()?'':'none';
+}
+
+/* ── RICH TEXT MODE TRANSLATION ── */
+async function translateRich(srcName,tgtName,isAuto){
+  const rtSrc=document.getElementById('rt-source');
+  const rtOut=document.getElementById('rt-output');
+  const html=rtSrc.innerHTML.trim();
+  if(!html||html==='<br>') return;
+  rtOut.className='rt-output'; rtOut.innerHTML='';
+
+  // Collect all block-level elements with text
+  const clone=document.createElement('div');
+  clone.innerHTML=html;
+  const blocks=[...clone.querySelectorAll('p,h1,h2,h3,h4,li,td,th,div:not(:has(*))')]
+    .filter(el=>el.innerText?.trim());
+  if(!blocks.length){
+    // Fallback: translate whole HTML
+    const sys=buildSystemPrompt(tgtName,isAuto,'- The input contains HTML. Keep ALL tags exactly as-is. Translate only the visible text content.');
+    const res=await callAPI(`Translate this HTML content from ${isAuto?'auto-detected language':srcName} to ${tgtName}:\n\n${html}`,sys);
+    rtOut.innerHTML=extractDetected(res).rest;
+    return;
+  }
+  const sys=buildSystemPrompt(tgtName,false,'- Translate ONLY the provided text. Keep inline tags (<b>,<i>,<u>,<em>,<strong>,<a> etc.) exactly as they appear.');
+  let detectedShown=false;
+  for(let i=0;i<blocks.length;i++){
+    if(cancelRequested) break;
+    showProgress(`Translating block ${i+1} of ${blocks.length}…`,((i)/blocks.length)*100);
+    const el=blocks[i];
+    const innerHtml=el.innerHTML;
+    const msg=`Translate the following HTML fragment to ${tgtName}. Keep all HTML tags exactly as-is, translate only text:\n\n${innerHtml}`;
+    let res=await callAPI(msg,sys);
+    if(i===0&&isAuto){const{detected,rest}=extractDetected(res);if(detected&&!detectedShown){detectedShown=true;/* could show badge */}res=rest;}
+    el.innerHTML=res;
+  }
+  rtOut.innerHTML=clone.innerHTML;
+}
+
+/* ── FILE TRANSLATION ── */
+let translatedFileContent='';
+async function translateFile(srcName,tgtName,isAuto){
+  if(!loadedContent){ alert('Please load a file first.'); resetBtn(); return; }
+  const outEl=document.getElementById('file-output');
+  const outWrap=document.getElementById('file-output-wrap');
+  outEl.textContent=''; outWrap.classList.remove('hidden');
+  const ext=loadedType;
+  let result='';
+
+  if(['txt','md'].includes(ext)){
+    result=await translateLargeText(loadedContent,srcName,tgtName,isAuto);
+  } else if(ext==='html'){
+    result=await translateHTMLFile(loadedContent,srcName,tgtName,isAuto);
+  } else if(ext==='docx'){
+    // mammoth already gave us plain text
+    result=await translateLargeText(loadedContent,srcName,tgtName,isAuto);
+  } else if(ext==='srt'){
+    result=await translateSRT(loadedContent,srcName,tgtName,isAuto);
+  } else if(ext==='po'){
+    result=await translatePO(loadedContent,srcName,tgtName,isAuto);
+  } else if(ext==='csv'){
+    result=await translateCSV(loadedContent,srcName,tgtName,isAuto);
+  } else if(ext==='json'){
+    result=await translateJSON(loadedContent,srcName,tgtName,isAuto);
+  }
+  translatedFileContent=result;
+  outEl.textContent=result;
+}
+
+async function translateLargeText(text,srcName,tgtName,isAuto){
+  const chunks=chunkText(text);
+  const results=[]; let firstDone=false;
+  const sys=buildSystemPrompt(tgtName,isAuto&&!firstDone);
+  for(let i=0;i<chunks.length;i++){
+    if(cancelRequested) break;
+    showProgress(`Translating ${i+1} / ${chunks.length} chunks (${Math.round((i+1)/chunks.length*100)}%)…`,((i+1)/chunks.length)*100);
+    const ctx=results.slice(-1)[0]?.slice(-400)||'';
+    const cSys=buildSystemPrompt(tgtName,isAuto&&!firstDone)+(ctx?`\n\nPrevious passage ended: "${ctx}"`:'');
+    let res=await callAPI(`Translate from ${isAuto&&!firstDone?'auto-detected language':srcName} to ${tgtName}:\n\n${chunks[i]}`,cSys);
+    if(!firstDone&&isAuto){const{rest}=extractDetected(res);res=rest;firstDone=true;}
+    results.push(res);
+    document.getElementById('file-output').textContent=results.join('\n\n');
+  }
+  return results.join('\n\n');
+}
+
+async function translateHTMLFile(html,srcName,tgtName,isAuto){
+  const parser=new DOMParser();
+  const doc=parser.parseFromString(html,'text/html');
+  const blocks=[...doc.querySelectorAll('p,h1,h2,h3,h4,h5,h6,li,td,th,span,div')]
+    .filter(el=>el.childNodes.length&&[...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()));
+  const sys=buildSystemPrompt(tgtName,false,'- Translate ONLY the text, keep HTML tags exactly as they are.');
+  for(let i=0;i<blocks.length;i++){
+    if(cancelRequested) break;
+    showProgress(`Translating HTML block ${i+1}/${blocks.length}…`,((i+1)/blocks.length)*100);
+    const el=blocks[i];
+    const inner=el.innerHTML;
+    if(!inner.trim()) continue;
+    const res=await callAPI(`Translate to ${tgtName}, keep tags:\n${inner}`,sys);
+    el.innerHTML=res;
+  }
+  return doc.documentElement.outerHTML;
+}
+
+async function translateSRT(srt,srcName,tgtName,isAuto){
+  // Parse SRT blocks: index \n timestamp \n text \n\n
+  const blocks=srt.trim().split(/\n\n+/);
+  const dialogues=[], indices=[];
+  blocks.forEach((b,i)=>{
+    const lines=b.split('\n');
+    if(lines.length>=3){
+      const textLines=lines.slice(2).join('\n');
+      dialogues.push(textLines);
+      indices.push(i);
+    }
+  });
+  const BATCH=20;
+  const sys=buildSystemPrompt(tgtName,isAuto,'- Translate each subtitle line. Input is a numbered list; output the SAME numbered list with translations only.\n- Keep numbering exactly as given.');
+  let allTranslations=[];
+  for(let s=0;s<dialogues.length;s+=BATCH){
+    if(cancelRequested) break;
+    const batch=dialogues.slice(s,s+BATCH);
+    const numbered=batch.map((t,i)=>`${s+i+1}. ${t}`).join('\n');
+    showProgress(`Translating subtitles ${s+1}–${Math.min(s+BATCH,dialogues.length)} of ${dialogues.length}…`,((s+BATCH)/dialogues.length)*100);
+    const res=await callAPI(`Translate these subtitles to ${tgtName}:\n${numbered}`,sys);
+    const lines=res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,''));
+    allTranslations.push(...lines);
+  }
+  let ti=0;
+  const out=blocks.map((b,i)=>{
+    if(!indices.includes(i)) return b;
+    const lines=b.split('\n');
+    const translated=allTranslations[ti++]||lines.slice(2).join('\n');
+    return lines.slice(0,2).join('\n')+'\n'+translated;
+  });
+  return out.join('\n\n');
+}
+
+async function translatePO(po,srcName,tgtName,isAuto){
+  // Extract msgid/msgstr pairs
+  const pairs=[]; let cur={id:'',str:'',raw:''};
+  const lines=po.split('\n');
+  const out=[]; let inMsg=false;
+  for(const line of lines){
+    if(line.startsWith('msgid ')){cur.id=line.slice(7,-1);inMsg=true;}
+    else if(line.startsWith('msgstr ')){inMsg=false;}
+    else if(line.startsWith('"')&&inMsg){cur.id+='\n'+line.slice(1,-1);}
+    if(line.startsWith('msgid ')) pairs.push(cur={id:line.slice(7,-1)||'',str:'',srcLine:lines.indexOf(line)});
+  }
+  const toTranslate=pairs.filter(p=>p.id&&p.id!=='');
+  const BATCH=15;
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each item. Input: numbered list of source strings. Output: same numbered list, translated only.');
+  let translated=[];
+  for(let s=0;s<toTranslate.length;s+=BATCH){
+    if(cancelRequested) break;
+    const batch=toTranslate.slice(s,s+BATCH);
+    const numbered=batch.map((p,i)=>`${s+i+1}. ${p.id}`).join('\n');
+    showProgress(`Translating .po strings ${s+1}–${Math.min(s+BATCH,toTranslate.length)}…`,((s+BATCH)/toTranslate.length)*100);
+    const res=await callAPI(`Translate these strings to ${tgtName}:\n${numbered}`,sys);
+    translated.push(...res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,'')));
+  }
+  let ti=0;
+  return po.replace(/^msgstr ""$/gm,()=>`msgstr "${translated[ti++]||''}"`);
+}
+
+async function translateCSV(csv,srcName,tgtName,isAuto){
+  const rows=csv.split('\n').map(r=>r.split(','));
+  if(!rows.length) return csv;
+  const header=rows[0]; const dataRows=rows.slice(1);
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each cell value. Input: pipe-separated list of cell values. Output: same count of translated values, pipe-separated. Preserve empty cells as empty.');
+  const BATCH=30;
+  let result=[header.join(',')];
+  const flat=dataRows.flat();
+  for(let s=0;s<flat.length;s+=BATCH){
+    if(cancelRequested) break;
+    const batch=flat.slice(s,s+BATCH);
+    showProgress(`Translating CSV cells ${s+1}–${Math.min(s+BATCH,flat.length)}…`,((s+BATCH)/flat.length)*100);
+    const numbered=batch.map((c,i)=>`${s+i+1}. ${c}`).join('\n');
+    const res=await callAPI(`Translate these cell values to ${tgtName}:\n${numbered}`,sys);
+    const vals=res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,''));
+    flat.splice(s,batch.length,...vals.concat(Array(batch.length-vals.length).fill('')));
+  }
+  let ci=0;
+  dataRows.forEach(row=>result.push(row.map(()=>flat[ci++]||'').join(',')));
+  return result.join('\n');
+}
+
+async function translateJSON(json,srcName,tgtName,isAuto){
+  let parsed; try{parsed=JSON.parse(json);}catch{return json;}
+  const strings=[];
+  function collect(obj){
+    if(typeof obj==='string'){strings.push(obj);return '__PLACEHOLDER_'+(strings.length-1)+'__';}
+    if(Array.isArray(obj)) return obj.map(collect);
+    if(obj&&typeof obj==='object') return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,collect(v)]));
+    return obj;
+  }
+  const template=collect(parsed);
+  const BATCH=20;
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each string. Input: numbered list. Output: same numbered list, translated.');
+  let translated=[];
+  for(let s=0;s<strings.length;s+=BATCH){
+    if(cancelRequested) break;
+    const batch=strings.slice(s,s+BATCH);
+    showProgress(`Translating JSON strings ${s+1}–${Math.min(s+BATCH,strings.length)}…`,((s+BATCH)/strings.length)*100);
+    const numbered=batch.map((t,i)=>`${s+i+1}. ${t}`).join('\n');
+    const res=await callAPI(`Translate to ${tgtName}:\n${numbered}`,sys);
+    translated.push(...res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,'')));
+  }
+  function restore(obj){
+    if(typeof obj==='string'){const m=obj.match(/^__PLACEHOLDER_(\d+)__$/);return m?translated[+m[1]]||strings[+m[1]]:obj;}
+    if(Array.isArray(obj)) return obj.map(restore);
+    if(obj&&typeof obj==='object') return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,restore(v)]));
+    return obj;
+  }
+  return JSON.stringify(restore(template),null,2);
+}
+
+/* ── LEGAL MODAL ── */
+function openLegal(panelId){
+  const overlay=document.getElementById('legal-overlay');
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  if(panelId) switchLegalTab(panelId);
+  if(uiLang.code!=='en') translateLegalIfNeeded();
+}
+function closeLegal(){
+  document.getElementById('legal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function switchLegalTab(panelId){
+  document.querySelectorAll('.legal-tab').forEach(t=>t.classList.toggle('active',t.dataset.panel===panelId));
+  document.querySelectorAll('.legal-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+panelId));
+}
+function rebindLegalTabs(){
+  document.querySelectorAll('.legal-tab').forEach(btn=>{
+    btn.onclick=()=>switchLegalTab(btn.dataset.panel);
+  });
+}
+document.querySelectorAll('.legal-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>switchLegalTab(btn.dataset.panel));
+});
+document.getElementById('legal-overlay').addEventListener('click',e=>{
+  if(e.target===e.currentTarget) closeLegal();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeLegal(); closeUILang(); }
+});
+
+/* ── UI i18n ENGINE ── */
+const UI_TRANSLATIONS = {
+  "en": {"hero_eyebrow": "Free Translation Tools", "hero_h1": "Speak every<br><em>language.</em>", "hero_sub": "The definitive curated directory of the world's best free machine translators and language tools — from casual use to professional CAT workflows.", "stat1": "Curated tools", "stat2": "Skill levels", "stat3": "Free to use", "stat4": "Languages covered", "nav1": "Beginners", "nav2": "Average", "nav3": "Professionals", "nav4": "Translate", "search_nav": "Search…", "ui_lang_ph": "Search language…", "tr_eyebrow": "AI-Powered Translation", "mode_text": "✎ Plain Text", "mode_rich": "❡ Rich Text", "mode_file": "⇪ File Upload", "src_label": "Source text", "src_ph": "Type or paste text here — no character limit. Very large texts are translated in automatic chunks…", "btn_clear": "✕ Clear", "tgt_label": "Translation", "tr_out_ph": "Translation will appear here…", "btn_copy": "⧉ Copy", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Formatted translation will appear here, preserving all structure…", "btn_copy_rt": "⧉ Copy text", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Table", "rt_tb_clear": "✕ Clear", "file_title": "Drop your file here", "file_sub": "or click to browse — supports these formats:", "file_out_label": "Translated output", "btn_dl_file": "↓ Download translated file", "btn_copy_file": "⧉ Copy text", "powered": "Powered by <span>Claude AI</span> — unlimited text · rich formatting · 8 file formats · 500+ languages", "sec_b_label": "For Beginners", "sec_b_h2": "Simple &amp; <em style=\"font-style:italic;color:var(--teal)\">instant</em>", "sec_b_desc": "No sign-up required. Just paste your text and get a translation in seconds.", "sec_a_label": "For Average Users", "sec_a_h2": "Smarter &amp; <em style=\"font-style:italic;color:var(--gold2)\">contextual</em>", "sec_a_desc": "Higher quality output with dictionary context, bilingual examples, and community forums.", "sec_p_label": "For Professionals", "sec_p_h2": "CAT tools &amp; <em style=\"font-style:italic;color:var(--violet)\">workflows</em>", "sec_p_desc": "Full translation memories, terminology management, and collaborative CAT environments.", "div1": "Elevate your translation workflow", "div2": "Built for translators, linguists & developers", "no_results": "No tools match your search. Try different keywords.", "footer_desc": "The most complete directory of free translation tools — from everyday use to professional CAT workflows. No advertising. No affiliate links.", "footer_copy": "© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union", "footer_gdpr": "🔒 Privacy & GDPR", "footer_cookies": "🍪 Cookie Policy", "footer_impressum": "📋 Impressum", "footer_access": "♿ Accessibility", "footer_tech": "⚙ Technologies & Transparency", "footer_terms": "⚖ Terms & Disclaimer", "legal_title": "⚖ Legal & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impressum", "ltab_access": "♿ Accessibility", "ltab_tech": "⚙ Technologies", "ltab_terms": "⚖ Terms"},
+  "ro": {"hero_eyebrow": "Instrumente gratuite de traducere", "hero_h1": "Vorbește orice<br><em>limbă.</em>", "hero_sub": "Directorul definitiv al celor mai bune instrumente gratuite de traducere — de la uz casual la fluxuri profesionale CAT.", "stat1": "Instrumente selectate", "stat2": "Niveluri de abilitate", "stat3": "Gratuit", "stat4": "Limbi acoperite", "nav1": "Începători", "nav2": "Utilizatori", "nav3": "Profesioniști", "nav4": "Traduce", "search_nav": "Caută…", "ui_lang_ph": "Caută limbă…", "tr_eyebrow": "Traducere cu AI", "mode_text": "✎ Text simplu", "mode_rich": "❡ Text formatat", "mode_file": "⇪ Încarcă fișier", "src_label": "Text sursă", "src_ph": "Scrie sau lipește textul aici — fără limită de caractere…", "btn_clear": "✕ Șterge", "tgt_label": "Traducere", "tr_out_ph": "Traducerea va apărea aici…", "btn_copy": "⧉ Copiază", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Traducerea formatată va apărea aici…", "btn_copy_rt": "⧉ Copiază text", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabel", "rt_tb_clear": "✕ Șterge", "file_title": "Trage fișierul aici", "file_sub": "sau click pentru a selecta — formate suportate:", "file_out_label": "Traducere finală", "btn_dl_file": "↓ Descarcă fișierul tradus", "btn_copy_file": "⧉ Copiază text", "powered": "Alimentat de <span>Claude AI</span> — text nelimitat · formatare avansată · 8 formate · 500+ limbi", "sec_b_label": "Pentru începători", "sec_b_h2": "Simplu &amp; <em style=\"font-style:italic;color:var(--teal)\">instant</em>", "sec_b_desc": "Fără înregistrare. Lipești textul și obții traducerea în câteva secunde.", "sec_a_label": "Pentru utilizatori", "sec_a_h2": "Mai inteligent &amp; <em style=\"font-style:italic;color:var(--gold2)\">contextual</em>", "sec_a_desc": "Calitate superioară cu context de dicționar, exemple bilingve și forumuri de comunitate.", "sec_p_label": "Pentru profesioniști", "sec_p_h2": "Instrumente CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">fluxuri</em>", "sec_p_desc": "Memorii de traducere complete, gestionare terminologie și medii CAT colaborative.", "div1": "Îmbunătățește-ți fluxul de traducere", "div2": "Construit pentru traducători, lingviști & dezvoltatori", "no_results": "Niciun instrument nu corespunde căutării. Încearcă alte cuvinte cheie.", "footer_desc": "Cel mai complet director de instrumente gratuite de traducere. Fără publicitate. Fără linkuri afiliate.", "footer_copy": "© 2026 TranslateHub · Construit cu grijă pentru comunitatea lingvistică · Jurisdicție: România / UE", "footer_gdpr": "🔒 Confidențialitate & GDPR", "footer_cookies": "🍪 Politica cookies", "footer_impressum": "📋 Impressum", "footer_access": "♿ Accesibilitate", "footer_tech": "⚙ Tehnologii & Transparență", "footer_terms": "⚖ Termeni & Disclaimer", "legal_title": "⚖ Legal & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impressum", "ltab_access": "♿ Accesibilitate", "ltab_tech": "⚙ Tehnologii", "ltab_terms": "⚖ Termeni"},
+  "fr": {"hero_eyebrow": "Outils de traduction gratuits", "hero_h1": "Parlez toutes les<br><em>langues.</em>", "hero_sub": "Le répertoire complet des meilleurs outils de traduction gratuits — de l'usage courant aux flux de travail CAT professionnels.", "stat1": "Outils sélectionnés", "stat2": "Niveaux de compétence", "stat3": "Gratuit", "stat4": "Langues couvertes", "nav1": "Débutants", "nav2": "Utilisateurs", "nav3": "Professionnels", "nav4": "Traduire", "search_nav": "Rechercher…", "ui_lang_ph": "Rechercher une langue…", "tr_eyebrow": "Traduction par IA", "mode_text": "✎ Texte simple", "mode_rich": "❡ Texte enrichi", "mode_file": "⇪ Télécharger un fichier", "src_label": "Texte source", "src_ph": "Saisissez ou collez votre texte ici — sans limite de caractères…", "btn_clear": "✕ Effacer", "tgt_label": "Traduction", "tr_out_ph": "La traduction apparaîtra ici…", "btn_copy": "⧉ Copier", "btn_dl_txt": "↓ .txt", "rt_out_ph": "La traduction formatée apparaîtra ici…", "btn_copy_rt": "⧉ Copier le texte", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tableau", "rt_tb_clear": "✕ Effacer", "file_title": "Déposez votre fichier ici", "file_sub": "ou cliquez pour parcourir — formats supportés :", "file_out_label": "Traduction finale", "btn_dl_file": "↓ Télécharger le fichier traduit", "btn_copy_file": "⧉ Copier le texte", "powered": "Propulsé par <span>Claude AI</span> — texte illimité · mise en forme avancée · 8 formats · 500+ langues", "sec_b_label": "Pour les débutants", "sec_b_h2": "Simple &amp; <em style=\"font-style:italic;color:var(--teal)\">instantané</em>", "sec_b_desc": "Sans inscription. Collez votre texte et obtenez une traduction en quelques secondes.", "sec_a_label": "Pour les utilisateurs", "sec_a_h2": "Plus intelligent &amp; <em style=\"font-style:italic;color:var(--gold2)\">contextuel</em>", "sec_a_desc": "Meilleure qualité avec contexte de dictionnaire, exemples bilingues et forums communautaires.", "sec_p_label": "Pour les professionnels", "sec_p_h2": "Outils CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">flux de travail</em>", "sec_p_desc": "Mémoires de traduction complètes, gestion de la terminologie et environnements CAT collaboratifs.", "div1": "Améliorez votre flux de traduction", "div2": "Conçu pour les traducteurs, linguistes & développeurs", "no_results": "Aucun outil ne correspond à votre recherche. Essayez d'autres mots-clés.", "footer_desc": "Le répertoire le plus complet d'outils de traduction gratuits. Aucune publicité. Aucun lien affilié.", "footer_copy": "© 2026 TranslateHub · Construit avec soin pour la communauté linguistique · Juridiction : Roumanie / UE", "footer_gdpr": "🔒 Confidentialité & RGPD", "footer_cookies": "🍪 Politique des cookies", "footer_impressum": "📋 Mentions légales", "footer_access": "♿ Accessibilité", "footer_tech": "⚙ Technologies & Transparence", "footer_terms": "⚖ Conditions & Avertissement", "legal_title": "⚖ Légal & RGPD", "ltab_gdpr": "🔒 RGPD", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Mentions légales", "ltab_access": "♿ Accessibilité", "ltab_tech": "⚙ Technologies", "ltab_terms": "⚖ Conditions"},
+  "es": {"hero_eyebrow": "Herramientas de traducción gratuitas", "hero_h1": "Habla todos los<br><em>idiomas.</em>", "hero_sub": "El directorio definitivo de las mejores herramientas de traducción gratuitas — desde uso casual hasta flujos de trabajo CAT profesionales.", "stat1": "Herramientas seleccionadas", "stat2": "Niveles de habilidad", "stat3": "Gratis", "stat4": "Idiomas cubiertos", "nav1": "Principiantes", "nav2": "Usuarios", "nav3": "Profesionales", "nav4": "Traducir", "search_nav": "Buscar…", "ui_lang_ph": "Buscar idioma…", "tr_eyebrow": "Traducción con IA", "mode_text": "✎ Texto plano", "mode_rich": "❡ Texto enriquecido", "mode_file": "⇪ Subir archivo", "src_label": "Texto fuente", "src_ph": "Escribe o pega el texto aquí — sin límite de caracteres…", "btn_clear": "✕ Borrar", "tgt_label": "Traducción", "tr_out_ph": "La traducción aparecerá aquí…", "btn_copy": "⧉ Copiar", "btn_dl_txt": "↓ .txt", "rt_out_ph": "La traducción formateada aparecerá aquí…", "btn_copy_rt": "⧉ Copiar texto", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabla", "rt_tb_clear": "✕ Borrar", "file_title": "Suelta tu archivo aquí", "file_sub": "o haz clic para explorar — formatos admitidos:", "file_out_label": "Traducción final", "btn_dl_file": "↓ Descargar archivo traducido", "btn_copy_file": "⧉ Copiar texto", "powered": "Desarrollado por <span>Claude AI</span> — texto ilimitado · formato avanzado · 8 formatos · 500+ idiomas", "sec_b_label": "Para principiantes", "sec_b_h2": "Simple &amp; <em style=\"font-style:italic;color:var(--teal)\">instantáneo</em>", "sec_b_desc": "Sin registro. Pega tu texto y obtén una traducción en segundos.", "sec_a_label": "Para usuarios", "sec_a_h2": "Más inteligente &amp; <em style=\"font-style:italic;color:var(--gold2)\">contextual</em>", "sec_a_desc": "Mayor calidad con contexto de diccionario, ejemplos bilingües y foros de la comunidad.", "sec_p_label": "Para profesionales", "sec_p_h2": "Herramientas CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">flujos de trabajo</em>", "sec_p_desc": "Memorias de traducción completas, gestión de terminología y entornos CAT colaborativos.", "div1": "Mejora tu flujo de traducción", "div2": "Diseñado para traductores, lingüistas y desarrolladores", "no_results": "Ninguna herramienta coincide con tu búsqueda. Prueba otras palabras clave.", "footer_desc": "El directorio más completo de herramientas de traducción gratuitas. Sin publicidad. Sin enlaces de afiliados.", "footer_copy": "© 2026 TranslateHub · Construido con cuidado para la comunidad lingüística · Jurisdicción: Rumanía / UE", "footer_gdpr": "🔒 Privacidad & RGPD", "footer_cookies": "🍪 Política de cookies", "footer_impressum": "📋 Aviso legal", "footer_access": "♿ Accesibilidad", "footer_tech": "⚙ Tecnologías & Transparencia", "footer_terms": "⚖ Términos & Aviso", "legal_title": "⚖ Legal & RGPD", "ltab_gdpr": "🔒 RGPD", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Aviso legal", "ltab_access": "♿ Accesibilidad", "ltab_tech": "⚙ Tecnologías", "ltab_terms": "⚖ Términos"},
+  "de": {"hero_eyebrow": "Kostenlose Übersetzungswerkzeuge", "hero_h1": "Jede<br><em>Sprache sprechen.</em>", "hero_sub": "Das umfassendste Verzeichnis der besten kostenlosen Übersetzungswerkzeuge — vom Alltagsgebrauch bis zu professionellen CAT-Workflows.", "stat1": "Kuratierte Werkzeuge", "stat2": "Qualifikationsstufen", "stat3": "Kostenlos", "stat4": "Abgedeckte Sprachen", "nav1": "Anfänger", "nav2": "Benutzer", "nav3": "Profis", "nav4": "Übersetzen", "search_nav": "Suchen…", "ui_lang_ph": "Sprache suchen…", "tr_eyebrow": "KI-gestützte Übersetzung", "mode_text": "✎ Klartext", "mode_rich": "❡ Rich Text", "mode_file": "⇪ Datei hochladen", "src_label": "Quelltext", "src_ph": "Text hier eingeben oder einfügen — keine Zeichenbegrenzung…", "btn_clear": "✕ Löschen", "tgt_label": "Übersetzung", "tr_out_ph": "Übersetzung erscheint hier…", "btn_copy": "⧉ Kopieren", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Formatierte Übersetzung erscheint hier…", "btn_copy_rt": "⧉ Text kopieren", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabelle", "rt_tb_clear": "✕ Löschen", "file_title": "Datei hier ablegen", "file_sub": "oder klicken zum Durchsuchen — unterstützte Formate:", "file_out_label": "Übersetzte Ausgabe", "btn_dl_file": "↓ Übersetzte Datei herunterladen", "btn_copy_file": "⧉ Text kopieren", "powered": "Powered by <span>Claude AI</span> — unbegrenzter Text · umfangreiche Formatierung · 8 Formate · 500+ Sprachen", "sec_b_label": "Für Anfänger", "sec_b_h2": "Einfach &amp; <em style=\"font-style:italic;color:var(--teal)\">sofort</em>", "sec_b_desc": "Keine Anmeldung erforderlich. Text einfügen und sofort eine Übersetzung erhalten.", "sec_a_label": "Für Benutzer", "sec_a_h2": "Intelligenter &amp; <em style=\"font-style:italic;color:var(--gold2)\">kontextuell</em>", "sec_a_desc": "Höhere Qualität mit Wörterbuchkontext, zweisprachigen Beispielen und Community-Foren.", "sec_p_label": "Für Profis", "sec_p_h2": "CAT-Werkzeuge &amp; <em style=\"font-style:italic;color:var(--violet)\">Workflows</em>", "sec_p_desc": "Vollständige Übersetzungsspeicher, Terminologieverwaltung und kollaborative CAT-Umgebungen.", "div1": "Verbessern Sie Ihren Übersetzungs-Workflow", "div2": "Für Übersetzer, Linguisten & Entwickler", "no_results": "Keine Werkzeuge entsprechen Ihrer Suche. Versuchen Sie andere Schlüsselwörter.", "footer_desc": "Das umfassendste Verzeichnis kostenloser Übersetzungswerkzeuge. Keine Werbung. Keine Affiliate-Links.", "footer_copy": "© 2026 TranslateHub · Mit Sorgfalt für die Sprachgemeinschaft erstellt · Gerichtsstand: Rumänien / EU", "footer_gdpr": "🔒 Datenschutz & DSGVO", "footer_cookies": "🍪 Cookie-Richtlinie", "footer_impressum": "📋 Impressum", "footer_access": "♿ Barrierefreiheit", "footer_tech": "⚙ Technologien & Transparenz", "footer_terms": "⚖ AGB & Haftungsausschluss", "legal_title": "⚖ Rechtliches & DSGVO", "ltab_gdpr": "🔒 DSGVO", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impressum", "ltab_access": "♿ Barrierefreiheit", "ltab_tech": "⚙ Technologien", "ltab_terms": "⚖ AGB"},
+  "it": {"hero_eyebrow": "Strumenti di traduzione gratuiti", "hero_h1": "Parla ogni<br><em>lingua.</em>", "hero_sub": "L'elenco definitivo dei migliori strumenti di traduzione gratuiti — dall'uso quotidiano ai flussi di lavoro CAT professionali.", "stat1": "Strumenti selezionati", "stat2": "Livelli di competenza", "stat3": "Gratuito", "stat4": "Lingue coperte", "nav1": "Principianti", "nav2": "Utenti", "nav3": "Professionisti", "nav4": "Traduci", "search_nav": "Cerca…", "ui_lang_ph": "Cerca lingua…", "tr_eyebrow": "Traduzione con IA", "mode_text": "✎ Testo normale", "mode_rich": "❡ Testo formattato", "mode_file": "⇪ Carica file", "src_label": "Testo sorgente", "src_ph": "Scrivi o incolla il testo qui — nessun limite di caratteri…", "btn_clear": "✕ Cancella", "tgt_label": "Traduzione", "tr_out_ph": "La traduzione apparirà qui…", "btn_copy": "⧉ Copia", "btn_dl_txt": "↓ .txt", "rt_out_ph": "La traduzione formattata apparirà qui…", "btn_copy_rt": "⧉ Copia testo", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabella", "rt_tb_clear": "✕ Cancella", "file_title": "Trascina il file qui", "file_sub": "o clicca per sfogliare — formati supportati:", "file_out_label": "Output tradotto", "btn_dl_file": "↓ Scarica file tradotto", "btn_copy_file": "⧉ Copia testo", "powered": "Powered by <span>Claude AI</span> — testo illimitato · formattazione avanzata · 8 formati · 500+ lingue", "sec_b_label": "Per principianti", "sec_b_h2": "Semplice &amp; <em style=\"font-style:italic;color:var(--teal)\">istantaneo</em>", "sec_b_desc": "Nessuna registrazione richiesta. Incolla il testo e ottieni una traduzione in pochi secondi.", "sec_a_label": "Per utenti", "sec_a_h2": "Più intelligente &amp; <em style=\"font-style:italic;color:var(--gold2)\">contestuale</em>", "sec_a_desc": "Qualità superiore con contesto del dizionario, esempi bilingue e forum della comunità.", "sec_p_label": "Per professionisti", "sec_p_h2": "Strumenti CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">flussi di lavoro</em>", "sec_p_desc": "Memorie di traduzione complete, gestione della terminologia e ambienti CAT collaborativi.", "div1": "Migliora il tuo flusso di traduzione", "div2": "Creato per traduttori, linguisti & sviluppatori", "no_results": "Nessuno strumento corrisponde alla ricerca. Prova parole chiave diverse.", "footer_desc": "L'elenco più completo di strumenti di traduzione gratuiti. Nessuna pubblicità. Nessun link di affiliazione.", "footer_copy": "© 2026 TranslateHub · Creato con cura per la comunità linguistica · Giurisdizione: Romania / UE", "footer_gdpr": "🔒 Privacy & GDPR", "footer_cookies": "🍪 Politica cookie", "footer_impressum": "📋 Note legali", "footer_access": "♿ Accessibilità", "footer_tech": "⚙ Tecnologie & Trasparenza", "footer_terms": "⚖ Termini & Disclaimer", "legal_title": "⚖ Legale & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookie", "ltab_impressum": "📋 Note legali", "ltab_access": "♿ Accessibilità", "ltab_tech": "⚙ Tecnologie", "ltab_terms": "⚖ Termini"},
+  "pt": {"hero_eyebrow": "Ferramentas de tradução gratuitas", "hero_h1": "Fale todos os<br><em>idiomas.</em>", "hero_sub": "O diretório definitivo das melhores ferramentas de tradução gratuitas — do uso casual aos fluxos de trabalho CAT profissionais.", "stat1": "Ferramentas selecionadas", "stat2": "Níveis de habilidade", "stat3": "Gratuito", "stat4": "Idiomas cobertos", "nav1": "Iniciantes", "nav2": "Usuários", "nav3": "Profissionais", "nav4": "Traduzir", "search_nav": "Pesquisar…", "ui_lang_ph": "Pesquisar idioma…", "tr_eyebrow": "Tradução com IA", "mode_text": "✎ Texto simples", "mode_rich": "❡ Texto formatado", "mode_file": "⇪ Carregar arquivo", "src_label": "Texto fonte", "src_ph": "Digite ou cole o texto aqui — sem limite de caracteres…", "btn_clear": "✕ Limpar", "tgt_label": "Tradução", "tr_out_ph": "A tradução aparecerá aqui…", "btn_copy": "⧉ Copiar", "btn_dl_txt": "↓ .txt", "rt_out_ph": "A tradução formatada aparecerá aqui…", "btn_copy_rt": "⧉ Copiar texto", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabela", "rt_tb_clear": "✕ Limpar", "file_title": "Solte o arquivo aqui", "file_sub": "ou clique para navegar — formatos suportados:", "file_out_label": "Saída traduzida", "btn_dl_file": "↓ Baixar arquivo traduzido", "btn_copy_file": "⧉ Copiar texto", "powered": "Desenvolvido por <span>Claude AI</span> — texto ilimitado · formatação avançada · 8 formatos · 500+ idiomas", "sec_b_label": "Para iniciantes", "sec_b_h2": "Simples &amp; <em style=\"font-style:italic;color:var(--teal)\">instantâneo</em>", "sec_b_desc": "Sem cadastro. Cole o texto e obtenha uma tradução em segundos.", "sec_a_label": "Para usuários", "sec_a_h2": "Mais inteligente &amp; <em style=\"font-style:italic;color:var(--gold2)\">contextual</em>", "sec_a_desc": "Maior qualidade com contexto de dicionário, exemplos bilíngues e fóruns da comunidade.", "sec_p_label": "Para profissionais", "sec_p_h2": "Ferramentas CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">fluxos de trabalho</em>", "sec_p_desc": "Memórias de tradução completas, gestão de terminologia e ambientes CAT colaborativos.", "div1": "Melhore seu fluxo de tradução", "div2": "Construído para tradutores, linguistas & desenvolvedores", "no_results": "Nenhuma ferramenta corresponde à pesquisa. Tente outras palavras-chave.", "footer_desc": "O diretório mais completo de ferramentas de tradução gratuitas. Sem publicidade. Sem links de afiliados.", "footer_copy": "© 2026 TranslateHub · Construído com cuidado para a comunidade linguística · Jurisdição: Romênia / UE", "footer_gdpr": "🔒 Privacidade & LGPD", "footer_cookies": "🍪 Política de cookies", "footer_impressum": "📋 Aviso legal", "footer_access": "♿ Acessibilidade", "footer_tech": "⚙ Tecnologias & Transparência", "footer_terms": "⚖ Termos & Aviso", "legal_title": "⚖ Legal & LGPD", "ltab_gdpr": "🔒 LGPD", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Aviso legal", "ltab_access": "♿ Acessibilidade", "ltab_tech": "⚙ Tecnologias", "ltab_terms": "⚖ Termos"},
+  "ru": {"hero_eyebrow": "Бесплатные инструменты перевода", "hero_h1": "Говорите на любом<br><em>языке.</em>", "hero_sub": "Исчерпывающий каталог лучших бесплатных инструментов перевода — от повседневного использования до профессиональных CAT-сред.", "stat1": "Инструментов", "stat2": "Уровня навыков", "stat3": "Бесплатно", "stat4": "Языков", "nav1": "Новичкам", "nav2": "Пользователям", "nav3": "Профессионалам", "nav4": "Перевести", "search_nav": "Поиск…", "ui_lang_ph": "Поиск языка…", "tr_eyebrow": "Перевод на основе ИИ", "mode_text": "✎ Простой текст", "mode_rich": "❡ Форматированный текст", "mode_file": "⇪ Загрузить файл", "src_label": "Исходный текст", "src_ph": "Введите или вставьте текст — без ограничения символов…", "btn_clear": "✕ Очистить", "tgt_label": "Перевод", "tr_out_ph": "Перевод появится здесь…", "btn_copy": "⧉ Копировать", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Форматированный перевод появится здесь…", "btn_copy_rt": "⧉ Копировать текст", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Таблица", "rt_tb_clear": "✕ Очистить", "file_title": "Перетащите файл сюда", "file_sub": "или нажмите для выбора — поддерживаемые форматы:", "file_out_label": "Результат перевода", "btn_dl_file": "↓ Скачать переведённый файл", "btn_copy_file": "⧉ Копировать текст", "powered": "Работает на <span>Claude AI</span> — неограниченный текст · форматирование · 8 форматов · 500+ языков", "sec_b_label": "Для новичков", "sec_b_h2": "Просто &amp; <em style=\"font-style:italic;color:var(--teal)\">мгновенно</em>", "sec_b_desc": "Без регистрации. Вставьте текст и получите перевод за секунды.", "sec_a_label": "Для пользователей", "sec_a_h2": "Умнее &amp; <em style=\"font-style:italic;color:var(--gold2)\">контекстуально</em>", "sec_a_desc": "Более высокое качество с контекстом словаря, двуязычными примерами и форумами.", "sec_p_label": "Для профессионалов", "sec_p_h2": "CAT-инструменты &amp; <em style=\"font-style:italic;color:var(--violet)\">рабочие процессы</em>", "sec_p_desc": "Полные памяти переводов, управление терминологией и совместные CAT-среды.", "div1": "Улучшите свой рабочий процесс перевода", "div2": "Создан для переводчиков, лингвистов & разработчиков", "no_results": "Ни один инструмент не соответствует поиску. Попробуйте другие ключевые слова.", "footer_desc": "Наиболее полный каталог бесплатных инструментов перевода. Без рекламы. Без партнёрских ссылок.", "footer_copy": "© 2026 TranslateHub · Создан с заботой о языковом сообществе · Юрисдикция: Румыния / ЕС", "footer_gdpr": "🔒 Конфиденциальность & GDPR", "footer_cookies": "🍪 Политика cookies", "footer_impressum": "📋 Выходные данные", "footer_access": "♿ Доступность", "footer_tech": "⚙ Технологии & Прозрачность", "footer_terms": "⚖ Условия & Отказ", "legal_title": "⚖ Правовая информация & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Данные", "ltab_access": "♿ Доступность", "ltab_tech": "⚙ Технологии", "ltab_terms": "⚖ Условия"},
+  "zh-Hans": {"hero_eyebrow": "免费翻译工具", "hero_h1": "说任何<br><em>语言。</em>", "hero_sub": "最完整的免费机器翻译工具目录——从日常使用到专业CAT工作流程。", "stat1": "精选工具", "stat2": "技能等级", "stat3": "完全免费", "stat4": "支持语言", "nav1": "初学者", "nav2": "普通用户", "nav3": "专业人士", "nav4": "翻译", "search_nav": "搜索…", "ui_lang_ph": "搜索语言…", "tr_eyebrow": "AI 驱动翻译", "mode_text": "✎ 纯文本", "mode_rich": "❡ 富文本", "mode_file": "⇪ 文件上传", "src_label": "原文", "src_ph": "在此输入或粘贴文本——无字符限制…", "btn_clear": "✕ 清除", "tgt_label": "译文", "tr_out_ph": "翻译结果将在此显示…", "btn_copy": "⧉ 复制", "btn_dl_txt": "↓ .txt", "rt_out_ph": "格式化译文将在此显示…", "btn_copy_rt": "⧉ 复制文本", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ 表格", "rt_tb_clear": "✕ 清除", "file_title": "将文件拖放到此处", "file_sub": "或点击浏览——支持的格式：", "file_out_label": "翻译输出", "btn_dl_file": "↓ 下载翻译文件", "btn_copy_file": "⧉ 复制文本", "powered": "由 <span>Claude AI</span> 提供支持——无限文本 · 富文本格式 · 8种格式 · 500+语言", "sec_b_label": "适合初学者", "sec_b_h2": "简单 &amp; <em style=\"font-style:italic;color:var(--teal)\">即时</em>", "sec_b_desc": "无需注册。粘贴文本，几秒内获得翻译。", "sec_a_label": "适合普通用户", "sec_a_h2": "更智能 &amp; <em style=\"font-style:italic;color:var(--gold2)\">上下文感知</em>", "sec_a_desc": "更高质量，包含词典上下文、双语示例和社区论坛。", "sec_p_label": "适合专业人士", "sec_p_h2": "CAT工具 &amp; <em style=\"font-style:italic;color:var(--violet)\">工作流程</em>", "sec_p_desc": "完整翻译记忆库、术语管理和协作CAT环境。", "div1": "提升您的翻译工作流程", "div2": "为翻译人员、语言学家和开发者打造", "no_results": "没有工具与搜索匹配。请尝试其他关键词。", "footer_desc": "最完整的免费翻译工具目录。无广告。无联盟链接。", "footer_copy": "© 2026 TranslateHub · 为语言社区精心打造 · 司法管辖：罗马尼亚 / 欧盟", "footer_gdpr": "🔒 隐私 & GDPR", "footer_cookies": "🍪 Cookie政策", "footer_impressum": "📋 版权信息", "footer_access": "♿ 无障碍", "footer_tech": "⚙ 技术 & 透明度", "footer_terms": "⚖ 条款 & 免责声明", "legal_title": "⚖ 法律 & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookie", "ltab_impressum": "📋 版权", "ltab_access": "♿ 无障碍", "ltab_tech": "⚙ 技术", "ltab_terms": "⚖ 条款"},
+  "ja": {"hero_eyebrow": "無料翻訳ツール", "hero_h1": "すべての<br><em>言語を話す。</em>", "hero_sub": "無料の機械翻訳ツールの決定版ディレクトリ——日常利用からプロのCATワークフローまで。", "stat1": "厳選ツール", "stat2": "スキルレベル", "stat3": "完全無料", "stat4": "対応言語", "nav1": "初心者", "nav2": "一般ユーザー", "nav3": "プロ", "nav4": "翻訳", "search_nav": "検索…", "ui_lang_ph": "言語を検索…", "tr_eyebrow": "AI搭載翻訳", "mode_text": "✎ プレーンテキスト", "mode_rich": "❡ リッチテキスト", "mode_file": "⇪ ファイルアップロード", "src_label": "原文", "src_ph": "テキストを入力または貼り付け——文字数制限なし…", "btn_clear": "✕ クリア", "tgt_label": "翻訳", "tr_out_ph": "翻訳結果がここに表示されます…", "btn_copy": "⧉ コピー", "btn_dl_txt": "↓ .txt", "rt_out_ph": "書式付き翻訳がここに表示されます…", "btn_copy_rt": "⧉ テキストをコピー", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ テーブル", "rt_tb_clear": "✕ クリア", "file_title": "ファイルをここにドロップ", "file_sub": "またはクリックして参照——対応形式：", "file_out_label": "翻訳出力", "btn_dl_file": "↓ 翻訳ファイルをダウンロード", "btn_copy_file": "⧉ テキストをコピー", "powered": "<span>Claude AI</span> 搭載——無制限テキスト · リッチ書式 · 8形式 · 500以上の言語", "sec_b_label": "初心者向け", "sec_b_h2": "シンプル &amp; <em style=\"font-style:italic;color:var(--teal)\">即時</em>", "sec_b_desc": "登録不要。テキストを貼り付けて数秒で翻訳を取得。", "sec_a_label": "一般ユーザー向け", "sec_a_h2": "よりスマート &amp; <em style=\"font-style:italic;color:var(--gold2)\">文脈対応</em>", "sec_a_desc": "辞書コンテキスト、バイリンガル例文、コミュニティフォーラムで高品質な翻訳。", "sec_p_label": "プロ向け", "sec_p_h2": "CATツール &amp; <em style=\"font-style:italic;color:var(--violet)\">ワークフロー</em>", "sec_p_desc": "完全な翻訳メモリ、用語管理、コラボレーティブCAT環境。", "div1": "翻訳ワークフローを向上させる", "div2": "翻訳者、言語学者、開発者のために構築", "no_results": "検索に一致するツールはありません。別のキーワードをお試しください。", "footer_desc": "最も完全な無料翻訳ツールのディレクトリ。広告なし。アフィリエイトリンクなし。", "footer_copy": "© 2026 TranslateHub · 言語コミュニティのために作られました · 管轄：ルーマニア / EU", "footer_gdpr": "🔒 プライバシー & GDPR", "footer_cookies": "🍪 Cookie ポリシー", "footer_impressum": "📋 運営情報", "footer_access": "♿ アクセシビリティ", "footer_tech": "⚙ 技術 & 透明性", "footer_terms": "⚖ 利用規約 & 免責事項", "legal_title": "⚖ 法的情報 & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookie", "ltab_impressum": "📋 運営情報", "ltab_access": "♿ アクセシビリティ", "ltab_tech": "⚙ 技術", "ltab_terms": "⚖ 利用規約"},
+  "ar": {"hero_eyebrow": "أدوات ترجمة مجانية", "hero_h1": "تحدث بكل<br><em>لغة.</em>", "hero_sub": "الدليل الشامل لأفضل أدوات الترجمة المجانية — من الاستخدام اليومي إلى سير العمل الاحترافية CAT.", "stat1": "أدوات مختارة", "stat2": "مستويات المهارة", "stat3": "مجاني", "stat4": "اللغات المشمولة", "nav1": "مبتدئون", "nav2": "مستخدمون", "nav3": "محترفون", "nav4": "ترجمة", "search_nav": "بحث…", "ui_lang_ph": "ابحث عن لغة…", "tr_eyebrow": "ترجمة بالذكاء الاصطناعي", "mode_text": "✎ نص عادي", "mode_rich": "❡ نص منسق", "mode_file": "⇪ رفع ملف", "src_label": "النص المصدر", "src_ph": "اكتب أو الصق النص هنا — بدون حد للأحرف…", "btn_clear": "✕ مسح", "tgt_label": "الترجمة", "tr_out_ph": "ستظهر الترجمة هنا…", "btn_copy": "⧉ نسخ", "btn_dl_txt": "↓ .txt", "rt_out_ph": "ستظهر الترجمة المنسقة هنا…", "btn_copy_rt": "⧉ نسخ النص", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ جدول", "rt_tb_clear": "✕ مسح", "file_title": "أسقط ملفك هنا", "file_sub": "أو انقر للتصفح — الصيغ المدعومة:", "file_out_label": "مخرجات الترجمة", "btn_dl_file": "↓ تنزيل الملف المترجم", "btn_copy_file": "⧉ نسخ النص", "powered": "مدعوم بـ <span>Claude AI</span> — نص غير محدود · تنسيق متقدم · 8 صيغ · 500+ لغة", "sec_b_label": "للمبتدئين", "sec_b_h2": "بسيط &amp; <em style=\"font-style:italic;color:var(--teal)\">فوري</em>", "sec_b_desc": "بدون تسجيل. الصق النص واحصل على ترجمة في ثوانٍ.", "sec_a_label": "للمستخدمين", "sec_a_h2": "أذكى &amp; <em style=\"font-style:italic;color:var(--gold2)\">سياقي</em>", "sec_a_desc": "جودة أعلى مع سياق القاموس وأمثلة ثنائية اللغة ومنتديات المجتمع.", "sec_p_label": "للمحترفين", "sec_p_h2": "أدوات CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">سير العمل</em>", "sec_p_desc": "ذاكرات ترجمة كاملة وإدارة المصطلحات وبيئات CAT التعاونية.", "div1": "طوّر سير عمل الترجمة لديك", "div2": "مبني للمترجمين واللغويين والمطورين", "no_results": "لا توجد أدوات تطابق بحثك. جرب كلمات مفتاحية مختلفة.", "footer_desc": "الدليل الأكثر شمولاً لأدوات الترجمة المجانية. بدون إعلانات. بدون روابط تابعة.", "footer_copy": "© 2026 TranslateHub · مبني باهتمام لمجتمع اللغويين · الاختصاص القضائي: رومانيا / الاتحاد الأوروبي", "footer_gdpr": "🔒 الخصوصية & GDPR", "footer_cookies": "🍪 سياسة الكوكيز", "footer_impressum": "📋 بيانات الناشر", "footer_access": "♿ إمكانية الوصول", "footer_tech": "⚙ التقنيات & الشفافية", "footer_terms": "⚖ الشروط & إخلاء المسؤولية", "legal_title": "⚖ قانوني & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 كوكيز", "ltab_impressum": "📋 الناشر", "ltab_access": "♿ الوصول", "ltab_tech": "⚙ التقنيات", "ltab_terms": "⚖ الشروط"},
+  "ko": {"hero_eyebrow": "무료 번역 도구", "hero_h1": "모든<br><em>언어로 말하세요.</em>", "hero_sub": "일상적 사용부터 전문 CAT 워크플로우까지, 최고의 무료 번역 도구 디렉토리.", "stat1": "엄선된 도구", "stat2": "실력 수준", "stat3": "완전 무료", "stat4": "지원 언어", "nav1": "초보자", "nav2": "일반 사용자", "nav3": "전문가", "nav4": "번역", "search_nav": "검색…", "ui_lang_ph": "언어 검색…", "tr_eyebrow": "AI 기반 번역", "mode_text": "✎ 일반 텍스트", "mode_rich": "❡ 서식 있는 텍스트", "mode_file": "⇪ 파일 업로드", "src_label": "원문", "src_ph": "여기에 텍스트를 입력하거나 붙여넣기 — 글자 수 제한 없음…", "btn_clear": "✕ 지우기", "tgt_label": "번역", "tr_out_ph": "번역이 여기에 표시됩니다…", "btn_copy": "⧉ 복사", "btn_dl_txt": "↓ .txt", "rt_out_ph": "서식 있는 번역이 여기에 표시됩니다…", "btn_copy_rt": "⧉ 텍스트 복사", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ 표", "rt_tb_clear": "✕ 지우기", "file_title": "파일을 여기에 드래그하세요", "file_sub": "또는 클릭하여 탐색 — 지원 형식:", "file_out_label": "번역 결과", "btn_dl_file": "↓ 번역된 파일 다운로드", "btn_copy_file": "⧉ 텍스트 복사", "powered": "<span>Claude AI</span> 기반 — 무제한 텍스트 · 서식 · 8가지 파일 형식 · 500+개 언어", "sec_b_label": "초보자용", "sec_b_h2": "간단 &amp; <em style=\"font-style:italic;color:var(--teal)\">즉각적</em>", "sec_b_desc": "회원가입 불필요. 텍스트를 붙여넣으면 몇 초 안에 번역됩니다.", "sec_a_label": "일반 사용자용", "sec_a_h2": "더 스마트하게 &amp; <em style=\"font-style:italic;color:var(--gold2)\">문맥적으로</em>", "sec_a_desc": "사전 문맥, 이중 언어 예문 및 커뮤니티 포럼으로 더 높은 품질.", "sec_p_label": "전문가용", "sec_p_h2": "CAT 도구 &amp; <em style=\"font-style:italic;color:var(--violet)\">워크플로우</em>", "sec_p_desc": "완전한 번역 메모리, 용어 관리 및 협업 CAT 환경.", "div1": "번역 워크플로우를 향상시키세요", "div2": "번역가, 언어학자 & 개발자를 위해 제작", "no_results": "검색과 일치하는 도구가 없습니다. 다른 키워드를 사용해 보세요.", "footer_desc": "가장 완전한 무료 번역 도구 디렉토리. 광고 없음. 제휴 링크 없음.", "footer_copy": "© 2026 TranslateHub · 언어 커뮤니티를 위해 정성껏 제작 · 관할: 루마니아 / EU", "footer_gdpr": "🔒 개인정보 & GDPR", "footer_cookies": "🍪 쿠키 정책", "footer_impressum": "📋 발행인 정보", "footer_access": "♿ 접근성", "footer_tech": "⚙ 기술 & 투명성", "footer_terms": "⚖ 이용약관 & 고지", "legal_title": "⚖ 법적 고지 & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 쿠키", "ltab_impressum": "📋 발행인", "ltab_access": "♿ 접근성", "ltab_tech": "⚙ 기술", "ltab_terms": "⚖ 이용약관"},
+  "tr": {"hero_eyebrow": "Ücretsiz çeviri araçları", "hero_h1": "Her<br><em>dili konuşun.</em>", "hero_sub": "Günlük kullanımdan profesyonel CAT iş akışlarına kadar en iyi ücretsiz çeviri araçlarının kapsamlı dizini.", "stat1": "Seçilmiş araçlar", "stat2": "Beceri seviyeleri", "stat3": "Ücretsiz", "stat4": "Kapsanan diller", "nav1": "Yeni başlayanlar", "nav2": "Kullanıcılar", "nav3": "Profesyoneller", "nav4": "Çevir", "search_nav": "Ara…", "ui_lang_ph": "Dil ara…", "tr_eyebrow": "AI Destekli Çeviri", "mode_text": "✎ Düz metin", "mode_rich": "❡ Biçimli metin", "mode_file": "⇪ Dosya yükle", "src_label": "Kaynak metin", "src_ph": "Metni buraya yazın veya yapıştırın — karakter sınırı yok…", "btn_clear": "✕ Temizle", "tgt_label": "Çeviri", "tr_out_ph": "Çeviri burada görünecek…", "btn_copy": "⧉ Kopyala", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Biçimlendirilmiş çeviri burada görünecek…", "btn_copy_rt": "⧉ Metni kopyala", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tablo", "rt_tb_clear": "✕ Temizle", "file_title": "Dosyanızı buraya bırakın", "file_sub": "veya göz atmak için tıklayın — desteklenen formatlar:", "file_out_label": "Çeviri çıktısı", "btn_dl_file": "↓ Çevrilmiş dosyayı indir", "btn_copy_file": "⧉ Metni kopyala", "powered": "<span>Claude AI</span> ile güçlendirilmiş — sınırsız metin · gelişmiş biçimlendirme · 8 format · 500+ dil", "sec_b_label": "Yeni başlayanlar için", "sec_b_h2": "Basit &amp; <em style=\"font-style:italic;color:var(--teal)\">anında</em>", "sec_b_desc": "Kayıt gerekmez. Metni yapıştırın ve saniyeler içinde çeviri alın.", "sec_a_label": "Kullanıcılar için", "sec_a_h2": "Daha akıllı &amp; <em style=\"font-style:italic;color:var(--gold2)\">bağlamsal</em>", "sec_a_desc": "Sözlük bağlamı, iki dilli örnekler ve topluluk forumlarıyla daha yüksek kalite.", "sec_p_label": "Profesyoneller için", "sec_p_h2": "CAT araçları &amp; <em style=\"font-style:italic;color:var(--violet)\">iş akışları</em>", "sec_p_desc": "Tam çeviri bellekleri, terim yönetimi ve işbirlikçi CAT ortamları.", "div1": "Çeviri iş akışınızı geliştirin", "div2": "Çevirmenler, dilbilimciler ve geliştiriciler için", "no_results": "Aramanızla eşleşen araç yok. Farklı anahtar kelimeler deneyin.", "footer_desc": "En kapsamlı ücretsiz çeviri araçları dizini. Reklam yok. Ortak bağlantı yok.", "footer_copy": "© 2026 TranslateHub · Dil topluluğu için özenle yapılmıştır · Yetki: Romanya / AB", "footer_gdpr": "🔒 Gizlilik & KVKK", "footer_cookies": "🍪 Çerez politikası", "footer_impressum": "📋 Yayın bilgisi", "footer_access": "♿ Erişilebilirlik", "footer_tech": "⚙ Teknolojiler & Şeffaflık", "footer_terms": "⚖ Koşullar & Sorumluluk reddi", "legal_title": "⚖ Yasal & KVKK", "ltab_gdpr": "🔒 KVKK", "ltab_cookies": "🍪 Çerezler", "ltab_impressum": "📋 Yayın bilgisi", "ltab_access": "♿ Erişilebilirlik", "ltab_tech": "⚙ Teknolojiler", "ltab_terms": "⚖ Koşullar"},
+  "pl": {"hero_eyebrow": "Bezpłatne narzędzia tłumaczeniowe", "hero_h1": "Mów w każdym<br><em>języku.</em>", "hero_sub": "Kompletny katalog najlepszych bezpłatnych narzędzi tłumaczeniowych — od codziennego użytku po profesjonalne przepływy pracy CAT.", "stat1": "Narzędzi", "stat2": "Poziomy umiejętności", "stat3": "Bezpłatne", "stat4": "Obsługiwanych języków", "nav1": "Początkujący", "nav2": "Użytkownicy", "nav3": "Profesjonaliści", "nav4": "Przetłumacz", "search_nav": "Szukaj…", "ui_lang_ph": "Szukaj języka…", "tr_eyebrow": "Tłumaczenie z AI", "mode_text": "✎ Zwykły tekst", "mode_rich": "❡ Tekst sformatowany", "mode_file": "⇪ Prześlij plik", "src_label": "Tekst źródłowy", "src_ph": "Wpisz lub wklej tekst tutaj — bez limitu znaków…", "btn_clear": "✕ Wyczyść", "tgt_label": "Tłumaczenie", "tr_out_ph": "Tłumaczenie pojawi się tutaj…", "btn_copy": "⧉ Kopiuj", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Sformatowane tłumaczenie pojawi się tutaj…", "btn_copy_rt": "⧉ Kopiuj tekst", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabela", "rt_tb_clear": "✕ Wyczyść", "file_title": "Upuść plik tutaj", "file_sub": "lub kliknij, aby przeglądać — obsługiwane formaty:", "file_out_label": "Wynik tłumaczenia", "btn_dl_file": "↓ Pobierz przetłumaczony plik", "btn_copy_file": "⧉ Kopiuj tekst", "powered": "Napędzane przez <span>Claude AI</span> — nieograniczony tekst · formatowanie · 8 formatów · 500+ języków", "sec_b_label": "Dla początkujących", "sec_b_h2": "Proste &amp; <em style=\"font-style:italic;color:var(--teal)\">natychmiastowe</em>", "sec_b_desc": "Bez rejestracji. Wklej tekst i uzyskaj tłumaczenie w sekundach.", "sec_a_label": "Dla użytkowników", "sec_a_h2": "Sprytniejsze &amp; <em style=\"font-style:italic;color:var(--gold2)\">kontekstowe</em>", "sec_a_desc": "Wyższa jakość z kontekstem słownikowym, dwujęzycznymi przykładami i forami.", "sec_p_label": "Dla profesjonalistów", "sec_p_h2": "Narzędzia CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">przepływy pracy</em>", "sec_p_desc": "Pełne pamięci tłumaczeniowe, zarządzanie terminologią i środowiska CAT.", "div1": "Usprawnij swój przepływ tłumaczeniowy", "div2": "Zbudowane dla tłumaczy, językoznawców i programistów", "no_results": "Żadne narzędzie nie pasuje do wyszukiwania. Spróbuj innych słów kluczowych.", "footer_desc": "Najbardziej kompletny katalog bezpłatnych narzędzi tłumaczeniowych. Bez reklam. Bez linków partnerskich.", "footer_copy": "© 2026 TranslateHub · Zbudowane z troską dla społeczności językowej · Jurysdykcja: Rumunia / UE", "footer_gdpr": "🔒 Prywatność & RODO", "footer_cookies": "🍪 Polityka cookies", "footer_impressum": "📋 Impressum", "footer_access": "♿ Dostępność", "footer_tech": "⚙ Technologie & Przejrzystość", "footer_terms": "⚖ Warunki & Zastrzeżenie", "legal_title": "⚖ Prawne & RODO", "ltab_gdpr": "🔒 RODO", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impressum", "ltab_access": "♿ Dostępność", "ltab_tech": "⚙ Technologie", "ltab_terms": "⚖ Warunki"},
+  "nl": {"hero_eyebrow": "Gratis vertaaltools", "hero_h1": "Spreek elke<br><em>taal.</em>", "hero_sub": "De definitieve gids voor de beste gratis vertaaltools — van dagelijks gebruik tot professionele CAT-workflows.", "stat1": "Geselecteerde tools", "stat2": "Vaardigheidsniveaus", "stat3": "Gratis", "stat4": "Talen gedekt", "nav1": "Beginners", "nav2": "Gebruikers", "nav3": "Professionals", "nav4": "Vertalen", "search_nav": "Zoeken…", "ui_lang_ph": "Taal zoeken…", "tr_eyebrow": "AI-gestuurde vertaling", "mode_text": "✎ Platte tekst", "mode_rich": "❡ Opgemaakte tekst", "mode_file": "⇪ Bestand uploaden", "src_label": "Brontekst", "src_ph": "Typ of plak tekst hier — geen tekenlimiet…", "btn_clear": "✕ Wissen", "tgt_label": "Vertaling", "tr_out_ph": "Vertaling verschijnt hier…", "btn_copy": "⧉ Kopiëren", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Opgemaakte vertaling verschijnt hier…", "btn_copy_rt": "⧉ Tekst kopiëren", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabel", "rt_tb_clear": "✕ Wissen", "file_title": "Zet uw bestand hier neer", "file_sub": "of klik om te bladeren — ondersteunde indelingen:", "file_out_label": "Vertaalde uitvoer", "btn_dl_file": "↓ Vertaald bestand downloaden", "btn_copy_file": "⧉ Tekst kopiëren", "powered": "Aangedreven door <span>Claude AI</span> — onbeperkte tekst · opmaak · 8 indelingen · 500+ talen", "sec_b_label": "Voor beginners", "sec_b_h2": "Eenvoudig &amp; <em style=\"font-style:italic;color:var(--teal)\">direct</em>", "sec_b_desc": "Geen aanmelding vereist. Plak tekst en ontvang een vertaling in seconden.", "sec_a_label": "Voor gebruikers", "sec_a_h2": "Slimmer &amp; <em style=\"font-style:italic;color:var(--gold2)\">contextueel</em>", "sec_a_desc": "Hogere kwaliteit met woordenboekcontext, tweetalige voorbeelden en communityforums.", "sec_p_label": "Voor professionals", "sec_p_h2": "CAT-tools &amp; <em style=\"font-style:italic;color:var(--violet)\">workflows</em>", "sec_p_desc": "Volledige vertaalgeheugens, terminologiebeheer en samenwerkende CAT-omgevingen.", "div1": "Verbeter uw vertaalworkflow", "div2": "Gebouwd voor vertalers, taalkundigen & ontwikkelaars", "no_results": "Geen tools komen overeen met uw zoekopdracht. Probeer andere trefwoorden.", "footer_desc": "De meest complete gids voor gratis vertaaltools. Geen advertenties. Geen affiliate-links.", "footer_copy": "© 2026 TranslateHub · Met zorg gebouwd voor de taalgemeenschap · Jurisdictie: Roemenië / EU", "footer_gdpr": "🔒 Privacy & AVG", "footer_cookies": "🍪 Cookiebeleid", "footer_impressum": "📋 Colofon", "footer_access": "♿ Toegankelijkheid", "footer_tech": "⚙ Technologieën & Transparantie", "footer_terms": "⚖ Voorwaarden & Disclaimer", "legal_title": "⚖ Juridisch & AVG", "ltab_gdpr": "🔒 AVG", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Colofon", "ltab_access": "♿ Toegankelijkheid", "ltab_tech": "⚙ Technologieën", "ltab_terms": "⚖ Voorwaarden"},
+  "sv": {"hero_eyebrow": "Gratis översättningsverktyg", "hero_h1": "Tala alla<br><em>språk.</em>", "hero_sub": "Den definitiva katalogen över de bästa gratis översättningsverktygen — från vardagsbruk till professionella CAT-arbetsflöden.", "stat1": "Utvalda verktyg", "stat2": "Färdighetsnivåer", "stat3": "Gratis", "stat4": "Språk täckta", "nav1": "Nybörjare", "nav2": "Användare", "nav3": "Proffs", "nav4": "Översätt", "search_nav": "Sök…", "ui_lang_ph": "Sök språk…", "tr_eyebrow": "AI-driven översättning", "mode_text": "✎ Vanlig text", "mode_rich": "❡ Formaterad text", "mode_file": "⇪ Ladda upp fil", "src_label": "Källtext", "src_ph": "Skriv eller klistra in text här — ingen teckengräns…", "btn_clear": "✕ Rensa", "tgt_label": "Översättning", "tr_out_ph": "Översättningen visas här…", "btn_copy": "⧉ Kopiera", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Formaterad översättning visas här…", "btn_copy_rt": "⧉ Kopiera text", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabell", "rt_tb_clear": "✕ Rensa", "file_title": "Släpp din fil här", "file_sub": "eller klicka för att bläddra — format som stöds:", "file_out_label": "Översatt utdata", "btn_dl_file": "↓ Ladda ner översatt fil", "btn_copy_file": "⧉ Kopiera text", "powered": "Drivs av <span>Claude AI</span> — obegränsad text · formatering · 8 format · 500+ språk", "sec_b_label": "För nybörjare", "sec_b_h2": "Enkelt &amp; <em style=\"font-style:italic;color:var(--teal)\">omedelbart</em>", "sec_b_desc": "Ingen registrering krävs. Klistra in text och få en översättning på sekunder.", "sec_a_label": "För användare", "sec_a_h2": "Smartare &amp; <em style=\"font-style:italic;color:var(--gold2)\">kontextuellt</em>", "sec_a_desc": "Högre kvalitet med ordlistkontext, tvåspråkiga exempel och community-forum.", "sec_p_label": "För proffs", "sec_p_h2": "CAT-verktyg &amp; <em style=\"font-style:italic;color:var(--violet)\">arbetsflöden</em>", "sec_p_desc": "Fullständiga översättningsminnen, terminologihantering och kollaborativa CAT-miljöer.", "div1": "Förbättra ditt översättningsarbetsflöde", "div2": "Byggd för översättare, lingvister & utvecklare", "no_results": "Inga verktyg matchar din sökning. Prova andra sökord.", "footer_desc": "Den mest kompletta katalogen med gratis översättningsverktyg. Ingen reklam. Inga affiliate-länkar.", "footer_copy": "© 2026 TranslateHub · Byggd med omsorg för språkgemenskapen · Jurisdiktion: Rumänien / EU", "footer_gdpr": "🔒 Integritet & GDPR", "footer_cookies": "🍪 Cookiepolicy", "footer_impressum": "📋 Impressum", "footer_access": "♿ Tillgänglighet", "footer_tech": "⚙ Teknologier & Transparens", "footer_terms": "⚖ Villkor & Friskrivning", "legal_title": "⚖ Juridiskt & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impressum", "ltab_access": "♿ Tillgänglighet", "ltab_tech": "⚙ Teknologier", "ltab_terms": "⚖ Villkor"},
+  "cs": {"hero_eyebrow": "Bezplatné překladatelské nástroje", "hero_h1": "Mluvte každým<br><em>jazykem.</em>", "hero_sub": "Nejúplnější katalog nejlepších bezplatných překladatelských nástrojů — od každodenního použití po profesionální CAT pracovní postupy.", "stat1": "Vybrané nástroje", "stat2": "Úrovně dovedností", "stat3": "Zdarma", "stat4": "Pokrytých jazyků", "nav1": "Začátečníci", "nav2": "Uživatelé", "nav3": "Profesionálové", "nav4": "Přeložit", "search_nav": "Hledat…", "ui_lang_ph": "Hledat jazyk…", "tr_eyebrow": "Překlad s umělou inteligencí", "mode_text": "✎ Prostý text", "mode_rich": "❡ Formátovaný text", "mode_file": "⇪ Nahrát soubor", "src_label": "Zdrojový text", "src_ph": "Zadejte nebo vložte text zde — bez limitu znaků…", "btn_clear": "✕ Vymazat", "tgt_label": "Překlad", "tr_out_ph": "Překlad se zobrazí zde…", "btn_copy": "⧉ Kopírovat", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Formátovaný překlad se zobrazí zde…", "btn_copy_rt": "⧉ Kopírovat text", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Tabulka", "rt_tb_clear": "✕ Vymazat", "file_title": "Sem přetáhněte soubor", "file_sub": "nebo klikněte pro procházení — podporované formáty:", "file_out_label": "Přeložený výstup", "btn_dl_file": "↓ Stáhnout přeložený soubor", "btn_copy_file": "⧉ Kopírovat text", "powered": "Poháněno <span>Claude AI</span> — neomezený text · formátování · 8 formátů · 500+ jazyků", "sec_b_label": "Pro začátečníky", "sec_b_h2": "Jednoduché &amp; <em style=\"font-style:italic;color:var(--teal)\">okamžité</em>", "sec_b_desc": "Bez registrace. Vložte text a získejte překlad během sekund.", "sec_a_label": "Pro uživatele", "sec_a_h2": "Chytřejší &amp; <em style=\"font-style:italic;color:var(--gold2)\">kontextové</em>", "sec_a_desc": "Vyšší kvalita se slovníkovým kontextem, dvojjazyčnými příklady a komunitními fóry.", "sec_p_label": "Pro profesionály", "sec_p_h2": "Nástroje CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">pracovní postupy</em>", "sec_p_desc": "Kompletní překladové paměti, správa terminologie a kolaborativní prostředí CAT.", "div1": "Zdokonalte svůj překladatelský pracovní postup", "div2": "Vytvořeno pro překladatele, jazykovědce & vývojáře", "no_results": "Žádné nástroje neodpovídají vašemu hledání. Zkuste jiná klíčová slova.", "footer_desc": "Nejúplnější katalog bezplatných překladatelských nástrojů. Bez reklam. Bez affiliate odkazů.", "footer_copy": "© 2026 TranslateHub · Vytvořeno s péčí pro jazykovou komunitu · Jurisdikce: Rumunsko / EU", "footer_gdpr": "🔒 Soukromí & GDPR", "footer_cookies": "🍪 Zásady cookies", "footer_impressum": "📋 Impressum", "footer_access": "♿ Přístupnost", "footer_tech": "⚙ Technologie & Transparentnost", "footer_terms": "⚖ Podmínky & Prohlášení", "legal_title": "⚖ Právní & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impressum", "ltab_access": "♿ Přístupnost", "ltab_tech": "⚙ Technologie", "ltab_terms": "⚖ Podmínky"},
+  "hu": {"hero_eyebrow": "Ingyenes fordítóeszközök", "hero_h1": "Beszéljen minden<br><em>nyelven.</em>", "hero_sub": "A legjobb ingyenes fordítóeszközök legteljesebb katalógusa — mindennapi használattól a professzionális CAT-munkafolyamatokig.", "stat1": "Válogatott eszközök", "stat2": "Készségszintek", "stat3": "Ingyenes", "stat4": "Támogatott nyelvek", "nav1": "Kezdők", "nav2": "Felhasználók", "nav3": "Szakemberek", "nav4": "Fordítás", "search_nav": "Keresés…", "ui_lang_ph": "Nyelv keresése…", "tr_eyebrow": "MI-alapú fordítás", "mode_text": "✎ Sima szöveg", "mode_rich": "❡ Formázott szöveg", "mode_file": "⇪ Fájl feltöltése", "src_label": "Forrásszöveg", "src_ph": "Írja vagy illessze be szövegét — karakterkorlát nélkül…", "btn_clear": "✕ Törlés", "tgt_label": "Fordítás", "tr_out_ph": "A fordítás itt jelenik meg…", "btn_copy": "⧉ Másolás", "btn_dl_txt": "↓ .txt", "rt_out_ph": "A formázott fordítás itt jelenik meg…", "btn_copy_rt": "⧉ Szöveg másolása", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Táblázat", "rt_tb_clear": "✕ Törlés", "file_title": "Húzza ide a fájlt", "file_sub": "vagy kattintson a böngészéshez — támogatott formátumok:", "file_out_label": "Lefordított kimenet", "btn_dl_file": "↓ Lefordított fájl letöltése", "btn_copy_file": "⧉ Szöveg másolása", "powered": "<span>Claude AI</span> által üzemeltetett — korlátlan szöveg · formázás · 8 formátum · 500+ nyelv", "sec_b_label": "Kezdőknek", "sec_b_h2": "Egyszerű &amp; <em style=\"font-style:italic;color:var(--teal)\">azonnali</em>", "sec_b_desc": "Nincs szükség regisztrációra. Illessze be a szöveget, és kapjon fordítást másodpercek alatt.", "sec_a_label": "Felhasználóknak", "sec_a_h2": "Okosabb &amp; <em style=\"font-style:italic;color:var(--gold2)\">kontextuális</em>", "sec_a_desc": "Jobb minőség szótári kontextussal, kétnyelvű példákkal és közösségi fórumokkal.", "sec_p_label": "Szakembereknek", "sec_p_h2": "CAT-eszközök &amp; <em style=\"font-style:italic;color:var(--violet)\">munkafolyamatok</em>", "sec_p_desc": "Teljes fordítási memóriák, terminológiakezelés és együttműködési CAT-környezetek.", "div1": "Javítsa fordítási munkafolyamatát", "div2": "Fordítóknak, nyelvészeknek & fejlesztőknek", "no_results": "Egyik eszköz sem egyezik a keresésével. Próbáljon más kulcsszavakat.", "footer_desc": "Az ingyenes fordítóeszközök legteljesebb katalógusa. Nincs reklám. Nincs affiliate hivatkozás.", "footer_copy": "© 2026 TranslateHub · Gondosan alkotva a nyelvi közösségnek · Joghatóság: Románia / EU", "footer_gdpr": "🔒 Adatvédelem & GDPR", "footer_cookies": "🍪 Cookie-szabályzat", "footer_impressum": "📋 Impresszum", "footer_access": "♿ Akadálymentesség", "footer_tech": "⚙ Technológiák & Átláthatóság", "footer_terms": "⚖ Feltételek & Jogi nyilatkozat", "legal_title": "⚖ Jogi & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Impresszum", "ltab_access": "♿ Akadálymentesség", "ltab_tech": "⚙ Technológiák", "ltab_terms": "⚖ Feltételek"},
+  "el": {"hero_eyebrow": "Δωρεάν εργαλεία μετάφρασης", "hero_h1": "Μιλήστε κάθε<br><em>γλώσσα.</em>", "hero_sub": "Ο πληρέστερος κατάλογος των καλύτερων δωρεάν εργαλείων μετάφρασης — από καθημερινή χρήση έως επαγγελματικές ροές εργασίας CAT.", "stat1": "Επιλεγμένα εργαλεία", "stat2": "Επίπεδα δεξιοτήτων", "stat3": "Δωρεάν", "stat4": "Γλώσσες", "nav1": "Αρχάριοι", "nav2": "Χρήστες", "nav3": "Επαγγελματίες", "nav4": "Μετάφραση", "search_nav": "Αναζήτηση…", "ui_lang_ph": "Αναζήτηση γλώσσας…", "tr_eyebrow": "Μετάφραση με Τεχνητή Νοημοσύνη", "mode_text": "✎ Απλό κείμενο", "mode_rich": "❡ Μορφοποιημένο κείμενο", "mode_file": "⇪ Μεταφόρτωση αρχείου", "src_label": "Κείμενο πηγής", "src_ph": "Πληκτρολογήστε ή επικολλήστε κείμενο εδώ — χωρίς όριο χαρακτήρων…", "btn_clear": "✕ Εκκαθάριση", "tgt_label": "Μετάφραση", "tr_out_ph": "Η μετάφραση θα εμφανιστεί εδώ…", "btn_copy": "⧉ Αντιγραφή", "btn_dl_txt": "↓ .txt", "rt_out_ph": "Η μορφοποιημένη μετάφραση θα εμφανιστεί εδώ…", "btn_copy_rt": "⧉ Αντιγραφή κειμένου", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ Πίνακας", "rt_tb_clear": "✕ Εκκαθάριση", "file_title": "Ρίξτε το αρχείο σας εδώ", "file_sub": "ή κάντε κλικ για αναζήτηση — υποστηριζόμενες μορφές:", "file_out_label": "Μεταφρασμένη έξοδος", "btn_dl_file": "↓ Λήψη μεταφρασμένου αρχείου", "btn_copy_file": "⧉ Αντιγραφή κειμένου", "powered": "Τροφοδοτείται από <span>Claude AI</span> — απεριόριστο κείμενο · μορφοποίηση · 8 μορφές · 500+ γλώσσες", "sec_b_label": "Για αρχάριους", "sec_b_h2": "Απλό &amp; <em style=\"font-style:italic;color:var(--teal)\">άμεσο</em>", "sec_b_desc": "Χωρίς εγγραφή. Επικολλήστε κείμενο και λάβετε μετάφραση σε δευτερόλεπτα.", "sec_a_label": "Για χρήστες", "sec_a_h2": "Εξυπνότερο &amp; <em style=\"font-style:italic;color:var(--gold2)\">συμφραζόμενα</em>", "sec_a_desc": "Υψηλότερη ποιότητα με πλαίσιο λεξικού, δίγλωσσα παραδείγματα και φόρουμ κοινότητας.", "sec_p_label": "Για επαγγελματίες", "sec_p_h2": "Εργαλεία CAT &amp; <em style=\"font-style:italic;color:var(--violet)\">ροές εργασίας</em>", "sec_p_desc": "Πλήρεις μνήμες μετάφρασης, διαχείριση ορολογίας και συνεργατικά περιβάλλοντα CAT.", "div1": "Αναβαθμίστε τη ροή μετάφρασής σας", "div2": "Κατασκευασμένο για μεταφραστές, γλωσσολόγους & προγραμματιστές", "no_results": "Κανένα εργαλείο δεν αντιστοιχεί στην αναζήτηση. Δοκιμάστε άλλες λέξεις-κλειδιά.", "footer_desc": "Ο πληρέστερος κατάλογος δωρεάν εργαλείων μετάφρασης. Χωρίς διαφημίσεις. Χωρίς συνδέσμους.", "footer_copy": "© 2026 TranslateHub · Κατασκευασμένο με φροντίδα για τη γλωσσική κοινότητα · Δικαιοδοσία: Ρουμανία / ΕΕ", "footer_gdpr": "🔒 Απόρρητο & GDPR", "footer_cookies": "🍪 Πολιτική cookies", "footer_impressum": "📋 Εκδότης", "footer_access": "♿ Προσβασιμότητα", "footer_tech": "⚙ Τεχνολογίες & Διαφάνεια", "footer_terms": "⚖ Όροι & Αποποίηση", "legal_title": "⚖ Νομικά & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 Cookies", "ltab_impressum": "📋 Εκδότης", "ltab_access": "♿ Προσβασιμότητα", "ltab_tech": "⚙ Τεχνολογίες", "ltab_terms": "⚖ Όροι"},
+  "hi": {"hero_eyebrow": "मुफ़्त अनुवाद उपकरण", "hero_h1": "हर<br><em>भाषा बोलें।</em>", "hero_sub": "सर्वोत्तम मुफ़्त मशीन अनुवाद उपकरणों की संपूर्ण निर्देशिका — दैनिक उपयोग से लेकर पेशेवर CAT वर्कफ़्लो तक।", "stat1": "चयनित उपकरण", "stat2": "कौशल स्तर", "stat3": "निःशुल्क", "stat4": "भाषाएँ", "nav1": "शुरुआती", "nav2": "उपयोगकर्ता", "nav3": "पेशेवर", "nav4": "अनुवाद", "search_nav": "खोजें…", "ui_lang_ph": "भाषा खोजें…", "tr_eyebrow": "AI-संचालित अनुवाद", "mode_text": "✎ सामान्य पाठ", "mode_rich": "❡ समृद्ध पाठ", "mode_file": "⇪ फ़ाइल अपलोड", "src_label": "स्रोत पाठ", "src_ph": "यहाँ पाठ टाइप करें या पेस्ट करें — कोई वर्ण सीमा नहीं…", "btn_clear": "✕ साफ़ करें", "tgt_label": "अनुवाद", "tr_out_ph": "अनुवाद यहाँ दिखाई देगा…", "btn_copy": "⧉ कॉपी", "btn_dl_txt": "↓ .txt", "rt_out_ph": "स्वरूपित अनुवाद यहाँ दिखाई देगा…", "btn_copy_rt": "⧉ पाठ कॉपी करें", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ तालिका", "rt_tb_clear": "✕ साफ़ करें", "file_title": "यहाँ फ़ाइल छोड़ें", "file_sub": "या ब्राउज़ करने के लिए क्लिक करें — समर्थित प्रारूप:", "file_out_label": "अनुवादित आउटपुट", "btn_dl_file": "↓ अनुवादित फ़ाइल डाउनलोड करें", "btn_copy_file": "⧉ पाठ कॉपी करें", "powered": "<span>Claude AI</span> द्वारा संचालित — असीमित पाठ · स्वरूपण · 8 प्रारूप · 500+ भाषाएँ", "sec_b_label": "शुरुआती लोगों के लिए", "sec_b_h2": "सरल &amp; <em style=\"font-style:italic;color:var(--teal)\">तत्काल</em>", "sec_b_desc": "कोई पंजीकरण नहीं। पाठ पेस्ट करें और सेकंडों में अनुवाद पाएं।", "sec_a_label": "उपयोगकर्ताओं के लिए", "sec_a_h2": "स्मार्ट &amp; <em style=\"font-style:italic;color:var(--gold2)\">संदर्भात्मक</em>", "sec_a_desc": "शब्दकोश संदर्भ, द्विभाषी उदाहरण और समुदाय फ़ोरम के साथ उच्च गुणवत्ता।", "sec_p_label": "पेशेवरों के लिए", "sec_p_h2": "CAT उपकरण &amp; <em style=\"font-style:italic;color:var(--violet)\">वर्कफ़्लो</em>", "sec_p_desc": "पूर्ण अनुवाद मेमोरी, शब्दावली प्रबंधन और सहयोगी CAT वातावरण।", "div1": "अपना अनुवाद वर्कफ़्लो बेहतर बनाएं", "div2": "अनुवादकों, भाषाविदों और डेवलपर्स के लिए", "no_results": "खोज से कोई उपकरण नहीं मिला। अन्य कीवर्ड आज़माएं।", "footer_desc": "मुफ़्त अनुवाद उपकरणों की सबसे पूर्ण निर्देशिका। कोई विज्ञापन नहीं। कोई संबद्ध लिंक नहीं।", "footer_copy": "© 2026 TranslateHub · भाषा समुदाय के लिए बनाया गया · अधिकार क्षेत्र: रोमानिया / EU", "footer_gdpr": "🔒 गोपनीयता & GDPR", "footer_cookies": "🍪 कुकी नीति", "footer_impressum": "📋 प्रकाशक जानकारी", "footer_access": "♿ अभिगम्यता", "footer_tech": "⚙ तकनीक & पारदर्शिता", "footer_terms": "⚖ शर्तें & अस्वीकरण", "legal_title": "⚖ कानूनी & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 कुकीज़", "ltab_impressum": "📋 प्रकाशक", "ltab_access": "♿ अभिगम्यता", "ltab_tech": "⚙ तकनीक", "ltab_terms": "⚖ शर्तें"},
+};
+
+const UI_BASE={
+  hero_eyebrow:'Free Translation Tools',
+  hero_h1:'Speak every<br><em>language.</em>',
+  hero_sub:"The definitive curated directory of the world’s best free machine translators and language tools — from casual use to professional CAT workflows.",
+  stat1:'Curated tools',stat2:'Skill levels',stat3:'Free to use',stat4:'Languages covered',
+  nav1:'Beginners',nav2:'Average',nav3:'Professionals',nav4:'Translate',
+  search_nav:'Search…',
+  ui_lang_ph:'Search language…',
+  tr_eyebrow:'AI-Powered Translation',
+  tr_h2:'Translate <em style="font-style:italic;color:var(--violet)">anything</em>',
+  tr_sub:'500+ languages · Unlimited length · Rich formatting · 8 file types',
+  mode_text:'✎ Plain Text',mode_rich:'❡ Rich Text',mode_file:'⇪ File Upload',
+  src_label:'Source text',
+  src_ph:'Type or paste text here — no character limit. Very large texts are translated in automatic chunks…',
+  btn_clear:'✕ Clear',
+  tgt_label:'Translation',
+  tr_out_ph:'Translation will appear here…',
+  btn_copy:'⧉ Copy',btn_dl_txt:'↓ .txt',
+  rt_out_ph:'Formatted translation will appear here, preserving all structure…',
+  btn_copy_rt:'⧉ Copy text',btn_dl_rt:'↓ .html',
+  rt_tb_table:'⊞ Table',rt_tb_clear:'✕ Clear',
+  file_title:'Drop your file here',
+  file_sub:'or click to browse — supports these formats:',
+  file_out_label:'Translated output',
+  btn_dl_file:'↓ Download translated file',btn_copy_file:'⧉ Copy text',
+  powered:'Powered by <span>Claude AI</span> — unlimited text · rich formatting · 8 file formats · 500+ languages',
+  sec_b_label:'For Beginners',
+  sec_b_h2:'Simple &amp; <em style="font-style:italic;color:var(--teal)">instant</em>',
+  sec_b_desc:'No sign-up required. Just paste your text and get a translation in seconds.',
+  sec_a_label:'For Average Users',
+  sec_a_h2:'Smarter &amp; <em style="font-style:italic;color:var(--gold2)">contextual</em>',
+  sec_a_desc:'Higher quality output with dictionary context, bilingual examples, and community forums.',
+  sec_p_label:'For Professionals',
+  sec_p_h2:'CAT tools &amp; <em style="font-style:italic;color:var(--violet)">workflows</em>',
+  sec_p_desc:'Full translation memories, terminology management, and collaborative CAT environments.',
+  div1:'Elevate your translation workflow',
+  div2:'Built for translators, linguists & developers',
+  no_results:'No tools match your search. Try different keywords.',
+  footer_desc:'The most complete directory of free translation tools — from everyday use to professional CAT workflows. No advertising. No affiliate links.',
+  footer_copy:'© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union',
+  footer_gdpr:'🔒 Privacy & GDPR',
+  footer_cookies:'🍪 Cookie Policy',
+  footer_impressum:'📋 Impressum',
+  footer_access:'♿ Accessibility',
+  footer_tech:'⚙ Technologies & Transparency',
+  footer_terms:'⚖ Terms & Disclaimer',
+  legal_title:'⚖ Legal & GDPR',
+  ltab_gdpr:'🔒 GDPR',ltab_cookies:'🍪 Cookies',ltab_impressum:'📋 Impressum',
+  ltab_access:'♿ Accessibility',ltab_tech:'⚙ Technologies',ltab_terms:'⚖ Terms',
+};
+
+// UI_DOM: [key, CSS selector, prop]
+// props: t=textContent h=innerHTML ph=placeholder tn=last-textnode pe=placeholder-element
+const UI_DOM=[
+  ['hero_eyebrow','.hero-eyebrow','t'],
+  ['hero_h1','h1','h'],
+  ['hero_sub','.hero-sub','t'],
+  ['stat1','.hero-stats .stat:nth-child(1) .stat-label','t'],
+  ['stat2','.hero-stats .stat:nth-child(2) .stat-label','t'],
+  ['stat3','.hero-stats .stat:nth-child(3) .stat-label','t'],
+  ['stat4','.hero-stats .stat:nth-child(4) .stat-label','t'],
+  ['nav1','.nav-links a:nth-child(1)','t'],
+  ['nav2','.nav-links a:nth-child(2)','t'],
+  ['nav3','.nav-links a:nth-child(3)','t'],
+  ['nav4','.nav-links a:nth-child(4)','t'],
+  ['search_nav','#search-nav','ph'],
+  ['ui_lang_ph','#ui-lang-search-input','ph'],
+  ['tr_eyebrow','.translator-compact-label','tn'],
+  ['mode_text','.mode-tab[data-mode="text"]','t'],
+  ['mode_rich','.mode-tab[data-mode="rich"]','t'],
+  ['mode_file','.mode-tab[data-mode="file"]','t'],
+  ['src_label','#src-panel .tr-panel-label','t'],
+  ['src_ph','#tr-source','ph'],
+  ['btn_clear','#clear-btn','t'],
+  ['tgt_label','#tgt-panel .tr-panel-label','t'],
+  ['tr_out_ph','#tr-output','pe'],
+  ['btn_copy','#copy-btn','t'],
+  ['btn_dl_txt','#dl-txt-btn','t'],
+  ['rt_out_ph','#rt-output','pe'],
+  ['btn_copy_rt','#copy-rt-btn','t'],
+  ['btn_dl_rt','#dl-rt-btn','t'],
+  ['rt_tb_table','#insert-table-btn','t'],
+  ['rt_tb_clear','#clear-rt-btn','t'],
+  ['file_title','.file-drop-title','t'],
+  ['file_sub','.file-drop-sub','t'],
+  ['file_out_label','.file-output-label','t'],
+  ['btn_dl_file','#dl-file-btn','t'],
+  ['btn_copy_file','#copy-file-btn','t'],
+  ['powered','.powered-by','h'],
+  ['sec_b_label','#beginners .tier-label','tn'],
+  ['sec_b_h2','#beginners h2','h'],
+  ['sec_b_desc','#beginners .section-desc','t'],
+  ['sec_a_label','#average .tier-label','tn'],
+  ['sec_a_h2','#average h2','h'],
+  ['sec_a_desc','#average .section-desc','t'],
+  ['sec_p_label','#professionals .tier-label','tn'],
+  ['sec_p_h2','#professionals h2','h'],
+  ['sec_p_desc','#professionals .section-desc','t'],
+  ['div1','.divider:nth-of-type(1) span','t'],
+  ['div2','.divider:nth-of-type(2) span','t'],
+  ['no_results','#no-results p','t'],
+  ['footer_desc','footer > p:nth-child(2)','h'],
+  ['footer_copy','footer > p:last-child','h'],
+  ['footer_gdpr','.footer-legal-row button:nth-child(1)','t'],
+  ['footer_cookies','.footer-legal-row button:nth-child(2)','t'],
+  ['footer_impressum','.footer-legal-row button:nth-child(3)','t'],
+  ['footer_access','.footer-legal-row button:nth-child(4)','t'],
+  ['footer_tech','.footer-legal-row button:nth-child(5)','t'],
+  ['footer_terms','.footer-legal-row button:nth-child(6)','t'],
+  ['legal_title','#legal-modal-title','h'],
+  ['ltab_gdpr','.legal-tab[data-panel="gdpr"]','t'],
+  ['ltab_cookies','.legal-tab[data-panel="cookies"]','t'],
+  ['ltab_impressum','.legal-tab[data-panel="impressum"]','t'],
+  ['ltab_access','.legal-tab[data-panel="accessibility"]','t'],
+  ['ltab_tech','.legal-tab[data-panel="tech"]','t'],
+  ['ltab_terms','.legal-tab[data-panel="disclaimer"]','t'],
+];
+
+function applyUI(strings){
+  let applied=0, failed=[];
+  UI_DOM.forEach(([key,sel,prop])=>{
+    if(!strings[key]) return;
+    const el=document.querySelector(sel);
+    if(!el){ failed.push(key+'→'+sel); return; }
+    try{
+      if(prop==='t') el.textContent=strings[key];
+      else if(prop==='h') el.innerHTML=strings[key];
+      else if(prop==='ph') el.placeholder=strings[key];
+      else if(prop==='tn'){
+        const nodes=[...el.childNodes].filter(n=>n.nodeType===3);
+        if(nodes.length) nodes[nodes.length-1].textContent=' '+strings[key];
+      } else if(prop==='pe'){
+        if(el.classList.contains('placeholder')) el.textContent=strings[key];
+      }
+      applied++;
+    }catch(e){ failed.push(key); }
+  });
+  console.log('[i18n] Applied: '+applied+'/'+UI_DOM.length+(failed.length?' | Failed: '+failed.join(', '):''));
+}
+
+function extractJSON(text){
+  if(!text) throw new Error('empty response');
+  const t=text.trim();
+  try{ return JSON.parse(t); }catch(e){}
+  const stripped=t.replace(/^```(?:json)?\s*/,'').replace(/\s*```\s*$/,'').trim();
+  try{ return JSON.parse(stripped); }catch(e){}
+  const m=t.match(/\{[\s\S]*\}/);
+  if(m){ try{ return JSON.parse(m[0]); }catch(e){} }
+  throw new Error('no valid JSON in response — raw: '+t.slice(0,200));
+}
+
+let uiLang={code:'en',name:'English'};
+
+/* ── UI LANG TOAST ── */
+let _toastTimer=null;
+function showToast(msg,type,duration){
+  const t=document.getElementById('ui-toast');
+  if(!t) return;
+  clearTimeout(_toastTimer);
+  t.textContent=msg;
+  t.className='show'+(type?' '+type:'');
+  if(duration!==0) _toastTimer=setTimeout(()=>t.className='',duration||3000);
+}
+
+async function setUILang(code,name){
+  if(code===uiLang.code){ closeUILang(); return; }
+  uiLang={code,name};
+  closeUILang();
+
+  const btn=document.getElementById('ui-lang-btn');
+  const label=document.getElementById('ui-lang-label');
+  btn.disabled=true;
+  label.textContent='\u21bb';
+  buildLangPickerItems('');
+
+  const shortCode=code.slice(0,4).toUpperCase();
+
+  // ── 1. Use embedded translations (instant, no API) ────────────────────────
+  if(UI_TRANSLATIONS[code]){
+    applyUI(UI_TRANSLATIONS[code]);
+    // Cache to sessionStorage for consistency
+    try{ sessionStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code])); }catch(e){}
+    label.textContent=shortCode;
+    btn.disabled=false;
+    buildLangPickerItems('');
+    showToast('\u2713 '+name,'ok',2000);
+    return;
+  }
+
+  // ── 2. Try sessionStorage cache ───────────────────────────────────────────
+  try{
+    const cached=sessionStorage.getItem('ui_'+code);
+    if(cached){
+      applyUI(JSON.parse(cached));
+      label.textContent=shortCode;
+      btn.disabled=false;
+      buildLangPickerItems('');
+      showToast('\u2713 '+name+' (cached)','ok',1500);
+      return;
+    }
+  }catch(e){}
+
+  // ── 3. Fall back to Claude API for non-embedded languages ─────────────────
+  showToast('\u21bb Translating interface to '+name+'\u2026','',0);
+  const keys=Object.keys(UI_BASE);
+  const BATCH=8;
+  const translated={};
+
+  for(let i=0; i<keys.length; i+=BATCH){
+    const bKeys=keys.slice(i,i+BATCH);
+    const bObj={};
+    bKeys.forEach(k=>{ bObj[k]=UI_BASE[k]; });
+    const bNum=Math.floor(i/BATCH)+1;
+    const bTotal=Math.ceil(keys.length/BATCH);
+    showToast('\u21bb '+name+' — '+bNum+'/'+bTotal,'',0);
+
+    const sys='Professional translator. Return ONLY a valid JSON object (no markdown, no preamble). '
+      +'Translate the string values to '+name+'. '
+      +'Keep all JSON keys unchanged. '
+      +'Preserve HTML tags, CSS vars (var(--x)), emoji, HTML entities (&amp; &lt;) exactly. '
+      +'Translate only the human-readable words.';
+    const user='Translate to '+name+':\n'+JSON.stringify(bObj,null,1);
+
+    try{
+      const raw=await callAPI(user,sys);
+      const parsed=extractJSON(raw);
+      Object.assign(translated,parsed);
+      applyUI(translated);
+    }catch(e){
+      console.error('[i18n] batch '+bNum+' failed:',e);
+      checkAndShowBanner(e);
+      uiLang={code:'en',name:'English'};
+      label.textContent='EN';
+      btn.disabled=false;
+      showToast('\u26a0 Translation failed: '+e.message.slice(0,60),'error',5000);
+      return;
+    }
+  }
+
+  try{ sessionStorage.setItem('ui_'+code,JSON.stringify(translated)); }catch(e){}
+  label.textContent=shortCode;
+  btn.disabled=false;
+  buildLangPickerItems('');
+  showToast('\u2713 '+name,'ok',2500);
+}
+
+async function translateLegalIfNeeded(){
+  const code=uiLang.code;
+  if(code==='en') return;
+  const lKey='legal_'+code;
+  const lb=document.querySelector('.legal-body');
+  const cached=sessionStorage.getItem(lKey);
+  if(cached){lb.innerHTML=cached;rebindLegalTabs();return;}
+  if(!lb.dataset.original) lb.dataset.original=lb.innerHTML;
+  lb.innerHTML='<div class="ui-lang-translating">\u21bb Translating Legal & GDPR to '+uiLang.name+'\u2026</div>';
+  const sysP='You are a professional translator. Translate the visible text in this HTML to the target language. Keep ALL HTML tags, class names, data-* attributes, href links, mailto links, code snippets, and CSS variable names exactly unchanged. Translate only human-readable text content.';
+  const uMsg='Translate to '+uiLang.name+':\n'+lb.dataset.original;
+  try{
+    const res=await callAPI(uMsg,sysP);
+    const clean=res.replace(/^```(?:html)?\s*/,'').replace(/\s*```$/,'').trim();
+    sessionStorage.setItem(lKey,clean);
+    lb.innerHTML=clean;
+    rebindLegalTabs();
+  }catch(e){
+    lb.innerHTML=lb.dataset.original;
+    rebindLegalTabs();
+    console.error('Legal translation error',e);
+  }
+}
+
+/* ── UI LANGUAGE PICKER ── */
+function openUILang(){
+  const panel=document.getElementById('ui-lang-panel');
+  const isOpen=!panel.classList.contains('hidden');
+  panel.classList.toggle('hidden',isOpen);
+  if(!isOpen) setTimeout(()=>document.getElementById('ui-lang-search-input').focus(),40);
+}
+function closeUILang(){
+  const p=document.getElementById('ui-lang-panel');
+  if(p) p.classList.add('hidden');
+}
+
+function buildLangPickerItems(filter){
+  const list=document.getElementById('ui-lang-list');
+  if(!list) return;
+  const allLangs=_pickerLangs||[];
+  list.innerHTML='';
+  const fl=filter?(filter+'').toLowerCase():'';
+  const filtered=fl?allLangs.filter(([n])=>n.toLowerCase().includes(fl)):allLangs;
+  filtered.slice(0,100).forEach(([name,code])=>{
+    const btn=document.createElement('button');
+    btn.className='ui-lang-item';
+    const isActive=code===uiLang.code;
+    btn.textContent=name+(isActive?' ✓':'');
+    if(isActive) btn.style.color='var(--gold2)';
+    btn.onclick=()=>setUILang(code,name);
+    list.appendChild(btn);
+  });
+}
+let _pickerLangs=[];
+(function buildUILangList(){
+  const list=document.getElementById('ui-lang-list');
+  const searchInput=document.getElementById('ui-lang-search-input');
+  if(!list||!searchInput) return;
+  // Priority languages shown first
+  const priority=[
+    ['English','en'],['Romanian','ro'],['French','fr'],['Spanish','es'],
+    ['German','de'],['Italian','it'],['Portuguese','pt'],['Russian','ru'],
+    ['Chinese (Simplified)','zh-Hans'],['Japanese','ja'],['Arabic','ar'],
+    ['Korean','ko'],['Hindi','hi'],['Turkish','tr'],['Polish','pl'],
+    ['Dutch','nl'],['Swedish','sv'],['Norwegian','no'],['Danish','da'],
+    ['Finnish','fi'],['Czech','cs'],['Slovak','sk'],['Hungarian','hu'],
+    ['Greek','el'],['Bulgarian','bg'],['Ukrainian','uk'],['Serbian','sr'],
+    ['Croatian','hr'],['Vietnamese','vi'],['Thai','th'],['Indonesian','id'],
+  ];
+  const priorityCodes=new Set(priority.map(([,c])=>c));
+  const rest=LANGUAGES.filter(([,c])=>!priorityCodes.has(c));
+  const allLangs=[...priority,...rest];
+
+  _pickerLangs=allLangs;
+  buildLangPickerItems('');
+  searchInput.addEventListener('input',e=>buildLangPickerItems(e.target.value));
+  document.getElementById('ui-lang-btn').addEventListener('click',()=>buildLangPickerItems(searchInput.value));
+  // Auto-show API key banner when running locally
+  (function(){
+    if(window.location.protocol==='file:'||window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'){
+      const b=document.getElementById('apikey-banner');
+      if(b) b.classList.remove('hidden');
+      if(getApiKey()) showApiKeyStatus('✓ Key loaded from storage','ok');
+    }
+  })();
+
+  // Close on outside click
+  document.addEventListener('click',e=>{
+    const wrap=document.getElementById('ui-lang-wrap');
+    if(wrap&&!wrap.contains(e.target)) closeUILang();
+  },{passive:true});
+})();
+</script>
+<div id="ui-toast"></div>
+</body>
+</html>
