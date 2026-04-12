@@ -3,19 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.anthropic.com https://cdn.jsdelivr.net; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+<meta name="theme-color" content="#0b0e14">
+<meta name="color-scheme" content="dark">
 <title>TranslateHub — Best Free Translation Tools Directory</title>
-<meta name="description" content="The definitive curated directory of the world's best free machine translators — Google Translate, DeepL, MateCat, OmegaT and 20+ more. Plus a built-in AI translator powered by Claude.">
+<meta name="description" content="Curated directory of 22 free translation tools — Google Translate, DeepL, MateCat, OmegaT, LibreTranslate and more. Plus a built-in AI translator powered by Claude.">
 <meta property="og:title" content="TranslateHub — Best Free Translation Tools">
-<meta property="og:description" content="Curated directory of 20+ free translation tools for beginners, average users and professionals. Built-in AI translation powered by Claude.">
+<meta property="og:description" content="Curated directory of 22 free translation tools for beginners, average users and professionals. Built-in AI translation powered by Claude.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://chiuta.github.io/TranslateHub/">
+<meta property="og:url" content="./">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230b0e14'/%3E%3Ctext x='600' y='300' font-family='Georgia,serif' font-size='120' font-style='italic' text-anchor='middle' fill='%23e8a825'%3ETranslateHub%3C/text%3E%3Ctext x='600' y='380' font-family='Arial,sans-serif' font-size='36' text-anchor='middle' fill='%238a8a9a'%3EBest Free Translation Tools%3C/text%3E%3C/svg%3E">
+<meta property="og:image:type" content="image/svg+xml">
+<meta name="keywords" content="translation tools, free translator, CAT tools, Claude AI, Google Translate, DeepL, OmegaT, MateCat, LibreTranslate, machine translation directory">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TranslateHub — Best Free Translation Tools">
-<meta name="twitter:description" content="20+ free translation tools curated for beginners, average users and professionals. Built-in AI translator.">
-<link rel="canonical" href="https://chiuta.github.io/TranslateHub/">
+<meta name="twitter:description" content="22 free translation tools curated for beginners, average users and professionals. Built-in AI translator.">
+<link rel="canonical" href="./">
+<link rel="alternate" hreflang="x-default" href="./">
+<link rel="alternate" hreflang="en" href="./">
+<link rel="alternate" hreflang="ro" href="./">
+<link rel="alternate" hreflang="fr" href="./">
+<link rel="alternate" hreflang="es" href="./">
+<link rel="alternate" hreflang="de" href="./">
+<link rel="alternate" hreflang="it" href="./">
+<link rel="alternate" hreflang="pt" href="./">
+<link rel="alternate" hreflang="ru" href="./">
+<link rel="alternate" hreflang="zh" href="./">
+<link rel="alternate" hreflang="ja" href="./">
+<link rel="alternate" hreflang="ar" href="./">
+<link rel="alternate" hreflang="ko" href="./">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0e14'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' font-weight='500' text-anchor='middle' fill='%23e8a825'%3ET%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"TranslateHub","description":"Curated directory of 22 free translation tools plus a built-in AI translator.","inLanguage":"en","isFamilyFriendly":true,"about":{"@type":"Thing","name":"Free translation tools"}}
+</script>
 <style>
   :root {
     --bg: #0b0e14;
@@ -36,12 +60,12 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 68px; /* nav height + breathing room */
+    scroll-padding-top: var(--nav-h, 68px); /* updated dynamically via JS */
   }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Barlow', sans-serif;
+    font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     font-weight: 300;
     line-height: 1.7;
     min-height: 100vh;
@@ -85,7 +109,12 @@
     padding: 2rem 2.5rem 2rem;
     position: relative;
     z-index: 1;
-    overflow-y: auto;
+  }
+  /* Short viewports: stack vertical to avoid double-scroll */
+  @media (max-height: 900px) {
+    .hero { min-height: auto; grid-template-columns: 1fr; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 2rem 1.5rem; }
+    .hero-right { padding: 1.5rem 2rem 2rem; }
   }
   .hero-bg {
     position: absolute;
@@ -226,7 +255,7 @@
   /* --- SECTION --- */
   .section {
     margin-bottom: 6rem;
-    scroll-margin-top: 72px;
+    scroll-margin-top: calc(var(--nav-h, 68px) + 8px);
   }
   .section-header {
     display: flex;
@@ -238,7 +267,6 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-  .section-header-left {}
   .tier-label {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 0.8rem;
@@ -654,29 +682,6 @@
 
   .powered-by span { color: var(--violet); opacity: 0.8; }
 
-  /* special badges */
-  .best-pick { position: absolute; top: 1.2rem; right: 1.2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: var(--gold); color: #1a1200; padding: 0.2rem 0.6rem; border-radius: 4px; }
-  /* --- NO RESULTS --- */
-  #no-results { text-align: center; padding: 4rem 2rem; display: none; grid-column: 1/-1; }
-  #no-results p { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--muted); font-style: italic; }
-  /* --- FOOTER --- */
-  footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; position: relative; z-index: 1; }
-  footer a { color: var(--gold); text-decoration: none; }
-  /* --- STICKY NAV --- */
-  .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(11,14,20,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 500; color: var(--gold2); letter-spacing: -0.02em; }
-  .nav-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .nav-link { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 0.35rem 0.9rem; border-radius: 50px; transition: all 0.2s; color: var(--muted); border: 1px solid transparent; }
-  .nav-link:hover { color: var(--text); border-color: var(--border); }
-  .nav-search { background: var(--bg3); border: 1px solid var(--border); border-radius: 50px; padding: 0.4rem 1rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 0.85rem; font-weight: 300; outline: none; width: 200px; transition: border-color 0.2s; }
-  .nav-search::placeholder { color: var(--muted); }
-  .nav-search:focus { border-color: var(--gold); }
-  /* --- DIVIDER --- */
-  .divider { text-align: center; margin: 1rem 0 3rem; position: relative; }
-  .divider::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--border); }
-  .divider span { position: relative; background: var(--bg); padding: 0 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--muted); }
-
-
   /* --- LEGAL MODAL --- */
   .legal-overlay {
     display: none;
@@ -915,6 +920,37 @@
   #ui-toast.error { border-color: rgba(251,113,133,0.5); color: var(--rose); }
   #ui-toast.ok { border-color: rgba(45,212,191,0.4); color: var(--teal); }
 
+  /* --- A11Y: SKIP LINK + FOCUS --- */
+  .skip-link {
+    position: absolute; top: -40px; left: 8px;
+    background: var(--gold); color: #0d0a1f;
+    padding: 0.5rem 1rem; border-radius: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; letter-spacing: 0.08em;
+    text-decoration: none; z-index: 10000;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 8px; outline: 2px solid var(--gold2); outline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+  .visually-hidden {
+    position: absolute !important; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
+
+  /* --- REDUCED MOTION --- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .glyph { display: none; }
+    .swap-btn:hover { transform: none; }
+    .translate-btn.loading .btn-icon { animation: none; }
+  }
+
   /* --- RESPONSIVE --- */
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; min-height: auto; }
@@ -935,6 +971,8 @@
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- Floating glyphs background -->
 <div class="glyphs" aria-hidden="true">
@@ -958,12 +996,15 @@
     <a href="#professionals" class="nav-link">Professionals</a>
     <a href="#translator" class="nav-link" style="color:var(--violet)">Translate</a>
   </div>
-  <div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;">
-    <input type="text" id="search-nav" class="nav-search" placeholder="Search…" autocomplete="off">
+  <div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;" role="search">
+    <label for="search-nav" class="visually-hidden">Search translation tools</label>
+    <input type="text" id="search-nav" class="nav-search" placeholder="Search…" autocomplete="off" aria-label="Search translation tools" aria-describedby="search-results-count">
+    <span id="search-results-count" class="visually-hidden" aria-live="polite"></span>
     <div class="ui-lang-wrap" id="ui-lang-wrap">
-      <button id="ui-lang-btn" onclick="openUILang()" title="Interface language">🌐 <span id="ui-lang-label">EN</span></button>
-      <div class="ui-lang-panel hidden" id="ui-lang-panel">
+      <button id="ui-lang-btn" type="button" onclick="openUILang()" title="Interface language" aria-label="Change interface language" aria-haspopup="listbox" aria-expanded="false">🌐 <span id="ui-lang-label">EN</span></button>
+      <div class="ui-lang-panel hidden" id="ui-lang-panel" role="listbox" aria-label="Interface languages">
         <div class="ui-lang-search-wrap">
+          <label for="ui-lang-search-input" class="visually-hidden">Search language</label>
           <input type="text" id="ui-lang-search-input" placeholder="Search language…" autocomplete="off">
         </div>
         <div class="ui-lang-list" id="ui-lang-list"></div>
@@ -973,13 +1014,14 @@
 </nav>
 
 <!-- API KEY BANNER — shown when AI translation fails due to missing auth -->
-<div id="apikey-banner" class="hidden">
+<div id="apikey-banner" class="hidden" role="region" aria-label="API key configuration">
   <span><strong>🔑 API key required</strong> — add your Anthropic key to enable AI translation on this hosting.</span>
-  <input type="password" id="apikey-input" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
-  <button id="apikey-save-btn" onclick="saveApiKey()">Save key</button>
-  <button id="apikey-clear-btn" onclick="clearApiKey()">Clear</button>
+  <label for="apikey-input" class="visually-hidden">Anthropic API key</label>
+  <input type="password" id="apikey-input" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false" aria-label="Anthropic API key">
+  <button id="apikey-save-btn" type="button" onclick="saveApiKey()">Save key</button>
+  <button id="apikey-clear-btn" type="button" onclick="clearApiKey()">Clear</button>
   <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--gold);text-decoration:none;flex-shrink:0;">Get key ↗</a>
-  <span id="apikey-status"></span>
+  <span id="apikey-status" role="status" aria-live="polite"></span>
 </div>
 
 <!-- Hero + Translator -->
@@ -994,7 +1036,7 @@
 
     <div class="hero-stats">
       <div class="stat">
-        <span class="stat-num">20+</span>
+        <span class="stat-num">22</span>
         <span class="stat-label">Curated tools</span>
       </div>
       <div class="stat">
@@ -1006,7 +1048,7 @@
         <span class="stat-label">Free to use</span>
       </div>
       <div class="stat">
-        <span class="stat-num">200+</span>
+        <span class="stat-num">500+</span>
         <span class="stat-label">Languages covered</span>
       </div>
     </div>
@@ -1014,50 +1056,52 @@
   </div>
 
   <!-- RIGHT: AI translator -->
-  <div class="hero-right" id="translator" style="scroll-margin-top:68px;">
+  <div class="hero-right" id="translator" style="scroll-margin-top:calc(var(--nav-h, 68px) + 8px);">
     <div class="translator-inner">
       <div class="translator-compact-label">
         <span class="dot"></span>
         AI-Powered Translation
       </div>
 
-      <div class="mode-tabs">
-        <button class="mode-tab active" data-mode="text">✎ Plain Text</button>
-        <button class="mode-tab" data-mode="rich">❡ Rich Text</button>
-        <button class="mode-tab" data-mode="file">⇪ File Upload</button>
+      <div class="mode-tabs" role="tablist" aria-label="Translation input mode">
+        <button class="mode-tab active" type="button" data-mode="text" role="tab" aria-selected="true">✎ Plain Text</button>
+        <button class="mode-tab" type="button" data-mode="rich" role="tab" aria-selected="false">❡ Rich Text</button>
+        <button class="mode-tab" type="button" data-mode="file" role="tab" aria-selected="false">⇪ File Upload</button>
       </div>
 
       <div class="tr-controls">
         <div class="lang-select-wrap">
-          <select class="lang-select" id="src-lang">
+          <label for="src-lang" class="visually-hidden">Source language</label>
+          <select class="lang-select" id="src-lang" aria-label="Source language">
             <option value="auto">🔍 Auto-detect</option>
           </select>
         </div>
-        <button class="swap-btn" id="swap-btn" title="Swap languages">⇄</button>
+        <button class="swap-btn" type="button" id="swap-btn" title="Swap languages" aria-label="Swap source and target languages">⇄</button>
         <div class="lang-select-wrap">
-          <select class="lang-select" id="tgt-lang"></select>
+          <label for="tgt-lang" class="visually-hidden">Target language</label>
+          <select class="lang-select" id="tgt-lang" aria-label="Target language"></select>
         </div>
       </div>
 
       <!-- === TEXT MODE === -->
-      <div class="mode-panel" id="mode-text">
+      <div class="mode-panel" id="mode-text" role="tabpanel">
         <div class="tr-panels">
           <div class="tr-panel" id="src-panel">
-            <div class="tr-panel-label">Source text <span id="char-count" style="font-weight:300;font-style:italic;margin-left:0.5rem;text-transform:none;letter-spacing:0">0 chars</span></div>
-            <textarea class="tr-input" id="tr-source" placeholder="Type or paste text here — no character limit. Very large texts are translated in automatic chunks…"></textarea>
+            <div class="tr-panel-label"><label for="tr-source">Source text</label> <span id="char-count" style="font-weight:300;font-style:italic;margin-left:0.5rem;text-transform:none;letter-spacing:0">0 chars</span></div>
+            <textarea class="tr-input" id="tr-source" placeholder="Type or paste text here — no character limit. Very large texts are translated in automatic chunks…" aria-label="Source text" spellcheck="false"></textarea>
             <div class="tr-panel-footer">
-              <span id="word-count" class="char-count"></span>
-              <button class="icon-btn" id="clear-btn">✕ Clear</button>
+              <span id="word-count" class="char-count">0 words</span>
+              <button class="icon-btn" type="button" id="clear-btn" aria-label="Clear source text">✕ Clear</button>
             </div>
           </div>
           <div class="tr-panel" id="tgt-panel">
             <div class="tr-panel-label">Translation</div>
-            <div class="tr-output placeholder" id="tr-output">Translation will appear here…</div>
+            <div class="tr-output placeholder" id="tr-output" role="region" aria-live="polite" aria-label="Translation output">Translation will appear here…</div>
             <div class="tr-panel-footer">
-              <span id="detect-badge" class="char-count"></span>
+              <span id="detect-badge" class="char-count" aria-live="polite"></span>
               <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-                <button class="icon-btn" id="copy-btn">⧉ Copy</button>
-                <button class="icon-btn" id="dl-txt-btn" style="display:none">↓ .txt</button>
+                <button class="icon-btn" type="button" id="copy-btn" aria-label="Copy translation">⧉ Copy</button>
+                <button class="icon-btn" type="button" id="dl-txt-btn" style="display:none" aria-label="Download as text file">↓ .txt</button>
               </div>
             </div>
           </div>
@@ -1065,45 +1109,45 @@
       </div>
 
       <!-- === RICH TEXT MODE === -->
-      <div class="mode-panel hidden" id="mode-rich">
-        <div class="rt-toolbar">
-          <button class="rt-tb-btn" data-cmd="bold"><b>B</b></button>
-          <button class="rt-tb-btn" data-cmd="italic"><i>I</i></button>
-          <button class="rt-tb-btn" data-cmd="underline"><u>U</u></button>
-          <div class="rt-sep"></div>
-          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="h1">H1</button>
-          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="h2">H2</button>
-          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="h3">H3</button>
-          <button class="rt-tb-btn" data-cmd="formatBlock" data-val="p">¶</button>
-          <div class="rt-sep"></div>
-          <button class="rt-tb-btn" data-cmd="insertUnorderedList">• List</button>
-          <button class="rt-tb-btn" data-cmd="insertOrderedList">1. List</button>
-          <div class="rt-sep"></div>
-          <button class="rt-tb-btn" id="insert-table-btn">⊞ Table</button>
-          <div class="rt-sep"></div>
-          <button class="rt-tb-btn" id="clear-rt-btn">✕ Clear</button>
+      <div class="mode-panel hidden" id="mode-rich" role="tabpanel">
+        <div class="rt-toolbar" role="toolbar" aria-label="Text formatting">
+          <button class="rt-tb-btn" type="button" data-cmd="bold" aria-label="Bold"><b>B</b></button>
+          <button class="rt-tb-btn" type="button" data-cmd="italic" aria-label="Italic"><i>I</i></button>
+          <button class="rt-tb-btn" type="button" data-cmd="underline" aria-label="Underline"><u>U</u></button>
+          <div class="rt-sep" role="separator"></div>
+          <button class="rt-tb-btn" type="button" data-cmd="formatBlock" data-val="h1" aria-label="Heading 1">H1</button>
+          <button class="rt-tb-btn" type="button" data-cmd="formatBlock" data-val="h2" aria-label="Heading 2">H2</button>
+          <button class="rt-tb-btn" type="button" data-cmd="formatBlock" data-val="h3" aria-label="Heading 3">H3</button>
+          <button class="rt-tb-btn" type="button" data-cmd="formatBlock" data-val="p" aria-label="Paragraph">¶</button>
+          <div class="rt-sep" role="separator"></div>
+          <button class="rt-tb-btn" type="button" data-cmd="insertUnorderedList" aria-label="Bulleted list">• List</button>
+          <button class="rt-tb-btn" type="button" data-cmd="insertOrderedList" aria-label="Numbered list">1. List</button>
+          <div class="rt-sep" role="separator"></div>
+          <button class="rt-tb-btn" type="button" id="insert-table-btn" aria-label="Insert table">⊞ Table</button>
+          <div class="rt-sep" role="separator"></div>
+          <button class="rt-tb-btn" type="button" id="clear-rt-btn" aria-label="Clear rich text">✕ Clear</button>
         </div>
         <div class="rt-panels">
           <div>
-            <div class="rt-editor" id="rt-source" contenteditable="true" spellcheck="true"><p>Paste or type <strong>formatted text</strong> here. Use the toolbar to add <em>italic</em>, headings, lists, and tables.</p></div>
+            <div class="rt-editor" id="rt-source" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Rich text source"><p>Paste or type <strong>formatted text</strong> here. Use the toolbar to add <em>italic</em>, headings, lists, and tables.</p></div>
             <div style="padding:0.4rem 0 0;"><span id="rt-char-count" class="char-count"></span></div>
           </div>
           <div>
-            <div class="rt-output placeholder" id="rt-output">Formatted translation will appear here, preserving all structure…</div>
+            <div class="rt-output placeholder" id="rt-output" role="region" aria-live="polite" aria-label="Formatted translation output">Formatted translation will appear here, preserving all structure…</div>
             <div class="rt-panel-footer">
-              <button class="icon-btn" id="copy-rt-btn">⧉ Copy text</button>
-              <button class="icon-btn" id="dl-rt-btn">↓ .html</button>
+              <button class="icon-btn" type="button" id="copy-rt-btn" aria-label="Copy formatted text">⧉ Copy text</button>
+              <button class="icon-btn" type="button" id="dl-rt-btn" aria-label="Download as HTML file">↓ .html</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- === FILE MODE === -->
-      <div class="mode-panel hidden" id="mode-file">
-        <div class="file-drop" id="file-drop">
-          <div class="file-drop-icon">⇪</div>
+      <div class="mode-panel hidden" id="mode-file" role="tabpanel">
+        <div class="file-drop" id="file-drop" role="button" tabindex="0" aria-label="Upload file: drop here or click to browse">
+          <div class="file-drop-icon" aria-hidden="true">⇪</div>
           <div class="file-drop-title">Drop your file here</div>
-          <div class="file-drop-sub">or click to browse — supports these formats:</div>
+          <div class="file-drop-sub">or click to browse — supports these formats (max 2 MB):</div>
           <div class="file-type-chips">
             <span class="file-type-chip">.txt</span><span class="file-type-chip">.md</span><span class="file-type-chip">.html</span><span class="file-type-chip">.docx</span><span class="file-type-chip">.srt</span><span class="file-type-chip">.po</span><span class="file-type-chip">.csv</span><span class="file-type-chip">.json</span>
           </div>
@@ -1111,12 +1155,12 @@
         </div>
         <div class="file-info hidden" id="file-info">
           <div class="file-info-inner">
-            <span class="file-icon-big" id="file-icon-el">📄</span>
+            <span class="file-icon-big" id="file-icon-el" aria-hidden="true">📄</span>
             <div class="file-meta">
               <strong id="file-name-el">—</strong>
               <span id="file-size-el"></span>
             </div>
-            <button class="icon-btn" id="remove-file-btn">✕ Remove</button>
+            <button class="icon-btn" type="button" id="remove-file-btn" aria-label="Remove uploaded file">✕ Remove</button>
           </div>
         </div>
         <div class="file-preview-wrap hidden" id="file-preview-wrap">
@@ -1125,26 +1169,26 @@
         </div>
         <div class="file-output-wrap hidden" id="file-output-wrap">
           <div class="file-output-label">Translated output</div>
-          <div class="file-output" id="file-output"></div>
+          <div class="file-output" id="file-output" role="region" aria-live="polite" aria-label="Translated file output"></div>
           <div class="file-output-footer">
-            <button class="icon-btn" id="dl-file-btn">↓ Download translated file</button>
-            <button class="icon-btn" id="copy-file-btn">⧉ Copy text</button>
+            <button class="icon-btn" type="button" id="dl-file-btn" aria-label="Download translated file">↓ Download translated file</button>
+            <button class="icon-btn" type="button" id="copy-file-btn" aria-label="Copy translated text">⧉ Copy text</button>
           </div>
         </div>
       </div>
 
       <!-- PROGRESS BAR -->
-      <div class="tr-progress hidden" id="tr-progress">
+      <div class="tr-progress hidden" id="tr-progress" role="status" aria-live="polite">
         <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
         <div class="progress-info">
           <span class="progress-text" id="progress-text">Translating…</span>
-          <button class="icon-btn" id="cancel-btn" style="color:var(--rose);border-color:rgba(251,113,133,0.3)">✕ Cancel</button>
+          <button class="icon-btn" type="button" id="cancel-btn" style="color:var(--rose);border-color:rgba(251,113,133,0.3)" aria-label="Cancel translation">✕ Cancel</button>
         </div>
       </div>
 
       <div class="tr-action-row">
-        <button class="translate-btn" id="translate-btn">
-          <span class="btn-icon">✦</span> Translate
+        <button class="translate-btn" type="button" id="translate-btn">
+          <span class="btn-icon" aria-hidden="true">✦</span> Translate
         </button>
       </div>
       <div class="powered-by">Powered by <span>Claude AI</span> — unlimited text · rich formatting · 8 file formats · 500+ languages</div>
@@ -1153,7 +1197,7 @@
 </section>
 
 <!-- MAIN -->
-<main>
+<main id="main-content">
 
   <!-- ===== BEGINNERS ===== -->
   <section class="section" id="beginners">
@@ -1284,7 +1328,7 @@
     </div>
   </section>
 
-  <div class="divider"><span>Elevate your translation workflow</span></div>
+  <div class="divider" id="divider-1"><span>Elevate your translation workflow</span></div>
 
   <!-- ===== AVERAGE USERS ===== -->
   <section class="section" id="average">
@@ -1420,12 +1464,12 @@
           <div class="card-name">LibreTranslate</div>
           <div class="card-tagline">Free, open-source, and privacy-first</div>
         </div>
-        <p class="card-desc">100% open-source translation engine you can use on the web or self-host. No data is sent to commercial servers. Ideal for anyone privacy-conscious or organizations with confidential content. Free public API available.</p>
+        <p class="card-desc">100% open-source translation engine you can self-host or use via the demo site. No data is sent to commercial servers. Ideal for anyone privacy-conscious or organizations with confidential content. The public demo is rate-limited; serious use requires self-hosting (Docker / Python).</p>
         <div class="card-meta">
           <span class="tag">Open source</span>
           <span class="tag">Self-hostable</span>
           <span class="tag">Privacy-first</span>
-          <span class="tag">Free API</span>
+          <span class="tag">GDPR-safe</span>
         </div>
         <div class="card-footer">
           <div class="langs-badge"><strong>30+</strong> languages</div>
@@ -1442,7 +1486,7 @@
           <div class="card-name">Argos Translate</div>
           <div class="card-tagline">Full neural translation — completely offline</div>
         </div>
-        <p class="card-desc">Download language models and translate entirely on your device, with zero internet connection required. Open-source and GDPR-safe by design. Perfect for sensitive documents, travel without data, or air-gapped environments.</p>
+        <p class="card-desc">Download language models (~100 MB per pair) once and translate entirely on your device, with zero internet connection required. Open-source and GDPR-safe by design. Perfect for sensitive documents, travel without data, or air-gapped environments. Initial setup requires Python or the standalone desktop app.</p>
         <div class="card-meta">
           <span class="tag">Fully offline</span>
           <span class="tag">Neural MT</span>
@@ -1480,7 +1524,7 @@
     </div>
   </section>
 
-  <div class="divider"><span>Built for translators, linguists &amp; developers</span></div>
+  <div class="divider" id="divider-2"><span>Built for translators, linguists &amp; developers</span></div>
 
   <!-- ===== PROFESSIONALS ===== -->
   <section class="section" id="professionals">
@@ -1664,7 +1708,7 @@
           <div class="card-name">eTranslation (EC)</div>
           <div class="card-tagline">The European Commission's official MT service</div>
         </div>
-        <p class="card-desc">The European Commission's secure MT platform, built on OPUS-MT models trained on EU corpora. Free for public administrations, NGOs, universities, and businesses registered in the EU. Exceptional for legal, administrative, and formal texts.</p>
+        <p class="card-desc">The European Commission's secure MT platform, built on custom models trained on EU corpora. Free for public administrations, NGOs, universities, and businesses registered in the EU — requires an EU Login account and eligibility approval. Exceptional for legal, administrative, and formal texts.</p>
         <div class="card-meta">
           <span class="tag">EU trained corpora</span>
           <span class="tag">Secure &amp; GDPR</span>
@@ -1711,17 +1755,17 @@
 
 <!-- FOOTER -->
 <footer>
-  <p style="margin-bottom:0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--gold2)" data-i18n="footer_brand">TranslateHub</p>
-  <p style="max-width:520px;margin:0 auto 1rem;" data-i18n="footer_desc">The most complete directory of free translation tools — from everyday use to professional CAT workflows. No advertising. No affiliate links.</p>
+  <p id="footer-brand" style="margin-bottom:0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--gold2)">TranslateHub</p>
+  <p id="footer-desc" style="max-width:520px;margin:0 auto 1rem;">The most complete directory of free translation tools — from everyday use to professional CAT workflows. No advertising. No affiliate links.</p>
   <div class="footer-legal-row">
-    <button class="footer-legal-btn" onclick="openLegal('gdpr')" data-i18n="footer_gdpr">🔒 Privacy &amp; GDPR</button>
-    <button class="footer-legal-btn" onclick="openLegal('cookies')" data-i18n="footer_cookies">🍪 Cookie Policy</button>
-    <button class="footer-legal-btn" onclick="openLegal('impressum')" data-i18n="footer_impressum">📋 Impressum</button>
-    <button class="footer-legal-btn" onclick="openLegal('accessibility')" data-i18n="footer_access">♿ Accessibility</button>
-    <button class="footer-legal-btn" onclick="openLegal('tech')" data-i18n="footer_tech">⚙ Technologies &amp; Transparency</button>
-    <button class="footer-legal-btn" onclick="openLegal('disclaimer')" data-i18n="footer_terms">⚖ Terms &amp; Disclaimer</button>
+    <button class="footer-legal-btn" type="button" onclick="openLegal('gdpr')">🔒 Privacy &amp; GDPR</button>
+    <button class="footer-legal-btn" type="button" onclick="openLegal('cookies')">🍪 Cookie Policy</button>
+    <button class="footer-legal-btn" type="button" onclick="openLegal('impressum')">📋 Impressum</button>
+    <button class="footer-legal-btn" type="button" onclick="openLegal('accessibility')">♿ Accessibility</button>
+    <button class="footer-legal-btn" type="button" onclick="openLegal('tech')">⚙ Technologies &amp; Transparency</button>
+    <button class="footer-legal-btn" type="button" onclick="openLegal('disclaimer')">⚖ Terms &amp; Disclaimer</button>
   </div>
-  <p style="margin-top:1.25rem;font-size:0.78rem;color:rgba(138,138,154,0.45)" data-i18n="footer_copy">© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union</p>
+  <p id="footer-copy" style="margin-top:1.25rem;font-size:0.78rem;color:rgba(138,138,154,0.45)">© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union</p>
 </footer>
 
 <!-- LEGAL & GDPR MODAL -->
@@ -1729,31 +1773,39 @@
   <div class="legal-modal">
     <div class="legal-modal-header">
       <div class="legal-modal-title" id="legal-modal-title">⚖ Legal &amp; GDPR</div>
-      <button class="legal-close-btn" onclick="closeLegal()" aria-label="Închide">✕</button>
+      <button class="legal-close-btn" type="button" onclick="closeLegal()" aria-label="Close legal modal">✕</button>
     </div>
-    <div class="legal-tabs" role="tablist">
-      <button class="legal-tab active" data-panel="gdpr" role="tab">🔒 GDPR</button>
-      <button class="legal-tab" data-panel="cookies" role="tab">🍪 Cookies</button>
-      <button class="legal-tab" data-panel="impressum" role="tab">📋 Impressum</button>
-      <button class="legal-tab" data-panel="accessibility" role="tab">♿ Accessibility</button>
-      <button class="legal-tab" data-panel="tech" role="tab">⚙ Technologies</button>
-      <button class="legal-tab" data-panel="disclaimer" role="tab">⚖ Terms</button>
+    <div class="legal-tabs" role="tablist" aria-label="Legal sections">
+      <button class="legal-tab active" type="button" data-panel="gdpr" role="tab" aria-selected="true" aria-controls="panel-gdpr">🔒 GDPR</button>
+      <button class="legal-tab" type="button" data-panel="cookies" role="tab" aria-selected="false" aria-controls="panel-cookies">🍪 Cookies</button>
+      <button class="legal-tab" type="button" data-panel="impressum" role="tab" aria-selected="false" aria-controls="panel-impressum">📋 Impressum</button>
+      <button class="legal-tab" type="button" data-panel="accessibility" role="tab" aria-selected="false" aria-controls="panel-accessibility">♿ Accessibility</button>
+      <button class="legal-tab" type="button" data-panel="tech" role="tab" aria-selected="false" aria-controls="panel-tech">⚙ Technologies</button>
+      <button class="legal-tab" type="button" data-panel="disclaimer" role="tab" aria-selected="false" aria-controls="panel-disclaimer">⚖ Terms</button>
     </div>
     <div class="legal-body">
 
       <!-- GDPR -->
-      <div class="legal-panel active" id="panel-gdpr">
+      <div class="legal-panel active" id="panel-gdpr" role="tabpanel">
         <div class="legal-highlight">TranslateHub does not collect, store or process personal data. Text entered in the translation form is sent directly to the Anthropic API (Claude) and is not retained by this site.</div>
         <h3>Legal basis (GDPR Art. 6)</h3>
-        <p>Processing of user-entered text for translation purposes is carried out exclusively on the basis of implicit consent through use of the service (<strong>Art. 6(1)(a)</strong>) and the legitimate interest in providing the requested functionality (<strong>Art. 6(1)(f)</strong>).</p>
+        <p>Processing of user-entered text for translation purposes is carried out on the basis of <strong>Art. 6(1)(b)</strong> — performance of the service requested by the user — and <strong>Art. 6(1)(f)</strong> — legitimate interest in providing the requested functionality. No implicit or bundled consent is claimed; if you do not want your text sent to Anthropic, do not use the translation form.</p>
         <h3>What data TranslateHub processes</h3>
         <ul>
-          <li><strong>Text entered</strong> — sent temporarily to the Anthropic API for translation generation. Not stored on TranslateHub servers.</li>
-          <li><strong>Uploaded files</strong> — processed exclusively in your browser (client-side). Not sent to any TranslateHub server.</li>
-          <li><strong>Standard access logs</strong> — the web server (if the site is hosted) may generate standard access logs (IP, timestamp, User-Agent) as per normal hosting practice. This data is not used for profiling.</li>
+          <li><strong>Text entered</strong> — sent temporarily to the Anthropic API for translation generation. Not stored on TranslateHub servers (there are none).</li>
+          <li><strong>Uploaded files</strong> — processed exclusively in your browser (client-side). Only the extracted text is sent to Anthropic for translation.</li>
+          <li><strong>API key (if provided)</strong> — stored in your browser's sessionStorage, cleared when you close the tab. Never transmitted to TranslateHub.</li>
+          <li><strong>Interface language preference</strong> — stored in your browser's localStorage. Never transmitted.</li>
+          <li><strong>Hosting access logs</strong> — the web host (e.g. GitHub Pages, Cloudflare Pages, or similar static host) may record standard access logs (IP address, timestamp, User-Agent) per its own policy. TranslateHub does not access or use these logs.</li>
         </ul>
-        <h3>Data transmitted to Anthropic</h3>
-        <p>Your text is sent to <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">Anthropic, Inc.</a> via their public API. Anthropic may retain conversation content in accordance with their own privacy policy. We recommend not entering sensitive personal data in the translation form.</p>
+        <h3>Third-country transfers (GDPR Chapter V)</h3>
+        <p>By using this page you establish connections to the following non-EU services. Your IP address is technically transmitted to each of them:</p>
+        <ul>
+          <li><strong>Anthropic, Inc. (USA)</strong> — <code>api.anthropic.com</code> — receives your translation input. Per Anthropic's API policy, prompts and completions are retained for up to 30 days for abuse monitoring unless you use a Zero Data Retention agreement. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>.</li>
+          <li><strong>Google LLC (USA)</strong> — <code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code> — receives your IP to deliver web fonts. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</li>
+          <li><strong>Cloudflare, Inc. (USA)</strong> — <code>cdn.jsdelivr.net</code> — receives your IP only if you upload a <code>.docx</code> file (mammoth.js is lazy-loaded on demand). See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a>.</li>
+        </ul>
+        <p>These transfers rely on the standard contractual clauses and the EU–US Data Privacy Framework adequacy decision (July 2023). If you want zero third-party connections, self-host the fonts and mammoth.js locally.</p>
         <h3>Your rights (GDPR Chapter III)</h3>
         <ul>
           <li>Right of access (Art. 15)</li>
@@ -1761,28 +1813,35 @@
           <li>Right to erasure — "right to be forgotten" (Art. 17)</li>
           <li>Right to restriction of processing (Art. 18)</li>
           <li>Right to data portability (Art. 20)</li>
-          <li>Right to lodge a complaint with the national supervisory authority (ANSPDCP in Romania, or your local DPA)</li>
+          <li>Right to object (Art. 21)</li>
+          <li>Right to lodge a complaint with your national supervisory authority (ANSPDCP in Romania, or your local DPA)</li>
         </ul>
+        <p>Because TranslateHub stores nothing on its own servers, rights 15, 17, 18 and 20 are satisfied trivially (there is nothing to access, erase, restrict or port). For data held by Anthropic, exercise your rights directly with them.</p>
         <div class="legal-badge-row">
-          <span class="legal-badge green">GDPR compliant</span>
           <span class="legal-badge green">No tracking</span>
           <span class="legal-badge green">No data selling</span>
+          <span class="legal-badge green">No cookies from this site</span>
           <span class="legal-badge gold">Jurisdiction: Romania / EU</span>
         </div>
       </div>
 
       <!-- COOKIES -->
-      <div class="legal-panel" id="panel-cookies">
-        <div class="legal-highlight">TranslateHub does not use tracking, advertising or profiling cookies. There are no ads. There are no third-party advertising networks.</div>
-        <h3>Strictly necessary technical cookies</h3>
-        <p>Your browser may store interface preferences locally (localStorage/sessionStorage) — such as the last selected language. This data remains exclusively in your browser and is not transmitted anywhere.</p>
-        <h3>Third-party cookies</h3>
+      <div class="legal-panel" id="panel-cookies" role="tabpanel">
+        <div class="legal-highlight">TranslateHub does not set any cookies of its own. There are no tracking, advertising or profiling cookies. No ads. No analytics.</div>
+        <h3>Browser storage used by TranslateHub (not cookies)</h3>
         <ul>
-          <li><strong>Google Fonts</strong> — fonts are loaded from Google servers. Google may set its own cookies per <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">their policy</a>. To avoid this, use a blocking extension or host fonts locally.</li>
-          <li><strong>Anthropic API</strong> — API calls do not use cookies, but header-based authentication.</li>
+          <li><strong>sessionStorage</strong> — your Anthropic API key (if you provide one) is stored here and automatically cleared when you close the tab. Never transmitted to TranslateHub.</li>
+          <li><strong>localStorage</strong> — your chosen interface language code (e.g. <code>ui_lang_pref=ro</code>) and cached UI translations for that language. Never transmitted.</li>
+        </ul>
+        <p>You can inspect and clear these at any time via your browser's developer tools (Application → Storage).</p>
+        <h3>Third-party connections that may set cookies</h3>
+        <ul>
+          <li><strong>Google Fonts</strong> (<code>fonts.googleapis.com</code>, <code>fonts.gstatic.com</code>) — fonts are fetched from Google's CDN. Google may process your IP address and set its own cookies per <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its policy</a>. To avoid this, use a blocking extension or self-host the fonts.</li>
+          <li><strong>jsdelivr CDN</strong> (<code>cdn.jsdelivr.net</code>) — used only when you upload a <code>.docx</code> file to lazy-load mammoth.js. Operated by Cloudflare.</li>
+          <li><strong>Anthropic API</strong> (<code>api.anthropic.com</code>) — API calls use header-based auth only, no cookies.</li>
         </ul>
         <h3>Legal basis</h3>
-        <p>Strictly necessary technical cookies do not require consent under the ePrivacy Directive 2002/58/EC. No analytical or marketing cookies are used.</p>
+        <p>Strictly necessary technical storage does not require consent under the ePrivacy Directive 2002/58/EC. No analytical or marketing storage is used.</p>
         <div class="legal-badge-row">
           <span class="legal-badge green">No tracking cookies</span>
           <span class="legal-badge green">No advertising</span>
@@ -1791,28 +1850,29 @@
       </div>
 
       <!-- IMPRESSUM -->
-      <div class="legal-panel" id="panel-impressum">
+      <div class="legal-panel" id="panel-impressum" role="tabpanel">
         <h3>Publisher information / Impressum</h3>
         <div class="legal-highlight">
           <strong>TranslateHub</strong><br>
-          Independent, non-commercial project<br>
-          Autor: <a href="/cdn-cgi/l/email-protection#84e5e8e1fcedebc4f0f6ebe9aaf0e2"><span class="__cf_email__" data-cfemail="d8b9b4bda0b1b798acaab7b5f6acbe">[email&#160;protected]</span></a><br>
+          Independent, non-commercial editorial project<br>
+          Operator: Alexandru-Ionuț Chiuță<br>
+          Contact: <a href="mailto:alexio@trom.tf">alexio@trom.tf</a><br>
           Web: <a href="https://alexio.tf" target="_blank" rel="noopener">alexio.tf</a><br>
           Location: Bucharest, Romania<br>
           Last updated: April 2026
         </div>
         <h3>Legal nature</h3>
-        <p>TranslateHub is an independent, non-commercial editorial project. It is not a registered legal entity. It does not collect payments or provide direct commercial services.</p>
+        <p>TranslateHub is an independent, non-commercial editorial project operated by a natural person. It is not a registered legal entity. It does not collect payments, display advertising, or provide direct commercial services. The operator identified above is the controller for any personal data processing that takes place via this site.</p>
         <h3>Liability for content</h3>
         <p>AI-generated translations are provided "as-is", without warranties of accuracy, completeness or fitness for a particular purpose. The user is responsible for verifying and using the translated content.</p>
         <h3>Liability for external links</h3>
         <p>TranslateHub contains links to external services (Google Translate, DeepL, MateCat etc.). These services are independent and have their own terms of use and privacy policies. TranslateHub has no responsibility for their content or practices.</p>
         <h3>Intellectual property</h3>
-        <p>The TranslateHub interface source code is available for inspection. The curatorial content (descriptions, structure, tool selection) belongs to the author. Generated translations belong to the user who requested them.</p>
+        <p>The TranslateHub interface source code is available for inspection. The curatorial content (descriptions, structure, tool selection) belongs to the operator. Generated translations belong to the user who requested them.</p>
       </div>
 
       <!-- ACCESIBILITATE -->
-      <div class="legal-panel" id="panel-accessibility">
+      <div class="legal-panel" id="panel-accessibility" role="tabpanel">
         <div class="legal-highlight">TranslateHub is committed to meeting web accessibility standards (WCAG 2.1 level AA) to the extent technically possible for an independent project.</div>
         <h3>Implemented accessibility features</h3>
         <ul>
@@ -1830,7 +1890,7 @@
           <li>Background animations in the hero may be disturbing for people with motion sensitivity. They can be disabled from OS settings (prefers-reduced-motion).</li>
         </ul>
         <h3>Reporting accessibility issues</h3>
-        <p>If you experience accessibility difficulties, contact: <a href="/cdn-cgi/l/email-protection#bbdad7dec3d2d4fbcfc9d4d695cfdd"><span class="__cf_email__" data-cfemail="4e2f222b3627210e3a3c2123603a28">[email&#160;protected]</span></a></p>
+        <p>If you experience accessibility difficulties, contact: <a href="mailto:alexio@trom.tf">alexio@trom.tf</a></p>
         <div class="legal-badge-row">
           <span class="legal-badge green">WCAG 2.1 AA (partial)</span>
           <span class="legal-badge violet">Keyboard navigation</span>
@@ -1839,7 +1899,7 @@
       </div>
 
       <!-- TEHNOLOGII -->
-      <div class="legal-panel" id="panel-tech">
+      <div class="legal-panel" id="panel-tech" role="tabpanel">
         <h3>Technology stack</h3>
         <div class="legal-badge-row">
           <span class="legal-badge violet">HTML5 · CSS3 · JavaScript ES2022</span>
@@ -1873,7 +1933,7 @@
       </div>
 
       <!-- TERMENI & DISCLAIMER -->
-      <div class="legal-panel" id="panel-disclaimer">
+      <div class="legal-panel" id="panel-disclaimer" role="tabpanel">
         <div class="legal-highlight">⚠ AI-generated translations may contain errors. Always verify critical translations (medical, legal, financial) with a professional human translator.</div>
         <h3>Terms of use</h3>
         <p>By using TranslateHub, you agree to the following terms:</p>
@@ -1896,14 +1956,31 @@
         <h3>Changes to terms</h3>
         <p>These terms may be updated without prior notice. The date of last modification is indicated in the footer. Continued use of the service after a modification constitutes acceptance of the new terms.</p>
         <div class="legal-sep"></div>
-        <p style="font-size:0.8rem;color:var(--muted)">Last updated: April 2026 · Primary jurisdiction: Romania / European Union · Contact: <a href="/cdn-cgi/l/email-protection#6b0a070e1302042b1f190406451f0d"><span class="__cf_email__" data-cfemail="d7b6bbb2afbeb897a3a5b8baf9a3b1">[email&#160;protected]</span></a></p>
+        <p style="font-size:0.8rem;color:var(--muted)">Last updated: April 2026 · Primary jurisdiction: Romania / European Union · Contact: <a href="mailto:alexio@trom.tf">alexio@trom.tf</a></p>
       </div>
 
     </div><!-- /legal-body -->
   </div><!-- /legal-modal -->
 </div><!-- /legal-overlay -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+/* ── DYNAMIC NAV HEIGHT (fixes scroll-padding when nav wraps) ── */
+(function(){
+  const nav=document.querySelector('.sticky-nav');
+  if(!nav) return;
+  const update=()=>{
+    const h=nav.offsetHeight||68;
+    document.documentElement.style.setProperty('--nav-h', h+'px');
+  };
+  update();
+  if('ResizeObserver' in window){
+    const ro=new ResizeObserver(update);
+    ro.observe(nav);
+  } else {
+    window.addEventListener('resize', update);
+  }
+})();
+
 /* ── CARD SEARCH ── */
 const allCards = document.querySelectorAll('.card');
 function filterCards(q) {
@@ -1919,12 +1996,15 @@ function filterCards(q) {
     const s=document.getElementById(id);
     if(s) s.style.display=[...s.querySelectorAll('.card')].some(c=>!c.classList.contains('hidden'))?'':'none';
   });
+  // Announce count to screen readers
+  const sr=document.getElementById('search-results-count');
+  if(sr) sr.textContent = q ? (vis+' '+(vis===1?'tool':'tools')+' match "'+q+'"') : '';
 }
 const ns=document.getElementById('search-nav');
 ns.addEventListener('input',e=>filterCards(e.target.value));
 
-/* ── LANGUAGE LIST ── */
-const LANGUAGES=[["Abkhazian","ab"],["Afar","aa"],["Afrikaans","af"],["Akan","ak"],["Albanian","sq"],["Amharic","am"],["Arabic","ar"],["Aragonese","an"],["Armenian","hy"],["Assamese","as"],["Avaric","av"],["Avestan","ae"],["Aymara","ay"],["Azerbaijani","az"],["Bambara","bm"],["Bashkir","ba"],["Basque","eu"],["Belarusian","be"],["Bengali","bn"],["Bislama","bi"],["Bosnian","bs"],["Breton","br"],["Bulgarian","bg"],["Burmese","my"],["Catalan","ca"],["Chamorro","ch"],["Chechen","ce"],["Chichewa","ny"],["Chinese (Simplified)","zh-Hans"],["Chinese (Traditional)","zh-Hant"],["Chuvash","cv"],["Cornish","kw"],["Corsican","co"],["Cree","cr"],["Croatian","hr"],["Czech","cs"],["Danish","da"],["Divehi","dv"],["Dutch","nl"],["Dzongkha","dz"],["English","en"],["Esperanto","eo"],["Estonian","et"],["Ewe","ee"],["Faroese","fo"],["Fijian","fj"],["Finnish","fi"],["French","fr"],["Fula","ff"],["Galician","gl"],["Georgian","ka"],["German","de"],["Greek","el"],["Guaraní","gn"],["Gujarati","gu"],["Haitian Creole","ht"],["Hausa","ha"],["Hebrew","he"],["Hindi","hi"],["Hungarian","hu"],["Icelandic","is"],["Ido","io"],["Igbo","ig"],["Indonesian","id"],["Interlingua","ia"],["Irish","ga"],["Italian","it"],["Inuktitut","iu"],["Japanese","ja"],["Javanese","jv"],["Kalaallisut","kl"],["Kannada","kn"],["Kashmiri","ks"],["Kazakh","kk"],["Khmer","km"],["Kinyarwanda","rw"],["Korean","ko"],["Kurdish","ku"],["Kyrgyz","ky"],["Latin","la"],["Latvian","lv"],["Lingala","ln"],["Lithuanian","lt"],["Luxembourgish","lb"],["Macedonian","mk"],["Malagasy","mg"],["Malay","ms"],["Malayalam","ml"],["Maltese","mt"],["Māori","mi"],["Marathi","mr"],["Mongolian","mn"],["Nauru","na"],["Navajo","nv"],["Nepali","ne"],["Norwegian","no"],["Norwegian Bokmål","nb"],["Norwegian Nynorsk","nn"],["Occitan","oc"],["Oromo","om"],["Oriya","or"],["Ossetian","os"],["Punjabi","pa"],["Pashto","ps"],["Persian","fa"],["Polish","pl"],["Portuguese","pt"],["Quechua","qu"],["Romansh","rm"],["Romanian","ro"],["Russian","ru"],["Sanskrit","sa"],["Sardinian","sc"],["Scottish Gaelic","gd"],["Serbian","sr"],["Shona","sn"],["Sindhi","sd"],["Sinhala","si"],["Slovak","sk"],["Slovenian","sl"],["Somali","so"],["Spanish","es"],["Sundanese","su"],["Swahili","sw"],["Swedish","sv"],["Tagalog","tl"],["Tajik","tg"],["Tamil","ta"],["Tatar","tt"],["Telugu","te"],["Thai","th"],["Tibetan","bo"],["Tigrinya","ti"],["Tonga","to"],["Tsonga","ts"],["Tswana","tn"],["Turkish","tr"],["Turkmen","tk"],["Twi","tw"],["Ukrainian","uk"],["Urdu","ur"],["Uzbek","uz"],["Vietnamese","vi"],["Volapük","vo"],["Welsh","cy"],["Wolof","wo"],["Xhosa","xh"],["Yiddish","yi"],["Yoruba","yo"],["Zulu","zu"],["Acehnese","ace"],["Asturian","ast"],["Balinese","ban"],["Buginese","bug"],["Friulian","fur"],["Ligurian","lij"],["Minangkabau","min"],["Mirandese","mwl"],["Neapolitan","nap"],["Papiamento","pap"],["Sardinian","sc"],["Sicilian","scn"],["Tok Pisin","tpi"],["Venetian","vec"],["Nahuatl","nah"],["Maya (Yucatec)","yua"],["Mapuche","arn"],["Ga","gaa"],["Dioula","dyu"],["Mandinka","mnk"],["Soninke","snk"],["Zarma","dje"],["Efik","efi"],["Luo","luo"],["Tumbuka","tum"],["Comorian","swb"],["Seychellois Creole","crs"],["Mauritian Creole","mfe"],["Lojban","jbo"],["Toki Pona","tok"],["Lingua Franca Nova","lfn"],["Klingon","tlh"],["Sindarin","sjn"],["Quenya","qya"],["High Valyrian","hbo"],["Na'vi","mis"],["Dothraki","mis2"]];
+/* ── LANGUAGE LIST (ISO 639-1/2/3 real codes only) ── */
+const LANGUAGES=[["Abkhazian","ab"],["Afar","aa"],["Afrikaans","af"],["Akan","ak"],["Albanian","sq"],["Amharic","am"],["Arabic","ar"],["Aragonese","an"],["Armenian","hy"],["Assamese","as"],["Avaric","av"],["Avestan","ae"],["Aymara","ay"],["Azerbaijani","az"],["Bambara","bm"],["Bashkir","ba"],["Basque","eu"],["Belarusian","be"],["Bengali","bn"],["Bislama","bi"],["Bosnian","bs"],["Breton","br"],["Bulgarian","bg"],["Burmese","my"],["Catalan","ca"],["Chamorro","ch"],["Chechen","ce"],["Chichewa","ny"],["Chinese (Simplified)","zh-Hans"],["Chinese (Traditional)","zh-Hant"],["Chuvash","cv"],["Cornish","kw"],["Corsican","co"],["Cree","cr"],["Croatian","hr"],["Czech","cs"],["Danish","da"],["Divehi","dv"],["Dutch","nl"],["Dzongkha","dz"],["English","en"],["Esperanto","eo"],["Estonian","et"],["Ewe","ee"],["Faroese","fo"],["Fijian","fj"],["Finnish","fi"],["French","fr"],["Fula","ff"],["Galician","gl"],["Georgian","ka"],["German","de"],["Greek","el"],["Guaraní","gn"],["Gujarati","gu"],["Haitian Creole","ht"],["Hausa","ha"],["Hebrew","he"],["Hindi","hi"],["Hungarian","hu"],["Icelandic","is"],["Ido","io"],["Igbo","ig"],["Indonesian","id"],["Interlingua","ia"],["Irish","ga"],["Italian","it"],["Inuktitut","iu"],["Japanese","ja"],["Javanese","jv"],["Kalaallisut","kl"],["Kannada","kn"],["Kashmiri","ks"],["Kazakh","kk"],["Khmer","km"],["Kinyarwanda","rw"],["Korean","ko"],["Kurdish","ku"],["Kyrgyz","ky"],["Latin","la"],["Latvian","lv"],["Lingala","ln"],["Lithuanian","lt"],["Luxembourgish","lb"],["Macedonian","mk"],["Malagasy","mg"],["Malay","ms"],["Malayalam","ml"],["Maltese","mt"],["Māori","mi"],["Marathi","mr"],["Mongolian","mn"],["Nauru","na"],["Navajo","nv"],["Nepali","ne"],["Norwegian","no"],["Norwegian Bokmål","nb"],["Norwegian Nynorsk","nn"],["Occitan","oc"],["Oromo","om"],["Oriya","or"],["Ossetian","os"],["Punjabi","pa"],["Pashto","ps"],["Persian","fa"],["Polish","pl"],["Portuguese","pt"],["Quechua","qu"],["Romansh","rm"],["Romanian","ro"],["Russian","ru"],["Sanskrit","sa"],["Sardinian","sc"],["Scottish Gaelic","gd"],["Serbian","sr"],["Shona","sn"],["Sindhi","sd"],["Sinhala","si"],["Slovak","sk"],["Slovenian","sl"],["Somali","so"],["Spanish","es"],["Sundanese","su"],["Swahili","sw"],["Swedish","sv"],["Tagalog","tl"],["Tajik","tg"],["Tamil","ta"],["Tatar","tt"],["Telugu","te"],["Thai","th"],["Tibetan","bo"],["Tigrinya","ti"],["Tonga","to"],["Tsonga","ts"],["Tswana","tn"],["Turkish","tr"],["Turkmen","tk"],["Twi","tw"],["Ukrainian","uk"],["Urdu","ur"],["Uzbek","uz"],["Vietnamese","vi"],["Volapük","vo"],["Welsh","cy"],["Wolof","wo"],["Xhosa","xh"],["Yiddish","yi"],["Yoruba","yo"],["Zulu","zu"],["Acehnese","ace"],["Asturian","ast"],["Balinese","ban"],["Buginese","bug"],["Friulian","fur"],["Ligurian","lij"],["Minangkabau","min"],["Mirandese","mwl"],["Neapolitan","nap"],["Papiamento","pap"],["Sicilian","scn"],["Tok Pisin","tpi"],["Venetian","vec"],["Nahuatl","nah"],["Maya (Yucatec)","yua"],["Mapuche","arn"],["Ga","gaa"],["Dioula","dyu"],["Mandinka","mnk"],["Soninke","snk"],["Zarma","dje"],["Efik","efi"],["Luo","luo"],["Tumbuka","tum"],["Comorian","swb"],["Seychellois Creole","crs"],["Mauritian Creole","mfe"],["Lojban","jbo"],["Toki Pona","tok"],["Lingua Franca Nova","lfn"],["Klingon","tlh"]];
 const srcSel=document.getElementById('src-lang'), tgtSel=document.getElementById('tgt-lang');
 LANGUAGES.forEach(([n,c])=>{srcSel.appendChild(new Option(n,c));tgtSel.appendChild(new Option(n,c));});
 tgtSel.value='ro'; if(!tgtSel.value) tgtSel.value='en';
@@ -1934,8 +2014,9 @@ const modePanels={text:document.getElementById('mode-text'),rich:document.getEle
 let currentMode='text';
 document.querySelectorAll('.mode-tab').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.mode-tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.mode-tab').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
     btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
     currentMode=btn.dataset.mode;
     Object.values(modePanels).forEach(p=>p.classList.add('hidden'));
     modePanels[currentMode].classList.remove('hidden');
@@ -1944,7 +2025,7 @@ document.querySelectorAll('.mode-tab').forEach(btn=>{
 
 /* ── SWAP BUTTON ── */
 document.getElementById('swap-btn').addEventListener('click',()=>{
-  if(srcSel.value==='auto') return;
+  if(srcSel.value==='auto'){ showToast('⚠ Set a specific source language to swap','error',2200); return; }
   [srcSel.value,tgtSel.value]=[tgtSel.value,srcSel.value];
   if(currentMode==='text'){
     const out=document.getElementById('tr-output');
@@ -1966,6 +2047,7 @@ function updateCharCount(){
   wordCountEl.textContent=w.toLocaleString()+' words';
 }
 srcTA.addEventListener('input',updateCharCount);
+updateCharCount(); // initialize on load
 
 /* ── TEXT CLEAR + COPY + DOWNLOAD ── */
 document.getElementById('clear-btn').addEventListener('click',()=>{
@@ -2026,15 +2108,33 @@ rtSrc.addEventListener('input',()=>{ rtCharCount.textContent=(rtSrc.innerText||'
 document.getElementById('dl-rt-btn').addEventListener('click',()=>{
   const rtOut=document.getElementById('rt-output');
   if(rtOut.classList.contains('placeholder')) return;
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Translation</title><style>body{font-family:Georgia,serif;max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.7;color:#222}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:0.5rem 0.8rem}</style></head><body>${rtOut.innerHTML}</body></html>`;
+  // rtOut.innerHTML is already sanitized at write-time (see sanitizeHTML)
+  const body=rtOut.innerHTML;
+  const html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Translation</title><style>body{font-family:Georgia,serif;max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.7;color:#222}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:0.5rem 0.8rem}</style></head><body>'+body+'</body></html>';
   downloadText(html,'translation.html','text/html');
 });
 
 /* ── FILE UPLOAD ── */
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+const ALLOWED_EXTS = ['txt','md','html','docx','srt','po','csv','json'];
 const fileDrop=document.getElementById('file-drop');
 const fileInput=document.getElementById('file-input');
 let loadedFile=null, loadedContent='', loadedType='';
+let _mammothPromise=null;
+async function loadMammoth(){
+  if(_mammothPromise) return _mammothPromise;
+  _mammothPromise=new Promise((resolve,reject)=>{
+    if(window.mammoth) return resolve(window.mammoth);
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js';
+    s.onload=()=>resolve(window.mammoth);
+    s.onerror=()=>{_mammothPromise=null;reject(new Error('Could not load .docx parser'));};
+    document.head.appendChild(s);
+  });
+  return _mammothPromise;
+}
 fileDrop.addEventListener('click',()=>fileInput.click());
+fileDrop.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();fileInput.click();} });
 fileDrop.addEventListener('dragover',e=>{e.preventDefault();fileDrop.classList.add('dragover');});
 fileDrop.addEventListener('dragleave',()=>fileDrop.classList.remove('dragover'));
 fileDrop.addEventListener('drop',e=>{e.preventDefault();fileDrop.classList.remove('dragover');if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);});
@@ -2047,8 +2147,20 @@ document.getElementById('remove-file-btn').addEventListener('click',()=>{
 });
 const FILE_ICONS={'txt':'📄','md':'📝','html':'🌐','docx':'📘','srt':'🎬','po':'🌍','csv':'📊','json':'📋'};
 async function handleFile(f){
+  const ext=(f.name.split('.').pop()||'').toLowerCase();
+  if(!ALLOWED_EXTS.includes(ext)){
+    showToast('⚠ Unsupported file type: .'+ext,'error',3500);
+    return;
+  }
+  if(f.size > MAX_FILE_SIZE){
+    showToast('⚠ File too large ('+formatBytes(f.size)+'). Max 2 MB.','error',4000);
+    return;
+  }
+  if(f.size === 0){
+    showToast('⚠ Empty file','error',2500);
+    return;
+  }
   loadedFile=f;
-  const ext=f.name.split('.').pop().toLowerCase();
   loadedType=ext;
   document.getElementById('file-icon-el').textContent=FILE_ICONS[ext]||'📄';
   document.getElementById('file-name-el').textContent=f.name;
@@ -2057,6 +2169,7 @@ async function handleFile(f){
   document.getElementById('file-output-wrap').classList.add('hidden');
   try {
     if(ext==='docx'){
+      const mammoth=await loadMammoth();
       const arr=await f.arrayBuffer();
       const res=await mammoth.extractRawText({arrayBuffer:arr});
       loadedContent=res.value;
@@ -2090,9 +2203,9 @@ function showProgress(text,pct){
 function hideProgress(){ document.getElementById('tr-progress').classList.add('hidden'); }
 
 let cancelRequested=false;
-document.getElementById('cancel-btn').addEventListener('click',()=>{ cancelRequested=true; hideProgress(); resetBtn(); });
+document.getElementById('cancel-btn').addEventListener('click',()=>{ cancelRequested=true; abortActive(); hideProgress(); resetBtn(); });
 
-/* ── TEXT CHUNKER ── */
+/* ── TEXT CHUNKER (preserves paragraph structure) ── */
 function chunkText(text,maxLen=2800){
   const paras=text.split(/\n{2,}/);
   const chunks=[]; let cur='';
@@ -2106,27 +2219,62 @@ function chunkText(text,maxLen=2800){
         cur='';
         for(const s of sents){
           if((cur+s).length<=maxLen){cur+=s;}
-          else{if(cur) chunks.push(cur.trim()); if(s.length>maxLen){for(let i=0;i<s.length;i+=maxLen) chunks.push(s.slice(i,i+maxLen));cur='';}else{cur=s;}}
+          else{if(cur) chunks.push(cur); if(s.length>maxLen){for(let i=0;i<s.length;i+=maxLen) chunks.push(s.slice(i,i+maxLen));cur='';}else{cur=s;}}
         }
       } else {cur=p;}
     }
   }
-  if(cur.trim()) chunks.push(cur.trim());
-  return chunks.filter(c=>c.trim());
+  if(cur) chunks.push(cur);
+  return chunks.filter(c=>c.length);
 }
 
-/* ── API CALL (non-streaming, for chunks) ── */
-/* ── API KEY MANAGEMENT ── */
-function getApiKey(){ return localStorage.getItem('th_apikey')||''; }
+/* ── HTML SANITIZER (for any innerHTML from AI response) ── */
+const ALLOWED_TAGS=new Set(['p','br','b','i','u','em','strong','a','ul','ol','li','h1','h2','h3','h4','h5','h6','table','thead','tbody','tfoot','tr','td','th','span','div','blockquote','code','pre','s','sub','sup','hr']);
+const ALLOWED_ATTRS={'a':['href','title'],'td':['colspan','rowspan'],'th':['colspan','rowspan','scope']};
+function sanitizeHTML(html){
+  const doc=new DOMParser().parseFromString('<!DOCTYPE html><body>'+String(html||''),'text/html');
+  // Remove dangerous elements entirely (with content)
+  doc.querySelectorAll('script,style,iframe,object,embed,link,meta,form,input,button,textarea,select,svg,math,base').forEach(n=>n.remove());
+  // Walk and clean
+  const toUnwrap=[];
+  const walker=doc.createTreeWalker(doc.body,NodeFilter.SHOW_ELEMENT);
+  let node;
+  while(node=walker.nextNode()){
+    const tag=node.tagName.toLowerCase();
+    if(!ALLOWED_TAGS.has(tag)){ toUnwrap.push(node); continue; }
+    const allowed=ALLOWED_ATTRS[tag]||[];
+    [...node.attributes].forEach(attr=>{
+      const n=attr.name.toLowerCase();
+      if(!allowed.includes(n)){ node.removeAttribute(attr.name); return; }
+      if(tag==='a'&&n==='href'){
+        const v=(attr.value||'').trim().toLowerCase();
+        if(v.startsWith('javascript:')||v.startsWith('data:')||v.startsWith('vbscript:')){ node.removeAttribute(attr.name); return; }
+      }
+    });
+    if(tag==='a'){ node.setAttribute('target','_blank'); node.setAttribute('rel','noopener nofollow'); }
+  }
+  toUnwrap.forEach(n=>{
+    const parent=n.parentNode; if(!parent) return;
+    while(n.firstChild) parent.insertBefore(n.firstChild,n);
+    parent.removeChild(n);
+  });
+  return doc.body.innerHTML;
+}
+
+/* ── API KEY MANAGEMENT (sessionStorage, cleared on tab close) ── */
+function getApiKey(){ try{return sessionStorage.getItem('th_apikey')||'';}catch(e){return '';} }
 function saveApiKey(){
   const v=(document.getElementById('apikey-input').value||'').trim();
   if(!v){ showApiKeyStatus('Enter a key first','err'); return; }
-  localStorage.setItem('th_apikey',v);
+  if(!/^sk-ant-[A-Za-z0-9_-]{20,}$/.test(v)){
+    showApiKeyStatus('Invalid format — expected sk-ant-…','err'); return;
+  }
+  try{ sessionStorage.setItem('th_apikey',v); }catch(e){ showApiKeyStatus('Storage unavailable','err'); return; }
   document.getElementById('apikey-input').value='';
-  showApiKeyStatus('✓ Saved — try translating again','ok');
+  showApiKeyStatus('✓ Saved (this tab only)','ok');
 }
 function clearApiKey(){
-  localStorage.removeItem('th_apikey');
+  try{ sessionStorage.removeItem('th_apikey'); }catch(e){}
   document.getElementById('apikey-input').value='';
   showApiKeyStatus('Key cleared','err');
 }
@@ -2143,58 +2291,127 @@ function buildHeaders(){
   return h;
 }
 function checkAndShowBanner(err){
-  // Show API key banner on network/CORS/401 errors
+  // Show API key banner on network/CORS/401/403/429 errors
   const msg=(err&&err.message)||'';
-  if(msg.toLowerCase().includes('fetch')||msg.includes('401')||msg.includes('403')){
+  const lower=msg.toLowerCase();
+  if(lower.includes('fetch')||lower.includes('network')||lower.includes('cors')||msg.includes('401')||msg.includes('403')||msg.includes('429')||msg.includes('api 0')){
     const b=document.getElementById('apikey-banner');
     if(b) b.classList.remove('hidden');
   }
 }
 
-async function callAPI(userMsg,systemPrompt){
+/* ── ABORT CONTROLLER for Cancel ── */
+let _abortCtrl=null;
+function newAbort(){ if(_abortCtrl) try{_abortCtrl.abort();}catch(e){} _abortCtrl=new AbortController(); return _abortCtrl.signal; }
+function abortActive(){ if(_abortCtrl) try{_abortCtrl.abort();}catch(e){} _abortCtrl=null; }
+
+/* ── API CALL (non-streaming, for chunks, with retry on 429/5xx) ── */
+async function callAPI(userMsg,systemPrompt,opts){
+  opts=opts||{};
+  const signal=opts.signal||(_abortCtrl&&_abortCtrl.signal);
+  const maxTokens=opts.max_tokens||8192;
+  const maxRetries=opts.maxRetries!==undefined?opts.maxRetries:3;
+  let lastErr=null;
+  for(let attempt=0; attempt<=maxRetries; attempt++){
+    if(signal&&signal.aborted) throw new DOMException('Aborted','AbortError');
+    try{
+      const r=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:buildHeaders(),
+        signal:signal,
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system:systemPrompt,messages:[{role:'user',content:userMsg}]})
+      });
+      if(r.status===429 || (r.status>=500 && r.status<600)){
+        // Retry on rate limit or server error
+        if(attempt<maxRetries){
+          const retryAfterHdr=r.headers.get('retry-after');
+          const retryAfterSec=retryAfterHdr?parseInt(retryAfterHdr,10):null;
+          const delayMs=retryAfterSec?retryAfterSec*1000:Math.min(1000*Math.pow(2,attempt), 8000);
+          showToast('⏳ Rate-limited, retrying in '+Math.round(delayMs/1000)+'s…','',delayMs+200);
+          await new Promise(res=>setTimeout(res,delayMs));
+          continue;
+        }
+      }
+      if(!r.ok){
+        let detail='';
+        try{ const e=await r.json(); detail=e.error&&e.error.message?': '+e.error.message:''; }catch(x){}
+        const err=new Error('API '+r.status+detail);
+        checkAndShowBanner(err);
+        throw err;
+      }
+      const d=await r.json();
+      if(d.stop_reason==='max_tokens'){
+        throw new Error('Response truncated (max_tokens). Try a smaller chunk or reduce input size.');
+      }
+      if(d.stop_reason==='refusal'){
+        throw new Error('Request refused by the model. Try different wording or content.');
+      }
+      const textBlock=(d.content||[]).find(b=>b.type==='text');
+      if(!textBlock||typeof textBlock.text!=='string'){
+        throw new Error('Empty response from API');
+      }
+      return textBlock.text;
+    }catch(e){
+      if(e.name==='AbortError') throw e;
+      lastErr=e;
+      // Only retry on network errors (TypeError from fetch)
+      if(e instanceof TypeError && attempt<maxRetries){
+        const delayMs=Math.min(1000*Math.pow(2,attempt), 8000);
+        await new Promise(res=>setTimeout(res,delayMs));
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw lastErr||new Error('API request failed');
+}
+
+/* ── API CALL STREAMING (single short text, CRLF-safe) ── */
+async function callAPIStream(userMsg,systemPrompt,onChunk,opts){
+  opts=opts||{};
+  const signal=opts.signal||(_abortCtrl&&_abortCtrl.signal);
   const r=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
     headers:buildHeaders(),
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4096,system:systemPrompt,messages:[{role:'user',content:userMsg}]})
+    signal:signal,
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:8192,stream:true,system:systemPrompt,messages:[{role:'user',content:userMsg}]})
   });
   if(!r.ok){
     let detail='';
     try{ const e=await r.json(); detail=e.error&&e.error.message?': '+e.error.message:''; }catch(x){}
-    throw new Error('API '+r.status+detail);
+    const err=new Error('API '+r.status+detail);
+    checkAndShowBanner(err);
+    throw err;
   }
-  const d=await r.json();
-  return d.content[0].text;
-}
-
-/* ── API CALL STREAMING (single short text) ── */
-async function callAPIStream(userMsg,systemPrompt,onChunk){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:buildHeaders(),
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4096,stream:true,system:systemPrompt,messages:[{role:'user',content:userMsg}]})
-  });
-  if(!r.ok){ const e=new Error('API '+r.status); checkAndShowBanner(e); throw e; }
   const reader=r.body.getReader(),dec=new TextDecoder();
   let buf='';
   while(true){
     const{done,value}=await reader.read(); if(done) break;
     buf+=dec.decode(value,{stream:true});
+    // CRLF-safe split: normalize line endings first
+    buf=buf.replace(/\r\n/g,'\n');
     const lines=buf.split('\n'); buf=lines.pop();
     for(const line of lines){
       if(!line.startsWith('data: ')) continue;
       const d=line.slice(6).trim(); if(d==='[DONE]') continue;
-      try{const ev=JSON.parse(d);if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta') onChunk(ev.delta.text);}catch{}
+      try{
+        const ev=JSON.parse(d);
+        if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta') onChunk(ev.delta.text);
+        else if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='max_tokens'){
+          throw new Error('Response truncated (max_tokens).');
+        }
+      }catch(e){ if(e.message&&e.message.indexOf('max_tokens')>=0) throw e; }
     }
   }
 }
 
 function buildSystemPrompt(tgtLang,isAuto,extra=''){
-  return `You are an expert multilingual translator.\nTranslate the provided text into ${tgtLang}.\nRULES:\n- Output ONLY the translated text. No preamble, notes, quotes around the result.\n- Preserve ALL whitespace, blank lines between paragraphs, punctuation style, tone, and register.\n- Translate idioms into natural target-language equivalents.\n- Preserve any HTML tags exactly as-is; translate only the text content within them.\n${isAuto?'- Begin output with exactly one line: [Detected: LANGUAGE_NAME], then a blank line, then the translation.\n':''}${extra}`;
+  return 'You are an expert multilingual translator.\nTranslate the provided text into '+tgtLang+'.\nRULES:\n- Output ONLY the translated text. No preamble, notes, quotes around the result.\n- Preserve ALL whitespace, blank lines between paragraphs, punctuation style, tone, and register.\n- Translate idioms into natural target-language equivalents.\n- Preserve any HTML tags exactly as-is; translate only the text content within them.\n'+(isAuto?'- Begin output with exactly one line: [Detected: LANGUAGE_NAME], then a blank line, then the translation.\n':'')+extra;
 }
 
 /* ── DETECT BADGE HELPER ── */
 function extractDetected(text){
-  if(!text.startsWith('[Detected:')) return{detected:'',rest:text};
+  if(!text||!text.startsWith('[Detected:')) return{detected:'',rest:text||''};
   const end=text.indexOf(']');
   if(end===-1) return{detected:'',rest:text};
   return{detected:text.slice(10,end).trim(),rest:text.slice(end+1).replace(/^\n/,'')};
@@ -2204,10 +2421,10 @@ function extractDetected(text){
 const translateBtn=document.getElementById('translate-btn');
 function setBusy(label='Translating…'){
   translateBtn.disabled=true; translateBtn.classList.add('loading');
-  translateBtn.innerHTML=`<span class="btn-icon">↻</span> ${label}`;
+  translateBtn.innerHTML='<span class="btn-icon" aria-hidden="true">↻</span> '+label;
   cancelRequested=false;
 }
-function resetBtn(){ translateBtn.disabled=false; translateBtn.classList.remove('loading'); translateBtn.innerHTML='<span class="btn-icon">✦</span> Translate'; }
+function resetBtn(){ translateBtn.disabled=false; translateBtn.classList.remove('loading'); translateBtn.innerHTML='<span class="btn-icon" aria-hidden="true">✦</span> Translate'; }
 
 /* ── TRANSLATE DISPATCHER ── */
 translateBtn.addEventListener('click',doTranslate);
@@ -2218,17 +2435,29 @@ async function doTranslate(){
   const tgtName=tgtSel.options[tgtSel.selectedIndex].text;
   const srcCode=srcSel.value;
   const isAuto=srcCode==='auto';
+  // Warn on very large input
+  let estChars=0;
+  if(currentMode==='text') estChars=(srcTA.value||'').length;
+  else if(currentMode==='rich') estChars=(document.getElementById('rt-source').textContent||'').length;
+  else if(currentMode==='file') estChars=(loadedContent||'').length;
+  if(estChars>50000){
+    const estChunks=Math.ceil(estChars/2800);
+    if(!confirm('This will make approximately '+estChunks+' API calls ('+(estChars/1000).toFixed(0)+'K chars). Continue?')) return;
+  }
+  document.getElementById('dl-txt-btn').style.display='none';
+  newAbort();
   setBusy();
   try{
     if(currentMode==='text') await translateText(srcName,tgtName,isAuto);
     else if(currentMode==='rich') await translateRich(srcName,tgtName,isAuto);
     else if(currentMode==='file') await translateFile(srcName,tgtName,isAuto);
   } catch(e){
-    if(!cancelRequested){
+    if(e.name==='AbortError'||cancelRequested){ /* silent */ }
+    else {
       const errEl=currentMode==='text'?document.getElementById('tr-output'):currentMode==='rich'?document.getElementById('rt-output'):document.getElementById('file-output');
       if(errEl){errEl.textContent='⚠ Error: '+e.message;errEl.className=(errEl.className||'').replace('placeholder','');}
     }
-  } finally{ resetBtn(); hideProgress(); }
+  } finally{ resetBtn(); hideProgress(); _abortCtrl=null; }
 }
 
 /* ── TEXT MODE TRANSLATION ── */
@@ -2240,7 +2469,7 @@ async function translateText(srcName,tgtName,isAuto){
   const panel=document.getElementById('tgt-panel');
   outEl.textContent=''; outEl.className='tr-output'; badge.textContent=''; panel.classList.add('active');
   const sys=buildSystemPrompt(tgtName,isAuto);
-  const userMsg=isAuto?`Auto-detect source language and translate to ${tgtName}:\n\n${text}`:`Translate from ${srcName} to ${tgtName}:\n\n${text}`;
+  const userMsg=isAuto?'Auto-detect source language and translate to '+tgtName+':\n\n'+text:'Translate from '+srcName+' to '+tgtName+':\n\n'+text;
 
   if(text.length<3500){
     // Stream short text
@@ -2248,7 +2477,20 @@ async function translateText(srcName,tgtName,isAuto){
     await callAPIStream(userMsg,sys,tok=>{
       full+=tok;
       if(isAuto&&!detDone){
-        if(full.includes(']')){const{detected,rest}=extractDetected(full);badge.textContent=detected?'🔍 Detected: '+detected:'';outEl.textContent=rest;detDone=true;}
+        // Only parse detection marker if response actually started with it
+        if(full.startsWith('[Detected:')){
+          const endIdx=full.indexOf(']');
+          if(endIdx!==-1){
+            const{detected,rest}=extractDetected(full);
+            badge.textContent=detected?'🔍 Detected: '+detected:'';
+            outEl.textContent=rest;
+            detDone=true;
+          }
+        } else if(full.length>12 && !full.startsWith('[')) {
+          // Model did not emit detection marker — just display as-is
+          outEl.textContent=full;
+          detDone=true;
+        }
       } else { outEl.textContent=isAuto?extractDetected(full).rest:full; }
     });
   } else {
@@ -2257,10 +2499,10 @@ async function translateText(srcName,tgtName,isAuto){
     const results=[];
     for(let i=0;i<chunks.length;i++){
       if(cancelRequested) break;
-      showProgress(`Translating chunk ${i+1} of ${chunks.length}…`,((i)/chunks.length)*100);
-      const ctx=results.slice(-1)[0]?.slice(-400)||'';
-      const cSys=sys+(ctx?`\n\nFor continuity, the previous translated passage ended with:\n"${ctx}"`:'')+'\n- Do NOT output [Detected:] lines for subsequent chunks.';
-      const cMsg=`Translate from ${isAuto?'the detected language':srcName} to ${tgtName}:\n\n${chunks[i]}`;
+      showProgress('Translating chunk '+(i+1)+' of '+chunks.length+'…',((i)/chunks.length)*100);
+      const ctx=results.slice(-1)[0]?results.slice(-1)[0].slice(-400):'';
+      const cSys=sys+(ctx?'\n\nFor continuity, the previous translated passage ended with:\n"'+ctx+'"':'')+'\n- Do NOT output [Detected:] lines for subsequent chunks.';
+      const cMsg='Translate from '+(isAuto?'the detected language':srcName)+' to '+tgtName+':\n\n'+chunks[i];
       let res=await callAPI(cMsg,cSys);
       if(i===0&&isAuto){const{detected,rest}=extractDetected(res);if(detected) badge.textContent='🔍 Detected: '+detected; res=rest;}
       results.push(res);
@@ -2275,34 +2517,46 @@ async function translateRich(srcName,tgtName,isAuto){
   const rtSrc=document.getElementById('rt-source');
   const rtOut=document.getElementById('rt-output');
   const html=rtSrc.innerHTML.trim();
-  if(!html||html==='<br>') return;
+  // Robust empty check: no content or only whitespace/empty tags
+  const textContent=(rtSrc.textContent||'').trim();
+  if(!html || !textContent) { showToast('⚠ Editor is empty','error',2000); return; }
   rtOut.className='rt-output'; rtOut.innerHTML='';
 
-  // Collect all block-level elements with text
+  // Collect leaf block-level elements with text content
+  // Use :has() if supported, otherwise manual filter (Safari <15.4 fallback)
   const clone=document.createElement('div');
   clone.innerHTML=html;
-  const blocks=[...clone.querySelectorAll('p,h1,h2,h3,h4,li,td,th,div:not(:has(*))')]
-    .filter(el=>el.innerText?.trim());
+  let blocks;
+  try{
+    blocks=[...clone.querySelectorAll('p,h1,h2,h3,h4,li,td,th,div:not(:has(*))')]
+      .filter(el=>(el.innerText||el.textContent||'').trim());
+  }catch(e){
+    // :has() not supported — manual filter
+    blocks=[...clone.querySelectorAll('p,h1,h2,h3,h4,li,td,th,div')]
+      .filter(el=>{
+        if(el.tagName.toLowerCase()==='div'&&el.querySelector('*')) return false;
+        return (el.innerText||el.textContent||'').trim();
+      });
+  }
   if(!blocks.length){
     // Fallback: translate whole HTML
     const sys=buildSystemPrompt(tgtName,isAuto,'- The input contains HTML. Keep ALL tags exactly as-is. Translate only the visible text content.');
-    const res=await callAPI(`Translate this HTML content from ${isAuto?'auto-detected language':srcName} to ${tgtName}:\n\n${html}`,sys);
-    rtOut.innerHTML=extractDetected(res).rest;
+    const res=await callAPI('Translate this HTML content from '+(isAuto?'auto-detected language':srcName)+' to '+tgtName+':\n\n'+html,sys);
+    rtOut.innerHTML=sanitizeHTML(extractDetected(res).rest);
     return;
   }
   const sys=buildSystemPrompt(tgtName,false,'- Translate ONLY the provided text. Keep inline tags (<b>,<i>,<u>,<em>,<strong>,<a> etc.) exactly as they appear.');
-  let detectedShown=false;
   for(let i=0;i<blocks.length;i++){
     if(cancelRequested) break;
-    showProgress(`Translating block ${i+1} of ${blocks.length}…`,((i)/blocks.length)*100);
+    showProgress('Translating block '+(i+1)+' of '+blocks.length+'…',((i)/blocks.length)*100);
     const el=blocks[i];
     const innerHtml=el.innerHTML;
-    const msg=`Translate the following HTML fragment to ${tgtName}. Keep all HTML tags exactly as-is, translate only text:\n\n${innerHtml}`;
+    const msg='Translate the following HTML fragment to '+tgtName+'. Keep all HTML tags exactly as-is, translate only text:\n\n'+innerHtml;
     let res=await callAPI(msg,sys);
-    if(i===0&&isAuto){const{detected,rest}=extractDetected(res);if(detected&&!detectedShown){detectedShown=true;/* could show badge */}res=rest;}
-    el.innerHTML=res;
+    if(i===0&&isAuto){const{rest}=extractDetected(res);res=rest;}
+    el.innerHTML=sanitizeHTML(res);
   }
-  rtOut.innerHTML=clone.innerHTML;
+  rtOut.innerHTML=sanitizeHTML(clone.innerHTML);
 }
 
 /* ── FILE TRANSLATION ── */
@@ -2338,13 +2592,12 @@ async function translateFile(srcName,tgtName,isAuto){
 async function translateLargeText(text,srcName,tgtName,isAuto){
   const chunks=chunkText(text);
   const results=[]; let firstDone=false;
-  const sys=buildSystemPrompt(tgtName,isAuto&&!firstDone);
   for(let i=0;i<chunks.length;i++){
     if(cancelRequested) break;
-    showProgress(`Translating ${i+1} / ${chunks.length} chunks (${Math.round((i+1)/chunks.length*100)}%)…`,((i+1)/chunks.length)*100);
-    const ctx=results.slice(-1)[0]?.slice(-400)||'';
-    const cSys=buildSystemPrompt(tgtName,isAuto&&!firstDone)+(ctx?`\n\nPrevious passage ended: "${ctx}"`:'');
-    let res=await callAPI(`Translate from ${isAuto&&!firstDone?'auto-detected language':srcName} to ${tgtName}:\n\n${chunks[i]}`,cSys);
+    showProgress('Translating '+(i+1)+' / '+chunks.length+' chunks ('+Math.round((i+1)/chunks.length*100)+'%)…',((i+1)/chunks.length)*100);
+    const ctx=results.slice(-1)[0]?results.slice(-1)[0].slice(-400):'';
+    const cSys=buildSystemPrompt(tgtName,isAuto&&!firstDone)+(ctx?'\n\nPrevious passage ended: "'+ctx+'"':'');
+    let res=await callAPI('Translate from '+(isAuto&&!firstDone?'auto-detected language':srcName)+' to '+tgtName+':\n\n'+chunks[i],cSys);
     if(!firstDone&&isAuto){const{rest}=extractDetected(res);res=rest;firstDone=true;}
     results.push(res);
     document.getElementById('file-output').textContent=results.join('\n\n');
@@ -2355,127 +2608,288 @@ async function translateLargeText(text,srcName,tgtName,isAuto){
 async function translateHTMLFile(html,srcName,tgtName,isAuto){
   const parser=new DOMParser();
   const doc=parser.parseFromString(html,'text/html');
-  const blocks=[...doc.querySelectorAll('p,h1,h2,h3,h4,h5,h6,li,td,th,span,div')]
-    .filter(el=>el.childNodes.length&&[...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()));
-  const sys=buildSystemPrompt(tgtName,false,'- Translate ONLY the text, keep HTML tags exactly as they are.');
-  for(let i=0;i<blocks.length;i++){
-    if(cancelRequested) break;
-    showProgress(`Translating HTML block ${i+1}/${blocks.length}…`,((i+1)/blocks.length)*100);
-    const el=blocks[i];
-    const inner=el.innerHTML;
-    if(!inner.trim()) continue;
-    const res=await callAPI(`Translate to ${tgtName}, keep tags:\n${inner}`,sys);
-    el.innerHTML=res;
+  // Walk text nodes only — avoids double-translation of nested elements
+  const SKIP_PARENTS=new Set(['SCRIPT','STYLE','NOSCRIPT','CODE','PRE']);
+  const walker=doc.createTreeWalker(doc.body,NodeFilter.SHOW_TEXT,{
+    acceptNode(n){
+      if(!n.nodeValue||!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      let p=n.parentNode;
+      while(p&&p!==doc.body){
+        if(SKIP_PARENTS.has(p.tagName)) return NodeFilter.FILTER_REJECT;
+        p=p.parentNode;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const textNodes=[];
+  let n; while(n=walker.nextNode()) textNodes.push(n);
+  if(!textNodes.length) return html;
+
+  // Batch text nodes together (max ~2000 chars per batch)
+  const batches=[]; let cur=[], curLen=0;
+  for(const tn of textNodes){
+    const t=tn.nodeValue;
+    if(curLen+t.length>2000 && cur.length){ batches.push(cur); cur=[]; curLen=0; }
+    cur.push(tn); curLen+=t.length;
   }
-  return doc.documentElement.outerHTML;
+  if(cur.length) batches.push(cur);
+
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each numbered item. Input: numbered list of plain text strings. Output: same count, same numbering, translated.\n- Preserve inner whitespace (leading/trailing spaces) exactly.');
+  let globalIdx=0;
+  for(let bi=0;bi<batches.length;bi++){
+    if(cancelRequested) break;
+    const batch=batches[bi];
+    showProgress('Translating HTML batch '+(bi+1)+'/'+batches.length+'…',((bi+1)/batches.length)*100);
+    const numbered=batch.map((tn,i)=>(globalIdx+i+1)+'. '+tn.nodeValue).join('\n');
+    const res=await callAPI('Translate these text fragments to '+tgtName+':\n'+numbered,sys);
+    const lines=res.split('\n');
+    const translated={};
+    for(const ln of lines){
+      const m=ln.match(/^(\d+)\.\s?(.*)$/);
+      if(m) translated[+m[1]]=m[2];
+    }
+    batch.forEach((tn,i)=>{
+      const k=globalIdx+i+1;
+      if(translated[k]!==undefined) tn.nodeValue=translated[k];
+    });
+    globalIdx+=batch.length;
+  }
+  return '<!DOCTYPE html>\n'+doc.documentElement.outerHTML;
 }
 
 async function translateSRT(srt,srcName,tgtName,isAuto){
-  // Parse SRT blocks: index \n timestamp \n text \n\n
+  // Normalize line endings
+  srt=srt.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
   const blocks=srt.trim().split(/\n\n+/);
-  const dialogues=[], indices=[];
-  blocks.forEach((b,i)=>{
+  // Only blocks with index + timestamp + text are dialogues
+  const dialogues=[], blockKind=[]; // 'dialogue' or 'raw'
+  blocks.forEach(b=>{
     const lines=b.split('\n');
-    if(lines.length>=3){
-      const textLines=lines.slice(2).join('\n');
-      dialogues.push(textLines);
-      indices.push(i);
+    if(lines.length>=3 && /-->/.test(lines[1])){
+      dialogues.push(lines.slice(2).join('\n'));
+      blockKind.push('dialogue');
+    } else {
+      blockKind.push('raw');
     }
   });
   const BATCH=20;
-  const sys=buildSystemPrompt(tgtName,isAuto,'- Translate each subtitle line. Input is a numbered list; output the SAME numbered list with translations only.\n- Keep numbering exactly as given.');
-  let allTranslations=[];
+  const sys=buildSystemPrompt(tgtName,isAuto,'- Translate each subtitle line. Input is a numbered list; output the SAME numbered list with translations only, one item per line.\n- Keep numbering exactly as given. Use the exact format: "N. translation".\n- Do NOT add extra blank lines or explanations.');
+  const allTranslations=new Array(dialogues.length);
   for(let s=0;s<dialogues.length;s+=BATCH){
     if(cancelRequested) break;
     const batch=dialogues.slice(s,s+BATCH);
-    const numbered=batch.map((t,i)=>`${s+i+1}. ${t}`).join('\n');
-    showProgress(`Translating subtitles ${s+1}–${Math.min(s+BATCH,dialogues.length)} of ${dialogues.length}…`,((s+BATCH)/dialogues.length)*100);
-    const res=await callAPI(`Translate these subtitles to ${tgtName}:\n${numbered}`,sys);
-    const lines=res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,''));
-    allTranslations.push(...lines);
+    const numbered=batch.map((t,i)=>(s+i+1)+'. '+t.replace(/\n/g,' ⏎ ')).join('\n');
+    showProgress('Translating subtitles '+(s+1)+'–'+Math.min(s+BATCH,dialogues.length)+' of '+dialogues.length+'…',((s+BATCH)/dialogues.length)*100);
+    const res=await callAPI('Translate these subtitles to '+tgtName+':\n'+numbered,sys);
+    // Parse: extract "N. text" per line, match by number (not position)
+    const lines=res.split('\n');
+    for(const ln of lines){
+      const m=ln.match(/^(\d+)\.\s?(.*)$/);
+      if(m){
+        const idx=+m[1]-1;
+        if(idx>=0 && idx<dialogues.length){
+          allTranslations[idx]=m[2].replace(/ ⏎ /g,'\n');
+        }
+      }
+    }
   }
-  let ti=0;
+  // Re-assemble, falling back to original for any missing translations
+  let di=0;
   const out=blocks.map((b,i)=>{
-    if(!indices.includes(i)) return b;
+    if(blockKind[i]!=='dialogue') return b;
     const lines=b.split('\n');
-    const translated=allTranslations[ti++]||lines.slice(2).join('\n');
-    return lines.slice(0,2).join('\n')+'\n'+translated;
+    const translated=allTranslations[di++];
+    const finalText=(translated!==undefined && translated!=='')?translated:lines.slice(2).join('\n');
+    return lines.slice(0,2).join('\n')+'\n'+finalText;
   });
   return out.join('\n\n');
 }
 
 async function translatePO(po,srcName,tgtName,isAuto){
-  // Extract msgid/msgstr pairs
-  const pairs=[]; let cur={id:'',str:'',raw:''};
+  // Normalize line endings
+  po=po.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  // Strip BOM
+  if(po.charCodeAt(0)===0xFEFF) po=po.slice(1);
+  // Parser: extract msgid / msgstr pairs, preserving comments, msgctxt, plural forms
+  function unescapePO(s){ return s.replace(/\\(.)/g,(m,c)=>({'n':'\n','t':'\t','r':'\r','\\':'\\','"':'"'}[c]||c)); }
+  function escapePO(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,'\\n').replace(/\t/g,'\\t'); }
   const lines=po.split('\n');
-  const out=[]; let inMsg=false;
+  const entries=[];
+  let cur=null, field=null;
+  function push(){ if(cur&&(cur.msgid||cur.msgid==='')) entries.push(cur); cur=null; field=null; }
   for(const line of lines){
-    if(line.startsWith('msgid ')){cur.id=line.slice(7,-1);inMsg=true;}
-    else if(line.startsWith('msgstr ')){inMsg=false;}
-    else if(line.startsWith('"')&&inMsg){cur.id+='\n'+line.slice(1,-1);}
-    if(line.startsWith('msgid ')) pairs.push(cur={id:line.slice(7,-1)||'',str:'',srcLine:lines.indexOf(line)});
+    if(!line.trim()){ push(); continue; }
+    if(line.startsWith('#')){
+      if(!cur) cur={comments:[],msgctxt:null,msgid:'',msgid_plural:null,msgstr:'',msgstrs:{}};
+      cur.comments.push(line); continue;
+    }
+    let m;
+    if(m=line.match(/^(msgctxt|msgid|msgid_plural|msgstr)\s+"(.*)"\s*$/)){
+      if(!cur) cur={comments:[],msgctxt:null,msgid:'',msgid_plural:null,msgstr:'',msgstrs:{}};
+      field=m[1]; cur[field]=unescapePO(m[2]); continue;
+    }
+    if(m=line.match(/^msgstr\[(\d+)\]\s+"(.*)"\s*$/)){
+      if(!cur) cur={comments:[],msgctxt:null,msgid:'',msgid_plural:null,msgstr:'',msgstrs:{}};
+      field='msgstr['+m[1]+']'; cur.msgstrs[+m[1]]=unescapePO(m[2]); continue;
+    }
+    if(m=line.match(/^"(.*)"\s*$/)){
+      if(!cur||!field) continue;
+      if(field.startsWith('msgstr[')){
+        const idx=+field.match(/\[(\d+)\]/)[1];
+        cur.msgstrs[idx]=(cur.msgstrs[idx]||'')+unescapePO(m[1]);
+      } else {
+        cur[field]=(cur[field]||'')+unescapePO(m[1]);
+      }
+    }
   }
-  const toTranslate=pairs.filter(p=>p.id&&p.id!=='');
+  push();
+  // Find entries needing translation (non-empty msgid, skip header with msgid "")
+  const toTranslate=entries.filter(e=>e.msgid&&e.msgid.length>0);
   const BATCH=15;
-  const sys=buildSystemPrompt(tgtName,false,'- Translate each item. Input: numbered list of source strings. Output: same numbered list, translated only.');
-  let translated=[];
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each item. Input: numbered list of source strings. Output: same numbered list, translated only, one item per line.\n- Use exact format "N. translation". Keep placeholder tokens like %s %d {0} {name} unchanged.');
+  const translated={};
   for(let s=0;s<toTranslate.length;s+=BATCH){
     if(cancelRequested) break;
     const batch=toTranslate.slice(s,s+BATCH);
-    const numbered=batch.map((p,i)=>`${s+i+1}. ${p.id}`).join('\n');
-    showProgress(`Translating .po strings ${s+1}–${Math.min(s+BATCH,toTranslate.length)}…`,((s+BATCH)/toTranslate.length)*100);
-    const res=await callAPI(`Translate these strings to ${tgtName}:\n${numbered}`,sys);
-    translated.push(...res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,'')));
+    const numbered=batch.map((e,i)=>(s+i+1)+'. '+e.msgid.replace(/\n/g,' ⏎ ')).join('\n');
+    showProgress('Translating .po strings '+(s+1)+'–'+Math.min(s+BATCH,toTranslate.length)+'…',((s+BATCH)/toTranslate.length)*100);
+    const res=await callAPI('Translate these strings to '+tgtName+':\n'+numbered,sys);
+    const plines=res.split('\n');
+    for(const ln of plines){
+      const mm=ln.match(/^(\d+)\.\s?(.*)$/);
+      if(mm) translated[+mm[1]-1]=mm[2].replace(/ ⏎ /g,'\n');
+    }
+    // Apply this batch
+    batch.forEach((e,i)=>{
+      const t=translated[s+i];
+      if(t!==undefined) e.msgstr=t;
+    });
   }
-  let ti=0;
-  return po.replace(/^msgstr ""$/gm,()=>`msgstr "${translated[ti++]||''}"`);
+  // Serialize
+  function serializeEntry(e){
+    const out=[...(e.comments||[])];
+    if(e.msgctxt!==null) out.push('msgctxt "'+escapePO(e.msgctxt)+'"');
+    out.push('msgid "'+escapePO(e.msgid)+'"');
+    if(e.msgid_plural!==null){
+      out.push('msgid_plural "'+escapePO(e.msgid_plural)+'"');
+      const keys=Object.keys(e.msgstrs).length?Object.keys(e.msgstrs):['0','1'];
+      keys.forEach(k=>out.push('msgstr['+k+'] "'+escapePO(e.msgstrs[k]||'')+'"'));
+    } else {
+      out.push('msgstr "'+escapePO(e.msgstr||'')+'"');
+    }
+    return out.join('\n');
+  }
+  return entries.map(serializeEntry).join('\n\n');
 }
 
 async function translateCSV(csv,srcName,tgtName,isAuto){
-  const rows=csv.split('\n').map(r=>r.split(','));
+  // Auto-detect delimiter from first 5 lines (European Excel uses ';', TSV uses tab)
+  function detectDelim(text){
+    const sample=text.split(/\r?\n/).slice(0,5).join('\n');
+    const counts={',':0,';':0,'\t':0};
+    let inQ=false;
+    for(const ch of sample){
+      if(ch==='"') inQ=!inQ;
+      else if(!inQ && counts.hasOwnProperty(ch)) counts[ch]++;
+    }
+    const winner=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+    return winner[1]>0 ? winner[0] : ',';
+  }
+  const DELIM=detectDelim(csv);
+  // RFC 4180 parser (handles quoted fields with the detected delimiter)
+  function parseCSV(text){
+    text=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+    const rows=[]; let row=[], field='', i=0, inQ=false;
+    while(i<text.length){
+      const c=text[i];
+      if(inQ){
+        if(c==='"'){ if(text[i+1]==='"'){ field+='"'; i+=2; continue; } inQ=false; i++; }
+        else { field+=c; i++; }
+      } else {
+        if(c==='"'){ inQ=true; i++; }
+        else if(c===DELIM){ row.push(field); field=''; i++; }
+        else if(c==='\n'){ row.push(field); rows.push(row); row=[]; field=''; i++; }
+        else { field+=c; i++; }
+      }
+    }
+    if(field.length||row.length){ row.push(field); rows.push(row); }
+    return rows;
+  }
+  function escapeCSV(s){
+    s=String(s==null?'':s);
+    if(s.indexOf(DELIM)>-1||/[\n"]/.test(s)) return '"'+s.replace(/"/g,'""')+'"';
+    return s;
+  }
+  const rows=parseCSV(csv);
   if(!rows.length) return csv;
   const header=rows[0]; const dataRows=rows.slice(1);
-  const sys=buildSystemPrompt(tgtName,false,'- Translate each cell value. Input: pipe-separated list of cell values. Output: same count of translated values, pipe-separated. Preserve empty cells as empty.');
+  // Collect all non-empty cells with their (row, col) coords
+  const cellRefs=[]; // {r, c, val}
+  dataRows.forEach((row,r)=>{
+    row.forEach((v,c)=>{
+      if(v&&v.trim()) cellRefs.push({r,c,val:v});
+    });
+  });
   const BATCH=30;
-  let result=[header.join(',')];
-  const flat=dataRows.flat();
-  for(let s=0;s<flat.length;s+=BATCH){
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each item. Input: numbered list. Output: same numbered list, translated only, one item per line. Use exact format "N. translation".\n- Preserve numeric values, dates, and single-character tokens unchanged.');
+  const translated={};
+  for(let s=0;s<cellRefs.length;s+=BATCH){
     if(cancelRequested) break;
-    const batch=flat.slice(s,s+BATCH);
-    showProgress(`Translating CSV cells ${s+1}–${Math.min(s+BATCH,flat.length)}…`,((s+BATCH)/flat.length)*100);
-    const numbered=batch.map((c,i)=>`${s+i+1}. ${c}`).join('\n');
-    const res=await callAPI(`Translate these cell values to ${tgtName}:\n${numbered}`,sys);
-    const vals=res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,''));
-    flat.splice(s,batch.length,...vals.concat(Array(batch.length-vals.length).fill('')));
+    const batch=cellRefs.slice(s,s+BATCH);
+    const numbered=batch.map((ref,i)=>(s+i+1)+'. '+ref.val.replace(/\n/g,' ⏎ ')).join('\n');
+    showProgress('Translating CSV cells '+(s+1)+'–'+Math.min(s+BATCH,cellRefs.length)+'…',((s+BATCH)/cellRefs.length)*100);
+    const res=await callAPI('Translate these cell values to '+tgtName+':\n'+numbered,sys);
+    const plines=res.split('\n');
+    for(const ln of plines){
+      const m=ln.match(/^(\d+)\.\s?(.*)$/);
+      if(m) translated[+m[1]-1]=m[2].replace(/ ⏎ /g,'\n');
+    }
   }
-  let ci=0;
-  dataRows.forEach(row=>result.push(row.map(()=>flat[ci++]||'').join(',')));
-  return result.join('\n');
+  // Apply
+  cellRefs.forEach((ref,idx)=>{
+    if(translated[idx]!==undefined) dataRows[ref.r][ref.c]=translated[idx];
+  });
+  return [header, ...dataRows].map(r=>r.map(escapeCSV).join(DELIM)).join('\n');
 }
 
 async function translateJSON(json,srcName,tgtName,isAuto){
-  let parsed; try{parsed=JSON.parse(json);}catch{return json;}
+  let parsed; try{parsed=JSON.parse(json);}catch(e){ throw new Error('Invalid JSON: '+e.message); }
+  // Unique placeholder prefix — avoids collision with source content
+  const PFX='__TH_'+(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2))+'_';
   const strings=[];
   function collect(obj){
-    if(typeof obj==='string'){strings.push(obj);return '__PLACEHOLDER_'+(strings.length-1)+'__';}
+    if(typeof obj==='string'){
+      if(!obj.trim()) return obj; // keep empty/whitespace strings as-is
+      strings.push(obj);
+      return PFX+(strings.length-1)+'__';
+    }
     if(Array.isArray(obj)) return obj.map(collect);
     if(obj&&typeof obj==='object') return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,collect(v)]));
     return obj;
   }
   const template=collect(parsed);
   const BATCH=20;
-  const sys=buildSystemPrompt(tgtName,false,'- Translate each string. Input: numbered list. Output: same numbered list, translated.');
-  let translated=[];
+  const sys=buildSystemPrompt(tgtName,false,'- Translate each string. Input: numbered list. Output: same numbered list, translated only, one per line. Use exact format "N. translation".\n- Keep placeholders like %s %d {0} {name} ${var} unchanged.');
+  const translated={};
   for(let s=0;s<strings.length;s+=BATCH){
     if(cancelRequested) break;
     const batch=strings.slice(s,s+BATCH);
-    showProgress(`Translating JSON strings ${s+1}–${Math.min(s+BATCH,strings.length)}…`,((s+BATCH)/strings.length)*100);
-    const numbered=batch.map((t,i)=>`${s+i+1}. ${t}`).join('\n');
-    const res=await callAPI(`Translate to ${tgtName}:\n${numbered}`,sys);
-    translated.push(...res.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^\d+\.\s*/,'')));
+    showProgress('Translating JSON strings '+(s+1)+'–'+Math.min(s+BATCH,strings.length)+'…',((s+BATCH)/strings.length)*100);
+    const numbered=batch.map((t,i)=>(s+i+1)+'. '+t.replace(/\n/g,' ⏎ ')).join('\n');
+    const res=await callAPI('Translate to '+tgtName+':\n'+numbered,sys);
+    const plines=res.split('\n');
+    for(const ln of plines){
+      const m=ln.match(/^(\d+)\.\s?(.*)$/);
+      if(m) translated[+m[1]-1]=m[2].replace(/ ⏎ /g,'\n');
+    }
   }
+  const phRe=new RegExp(PFX.replace(/[-\\^$*+?.()|[\]{}]/g,'\\$&')+'(\\d+)__');
   function restore(obj){
-    if(typeof obj==='string'){const m=obj.match(/^__PLACEHOLDER_(\d+)__$/);return m?translated[+m[1]]||strings[+m[1]]:obj;}
+    if(typeof obj==='string'){
+      const m=obj.match(new RegExp('^'+PFX.replace(/[-\\^$*+?.()|[\]{}]/g,'\\$&')+'(\\d+)__$'));
+      if(m){ const idx=+m[1]; return translated[idx]!==undefined?translated[idx]:strings[idx]; }
+      return obj;
+    }
     if(Array.isArray(obj)) return obj.map(restore);
     if(obj&&typeof obj==='object') return Object.fromEntries(Object.entries(obj).map(([k,v])=>[k,restore(v)]));
     return obj;
@@ -2496,7 +2910,11 @@ function closeLegal(){
   document.body.style.overflow='';
 }
 function switchLegalTab(panelId){
-  document.querySelectorAll('.legal-tab').forEach(t=>t.classList.toggle('active',t.dataset.panel===panelId));
+  document.querySelectorAll('.legal-tab').forEach(t=>{
+    const active=t.dataset.panel===panelId;
+    t.classList.toggle('active',active);
+    t.setAttribute('aria-selected',active?'true':'false');
+  });
   document.querySelectorAll('.legal-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+panelId));
 }
 function rebindLegalTabs(){
@@ -2538,56 +2956,8 @@ const UI_TRANSLATIONS = {
   "hi": {"hero_eyebrow": "मुफ़्त अनुवाद उपकरण", "hero_h1": "हर<br><em>भाषा बोलें।</em>", "hero_sub": "सर्वोत्तम मुफ़्त मशीन अनुवाद उपकरणों की संपूर्ण निर्देशिका — दैनिक उपयोग से लेकर पेशेवर CAT वर्कफ़्लो तक।", "stat1": "चयनित उपकरण", "stat2": "कौशल स्तर", "stat3": "निःशुल्क", "stat4": "भाषाएँ", "nav1": "शुरुआती", "nav2": "उपयोगकर्ता", "nav3": "पेशेवर", "nav4": "अनुवाद", "search_nav": "खोजें…", "ui_lang_ph": "भाषा खोजें…", "tr_eyebrow": "AI-संचालित अनुवाद", "mode_text": "✎ सामान्य पाठ", "mode_rich": "❡ समृद्ध पाठ", "mode_file": "⇪ फ़ाइल अपलोड", "src_label": "स्रोत पाठ", "src_ph": "यहाँ पाठ टाइप करें या पेस्ट करें — कोई वर्ण सीमा नहीं…", "btn_clear": "✕ साफ़ करें", "tgt_label": "अनुवाद", "tr_out_ph": "अनुवाद यहाँ दिखाई देगा…", "btn_copy": "⧉ कॉपी", "btn_dl_txt": "↓ .txt", "rt_out_ph": "स्वरूपित अनुवाद यहाँ दिखाई देगा…", "btn_copy_rt": "⧉ पाठ कॉपी करें", "btn_dl_rt": "↓ .html", "rt_tb_table": "⊞ तालिका", "rt_tb_clear": "✕ साफ़ करें", "file_title": "यहाँ फ़ाइल छोड़ें", "file_sub": "या ब्राउज़ करने के लिए क्लिक करें — समर्थित प्रारूप:", "file_out_label": "अनुवादित आउटपुट", "btn_dl_file": "↓ अनुवादित फ़ाइल डाउनलोड करें", "btn_copy_file": "⧉ पाठ कॉपी करें", "powered": "<span>Claude AI</span> द्वारा संचालित — असीमित पाठ · स्वरूपण · 8 प्रारूप · 500+ भाषाएँ", "sec_b_label": "शुरुआती लोगों के लिए", "sec_b_h2": "सरल &amp; <em style=\"font-style:italic;color:var(--teal)\">तत्काल</em>", "sec_b_desc": "कोई पंजीकरण नहीं। पाठ पेस्ट करें और सेकंडों में अनुवाद पाएं।", "sec_a_label": "उपयोगकर्ताओं के लिए", "sec_a_h2": "स्मार्ट &amp; <em style=\"font-style:italic;color:var(--gold2)\">संदर्भात्मक</em>", "sec_a_desc": "शब्दकोश संदर्भ, द्विभाषी उदाहरण और समुदाय फ़ोरम के साथ उच्च गुणवत्ता।", "sec_p_label": "पेशेवरों के लिए", "sec_p_h2": "CAT उपकरण &amp; <em style=\"font-style:italic;color:var(--violet)\">वर्कफ़्लो</em>", "sec_p_desc": "पूर्ण अनुवाद मेमोरी, शब्दावली प्रबंधन और सहयोगी CAT वातावरण।", "div1": "अपना अनुवाद वर्कफ़्लो बेहतर बनाएं", "div2": "अनुवादकों, भाषाविदों और डेवलपर्स के लिए", "no_results": "खोज से कोई उपकरण नहीं मिला। अन्य कीवर्ड आज़माएं।", "footer_desc": "मुफ़्त अनुवाद उपकरणों की सबसे पूर्ण निर्देशिका। कोई विज्ञापन नहीं। कोई संबद्ध लिंक नहीं।", "footer_copy": "© 2026 TranslateHub · भाषा समुदाय के लिए बनाया गया · अधिकार क्षेत्र: रोमानिया / EU", "footer_gdpr": "🔒 गोपनीयता & GDPR", "footer_cookies": "🍪 कुकी नीति", "footer_impressum": "📋 प्रकाशक जानकारी", "footer_access": "♿ अभिगम्यता", "footer_tech": "⚙ तकनीक & पारदर्शिता", "footer_terms": "⚖ शर्तें & अस्वीकरण", "legal_title": "⚖ कानूनी & GDPR", "ltab_gdpr": "🔒 GDPR", "ltab_cookies": "🍪 कुकीज़", "ltab_impressum": "📋 प्रकाशक", "ltab_access": "♿ अभिगम्यता", "ltab_tech": "⚙ तकनीक", "ltab_terms": "⚖ शर्तें"},
 };
 
-const UI_BASE={
-  hero_eyebrow:'Free Translation Tools',
-  hero_h1:'Speak every<br><em>language.</em>',
-  hero_sub:"The definitive curated directory of the world’s best free machine translators and language tools — from casual use to professional CAT workflows.",
-  stat1:'Curated tools',stat2:'Skill levels',stat3:'Free to use',stat4:'Languages covered',
-  nav1:'Beginners',nav2:'Average',nav3:'Professionals',nav4:'Translate',
-  search_nav:'Search…',
-  ui_lang_ph:'Search language…',
-  tr_eyebrow:'AI-Powered Translation',
-  tr_h2:'Translate <em style="font-style:italic;color:var(--violet)">anything</em>',
-  tr_sub:'500+ languages · Unlimited length · Rich formatting · 8 file types',
-  mode_text:'✎ Plain Text',mode_rich:'❡ Rich Text',mode_file:'⇪ File Upload',
-  src_label:'Source text',
-  src_ph:'Type or paste text here — no character limit. Very large texts are translated in automatic chunks…',
-  btn_clear:'✕ Clear',
-  tgt_label:'Translation',
-  tr_out_ph:'Translation will appear here…',
-  btn_copy:'⧉ Copy',btn_dl_txt:'↓ .txt',
-  rt_out_ph:'Formatted translation will appear here, preserving all structure…',
-  btn_copy_rt:'⧉ Copy text',btn_dl_rt:'↓ .html',
-  rt_tb_table:'⊞ Table',rt_tb_clear:'✕ Clear',
-  file_title:'Drop your file here',
-  file_sub:'or click to browse — supports these formats:',
-  file_out_label:'Translated output',
-  btn_dl_file:'↓ Download translated file',btn_copy_file:'⧉ Copy text',
-  powered:'Powered by <span>Claude AI</span> — unlimited text · rich formatting · 8 file formats · 500+ languages',
-  sec_b_label:'For Beginners',
-  sec_b_h2:'Simple &amp; <em style="font-style:italic;color:var(--teal)">instant</em>',
-  sec_b_desc:'No sign-up required. Just paste your text and get a translation in seconds.',
-  sec_a_label:'For Average Users',
-  sec_a_h2:'Smarter &amp; <em style="font-style:italic;color:var(--gold2)">contextual</em>',
-  sec_a_desc:'Higher quality output with dictionary context, bilingual examples, and community forums.',
-  sec_p_label:'For Professionals',
-  sec_p_h2:'CAT tools &amp; <em style="font-style:italic;color:var(--violet)">workflows</em>',
-  sec_p_desc:'Full translation memories, terminology management, and collaborative CAT environments.',
-  div1:'Elevate your translation workflow',
-  div2:'Built for translators, linguists & developers',
-  no_results:'No tools match your search. Try different keywords.',
-  footer_desc:'The most complete directory of free translation tools — from everyday use to professional CAT workflows. No advertising. No affiliate links.',
-  footer_copy:'© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union',
-  footer_gdpr:'🔒 Privacy & GDPR',
-  footer_cookies:'🍪 Cookie Policy',
-  footer_impressum:'📋 Impressum',
-  footer_access:'♿ Accessibility',
-  footer_tech:'⚙ Technologies & Transparency',
-  footer_terms:'⚖ Terms & Disclaimer',
-  legal_title:'⚖ Legal & GDPR',
-  ltab_gdpr:'🔒 GDPR',ltab_cookies:'🍪 Cookies',ltab_impressum:'📋 Impressum',
-  ltab_access:'♿ Accessibility',ltab_tech:'⚙ Technologies',ltab_terms:'⚖ Terms',
-};
+// UI_BASE is always UI_TRANSLATIONS.en — single source of truth for API fallback translation
+const UI_BASE=UI_TRANSLATIONS.en;
 
 // UI_DOM: [key, CSS selector, prop]
 // props: t=textContent h=innerHTML ph=placeholder tn=last-textnode pe=placeholder-element
@@ -2636,11 +3006,11 @@ const UI_DOM=[
   ['sec_p_label','#professionals .tier-label','tn'],
   ['sec_p_h2','#professionals h2','h'],
   ['sec_p_desc','#professionals .section-desc','t'],
-  ['div1','.divider:nth-of-type(1) span','t'],
-  ['div2','.divider:nth-of-type(2) span','t'],
+  ['div1','#divider-1 span','t'],
+  ['div2','#divider-2 span','t'],
   ['no_results','#no-results p','t'],
-  ['footer_desc','footer > p:nth-child(2)','h'],
-  ['footer_copy','footer > p:last-child','h'],
+  ['footer_desc','#footer-desc','h'],
+  ['footer_copy','#footer-copy','h'],
   ['footer_gdpr','.footer-legal-row button:nth-child(1)','t'],
   ['footer_cookies','.footer-legal-row button:nth-child(2)','t'],
   ['footer_impressum','.footer-legal-row button:nth-child(3)','t'],
@@ -2664,7 +3034,7 @@ function applyUI(strings){
     if(!el){ failed.push(key+'→'+sel); return; }
     try{
       if(prop==='t') el.textContent=strings[key];
-      else if(prop==='h') el.innerHTML=strings[key];
+      else if(prop==='h') el.innerHTML=sanitizeHTML(strings[key]);
       else if(prop==='ph') el.placeholder=strings[key];
       else if(prop==='tn'){
         const nodes=[...el.childNodes].filter(n=>n.nodeType===3);
@@ -2702,6 +3072,22 @@ function showToast(msg,type,duration){
   if(duration!==0) _toastTimer=setTimeout(()=>t.className='',duration||3000);
 }
 
+/* ── SHORT CODE HELPER (better display for compound codes like zh-Hans) ── */
+function getShortCode(code){
+  if(code.indexOf('-')>-1) return code.split('-')[0].toUpperCase(); // zh-Hans → ZH
+  return code.slice(0,3).toUpperCase();
+}
+/* ── HTML LANG ATTRIBUTE (so screen readers use correct voice) ── */
+function setHtmlLangAttr(code){
+  try{ document.documentElement.setAttribute('lang', code); }catch(e){}
+}
+/* ── PERSIST UI LANG PREF (single place) ── */
+function persistUILang(code,name,data){
+  try{ localStorage.setItem('ui_lang_pref',code); }catch(e){}
+  try{ localStorage.setItem('ui_lang_name',name); }catch(e){}
+  try{ if(data) localStorage.setItem('ui_'+code, JSON.stringify(data)); }catch(e){}
+}
+
 async function setUILang(code,name){
   if(code===uiLang.code){ closeUILang(); return; }
   uiLang={code,name};
@@ -2713,14 +3099,13 @@ async function setUILang(code,name){
   label.textContent='\u21bb';
   buildLangPickerItems('');
 
-  const shortCode=code.slice(0,4).toUpperCase();
+  const shortCode=getShortCode(code);
 
   // ── 1. Use embedded translations (instant, no API) ────────────────────────
   if(UI_TRANSLATIONS[code]){
     applyUI(UI_TRANSLATIONS[code]);
-    // Cache to sessionStorage for consistency
-    try{ try{localStorage.setItem('ui_lang_pref',code);localStorage.setItem('ui_lang_name',name);}catch(e){}
-try{localStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code]));}catch(e){} }catch(e){}
+    setHtmlLangAttr(code);
+    persistUILang(code,name,UI_TRANSLATIONS[code]);
     label.textContent=shortCode;
     btn.disabled=false;
     buildLangPickerItems('');
@@ -2728,11 +3113,13 @@ try{localStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code]));}cat
     return;
   }
 
-  // ── 2. Try sessionStorage cache ───────────────────────────────────────────
+  // ── 2. Try localStorage cache ─────────────────────────────────────────────
   try{
     const cached=localStorage.getItem('ui_'+code);
     if(cached){
       applyUI(JSON.parse(cached));
+      setHtmlLangAttr(code);
+      persistUILang(code,name,null);
       label.textContent=shortCode;
       btn.disabled=false;
       buildLangPickerItems('');
@@ -2746,6 +3133,7 @@ try{localStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code]));}cat
   const keys=Object.keys(UI_BASE);
   const BATCH=8;
   const translated={};
+  newAbort();
 
   for(let i=0; i<keys.length; i+=BATCH){
     const bKeys=keys.slice(i,i+BATCH);
@@ -2768,18 +3156,20 @@ try{localStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code]));}cat
       Object.assign(translated,parsed);
       applyUI(translated);
     }catch(e){
+      if(e.name==='AbortError'){ btn.disabled=false; return; }
       console.error('[i18n] batch '+bNum+' failed:',e);
       checkAndShowBanner(e);
       uiLang={code:'en',name:'English'};
       label.textContent='EN';
+      setHtmlLangAttr('en');
       btn.disabled=false;
       showToast('\u26a0 Translation failed: '+e.message.slice(0,60),'error',5000);
       return;
     }
   }
 
-  try{ try{localStorage.setItem('ui_lang_pref',code);localStorage.setItem('ui_lang_name',name);}catch(e){}
-localStorage.setItem('ui_'+code,JSON.stringify(translated)); }catch(e){}
+  setHtmlLangAttr(code);
+  persistUILang(code,name,translated);
   label.textContent=shortCode;
   btn.disabled=false;
   buildLangPickerItems('');
@@ -2791,17 +3181,36 @@ async function translateLegalIfNeeded(){
   if(code==='en') return;
   const lKey='legal_'+code;
   const lb=document.querySelector('.legal-body');
-  const cached=sessionStorage.getItem(lKey);
-  if(cached){lb.innerHTML=cached;rebindLegalTabs();return;}
+  let cached=null;
+  try{ cached=sessionStorage.getItem(lKey); }catch(e){}
+  if(cached){
+    lb.innerHTML=sanitizeLegalHTML(cached);
+    rebindLegalTabs();
+    return;
+  }
   if(!lb.dataset.original) lb.dataset.original=lb.innerHTML;
-  lb.innerHTML='<div class="ui-lang-translating">\u21bb Translating Legal & GDPR to '+uiLang.name+'\u2026</div>';
-  const sysP='You are a professional translator. Translate the visible text in this HTML to the target language. Keep ALL HTML tags, class names, data-* attributes, href links, mailto links, code snippets, and CSS variable names exactly unchanged. Translate only human-readable text content.';
-  const uMsg='Translate to '+uiLang.name+':\n'+lb.dataset.original;
+  lb.innerHTML='<div class="ui-lang-translating">\u21bb Translating Legal &amp; GDPR to '+uiLang.name+'\u2026</div>';
+
+  // Translate each panel separately to stay within max_tokens budget
+  const originalRoot=document.createElement('div');
+  originalRoot.innerHTML=lb.dataset.original;
+  const panels=[...originalRoot.querySelectorAll('.legal-panel')];
+  const sysP='Professional translator. Translate the visible text in this HTML to '+uiLang.name+'. Keep ALL HTML tags, class names, data-* attributes, id attributes, href links, mailto links, code snippets, CSS variable names, and HTML entities exactly unchanged. Translate only human-readable text content. Output ONLY the translated HTML, no markdown, no preamble.';
   try{
-    const res=await callAPI(uMsg,sysP);
-    const clean=res.replace(/^```(?:html)?\s*/,'').replace(/\s*```$/,'').trim();
-    sessionStorage.setItem(lKey,clean);
-    lb.innerHTML=clean;
+    for(let pi=0;pi<panels.length;pi++){
+      if(cancelRequested) throw new Error('Cancelled');
+      const panel=panels[pi];
+      const raw=await callAPI('Translate this HTML fragment to '+uiLang.name+':\n\n'+panel.outerHTML, sysP);
+      const clean=raw.replace(/^```(?:html)?\s*/,'').replace(/\s*```$/,'').trim();
+      // Replace the panel in the clone
+      const tmp=document.createElement('div');
+      tmp.innerHTML=clean;
+      const newPanel=tmp.querySelector('.legal-panel')||tmp.firstElementChild;
+      if(newPanel) panel.replaceWith(newPanel);
+    }
+    const result=originalRoot.innerHTML;
+    try{ sessionStorage.setItem(lKey,result); }catch(e){}
+    lb.innerHTML=sanitizeLegalHTML(result);
     rebindLegalTabs();
   }catch(e){
     lb.innerHTML=lb.dataset.original;
@@ -2810,19 +3219,40 @@ async function translateLegalIfNeeded(){
   }
 }
 
+/* Legal HTML needs a more permissive sanitizer than AI translation output,
+   since it includes class / id / data-panel for tab switching. */
+function sanitizeLegalHTML(html){
+  const doc=new DOMParser().parseFromString('<!DOCTYPE html><body>'+String(html||''),'text/html');
+  doc.querySelectorAll('script,style,iframe,object,embed,link,meta,base,form,input,select,textarea').forEach(n=>n.remove());
+  const walker=doc.createTreeWalker(doc.body,NodeFilter.SHOW_ELEMENT);
+  let n;
+  while(n=walker.nextNode()){
+    [...n.attributes].forEach(attr=>{
+      const name=attr.name.toLowerCase();
+      if(name.startsWith('on')) n.removeAttribute(attr.name);
+      if(name==='href'||name==='src'){
+        const v=(attr.value||'').trim().toLowerCase();
+        if(v.startsWith('javascript:')||v.startsWith('vbscript:')) n.removeAttribute(attr.name);
+      }
+    });
+  }
+  return doc.body.innerHTML;
+}
+
 /* ── RESTORE UI LANGUAGE FROM LOCALSTORAGE ── */
 (function(){
-  const savedCode=localStorage.getItem('ui_lang_pref');
-  const savedName=localStorage.getItem('ui_lang_name');
+  let savedCode=null, savedName=null;
+  try{ savedCode=localStorage.getItem('ui_lang_pref'); savedName=localStorage.getItem('ui_lang_name'); }catch(e){}
   if(savedCode && savedCode!=='en' && savedName){
-    // Apply instantly from cache without API call
-    const cached=localStorage.getItem('ui_'+savedCode);
+    let cached=null;
+    try{ cached=localStorage.getItem('ui_'+savedCode); }catch(e){}
     if(cached){
       try{
         uiLang={code:savedCode,name:savedName};
         applyUI(JSON.parse(cached));
+        setHtmlLangAttr(savedCode);
         const label=document.getElementById('ui-lang-label');
-        if(label) label.textContent=savedCode.slice(0,4).toUpperCase();
+        if(label) label.textContent=getShortCode(savedCode);
       }catch(e){ console.warn('[i18n] restore failed',e); }
     }
   }
@@ -2831,13 +3261,20 @@ async function translateLegalIfNeeded(){
 /* ── UI LANGUAGE PICKER ── */
 function openUILang(){
   const panel=document.getElementById('ui-lang-panel');
+  const btn=document.getElementById('ui-lang-btn');
   const isOpen=!panel.classList.contains('hidden');
   panel.classList.toggle('hidden',isOpen);
-  if(!isOpen) setTimeout(()=>document.getElementById('ui-lang-search-input').focus(),40);
+  if(btn) btn.setAttribute('aria-expanded', isOpen?'false':'true');
+  if(!isOpen) setTimeout(()=>{
+    const si=document.getElementById('ui-lang-search-input');
+    if(si) si.focus();
+  },40);
 }
 function closeUILang(){
   const p=document.getElementById('ui-lang-panel');
+  const btn=document.getElementById('ui-lang-btn');
   if(p) p.classList.add('hidden');
+  if(btn) btn.setAttribute('aria-expanded','false');
 }
 
 function buildLangPickerItems(filter){
@@ -2850,7 +3287,10 @@ function buildLangPickerItems(filter){
   filtered.slice(0,100).forEach(([name,code])=>{
     const btn=document.createElement('button');
     btn.className='ui-lang-item';
+    btn.type='button';
+    btn.setAttribute('role','option');
     const isActive=code===uiLang.code;
+    btn.setAttribute('aria-selected', isActive?'true':'false');
     btn.textContent=name+(isActive?' ✓':'');
     if(isActive) btn.style.color='var(--gold2)';
     btn.onclick=()=>setUILang(code,name);
@@ -2880,6 +3320,17 @@ let _pickerLangs=[];
   _pickerLangs=allLangs;
   buildLangPickerItems('');
   searchInput.addEventListener('input',e=>buildLangPickerItems(e.target.value));
+  searchInput.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ e.preventDefault(); closeUILang(); document.getElementById('ui-lang-btn').focus(); }
+    else if(e.key==='Enter'){
+      // Select first visible option
+      const first=document.querySelector('.ui-lang-item');
+      if(first) first.click();
+    } else if(e.key==='ArrowDown'){
+      const first=document.querySelector('.ui-lang-item');
+      if(first){ e.preventDefault(); first.focus(); }
+    }
+  });
   document.getElementById('ui-lang-btn').addEventListener('click',()=>buildLangPickerItems(searchInput.value));
   // Close on outside click
   document.addEventListener('click',e=>{
