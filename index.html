@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TranslateHub — The Best Free Translation Tools</title>
+<title>TranslateHub — Best Free Translation Tools Directory</title>
+<meta name="description" content="The definitive curated directory of the world's best free machine translators — Google Translate, DeepL, MateCat, OmegaT and 20+ more. Plus a built-in AI translator powered by Claude.">
+<meta property="og:title" content="TranslateHub — Best Free Translation Tools">
+<meta property="og:description" content="Curated directory of 20+ free translation tools for beginners, average users and professionals. Built-in AI translation powered by Claude.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chiuta.github.io/TranslateHub/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TranslateHub — Best Free Translation Tools">
+<meta name="twitter:description" content="20+ free translation tools curated for beginners, average users and professionals. Built-in AI translator.">
+<link rel="canonical" href="https://chiuta.github.io/TranslateHub/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
@@ -963,12 +972,13 @@
   </div>
 </nav>
 
-<!-- API KEY BANNER (shown when running locally without key) -->
+<!-- API KEY BANNER — shown when AI translation fails due to missing auth -->
 <div id="apikey-banner" class="hidden">
-  <span><strong>🔑 Anthropic API key required</strong> — this file runs locally; Claude.ai auth is unavailable.</span>
+  <span><strong>🔑 API key required</strong> — add your Anthropic key to enable AI translation on this hosting.</span>
   <input type="password" id="apikey-input" placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false">
   <button id="apikey-save-btn" onclick="saveApiKey()">Save key</button>
   <button id="apikey-clear-btn" onclick="clearApiKey()">Clear</button>
+  <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--gold);text-decoration:none;flex-shrink:0;">Get key ↗</a>
   <span id="apikey-status"></span>
 </div>
 
@@ -1004,7 +1014,7 @@
   </div>
 
   <!-- RIGHT: AI translator -->
-  <div class="hero-right" id="translator">
+  <div class="hero-right" id="translator" style="scroll-margin-top:68px;">
     <div class="translator-inner">
       <div class="translator-compact-label">
         <span class="dot"></span>
@@ -1227,25 +1237,25 @@
         </div>
       </div>
 
-      <div class="card b" data-keywords="papago naver korean japanese chinese asian languages">
+      <div class="card b" data-keywords="naver translate korean japanese chinese asian languages">
         <div class="card-top">
-          <div class="card-icon">🦜</div>
+          <div class="card-icon">🌏</div>
           <span class="card-tier-badge">Beginner</span>
         </div>
         <div>
-          <div class="card-name">Papago</div>
-          <div class="card-tagline">Best-in-class for East Asian languages</div>
+          <div class="card-name">Naver Translate</div>
+          <div class="card-tagline">Best-in-class for Korean and East Asian languages</div>
         </div>
-        <p class="card-desc">Built by Naver, Papago consistently outperforms competitors for Korean, Japanese, and Chinese. Features handwriting input, image translation, conversation mode, and a human proofreading service for short texts.</p>
+        <p class="card-desc">Naver's translation service (formerly Papago, integrated in 2024) consistently outperforms competitors for Korean, Japanese, and Chinese. Features image translation, conversation mode, and strong handling of informal speech and slang.</p>
         <div class="card-meta">
           <span class="tag">Korean best-in-class</span>
           <span class="tag">Japanese</span>
-          <span class="tag">Handwriting</span>
+          <span class="tag">Image translation</span>
           <span class="tag">Dictionary</span>
         </div>
         <div class="card-footer">
           <div class="langs-badge"><strong>15</strong> languages</div>
-          <a href="https://papago.naver.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+          <a href="https://translate.naver.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
         </div>
       </div>
 
@@ -1266,7 +1276,7 @@
           <span class="tag">Image OCR</span>
         </div>
         <div class="card-footer">
-          <div class="langs-badge"><strong>200+</strong> languages</div>
+          <div class="langs-badge"><strong>~40</strong> languages</div>
           <a href="https://fanyi.baidu.com" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
         </div>
       </div>
@@ -1290,7 +1300,7 @@
     </div>
     <div class="grid" id="grid-a">
 
-      <div class="card a" data-keywords="deepl neural quality best 31 languages document formal informal">
+      <div class="card a" data-keywords="deepl neural quality best 33 languages document formal informal">
         <span class="best-pick">★ Best Quality</span>
         <div class="card-top">
           <div class="card-icon">💎</div>
@@ -1308,7 +1318,7 @@
           <span class="tag">Glossary</span>
         </div>
         <div class="card-footer">
-          <div class="langs-badge"><strong>31</strong> languages</div>
+          <div class="langs-badge"><strong>33+</strong> languages</div>
           <a href="https://www.deepl.com/translator" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
         </div>
       </div>
@@ -1388,7 +1398,7 @@
           <div class="card-name">MyMemory</div>
           <div class="card-tagline">World's largest collaborative translation memory</div>
         </div>
-        <p class="card-desc">Aggregates translations from professional translators, language agencies, and MT engines into one giant, searchable memory. Offers a free API (1000 words/day), making it popular for developers who need translation in their apps.</p>
+        <p class="card-desc">Aggregates translations from professional translators, language agencies, and MT engines into one giant, searchable memory. Offers a free API (500 words/day anonymous, 1000 with a registered email), making it popular for developers who need translation in their apps.</p>
         <div class="card-meta">
           <span class="tag">Free API</span>
           <span class="tag">Translation memory</span>
@@ -1663,7 +1673,7 @@
         </div>
         <div class="card-footer">
           <div class="langs-badge"><strong>24</strong> EU languages</div>
-          <a href="https://ec.europa.eu/info/resources-partners/machine-translation-public-administrations-etranslation_en" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
+          <a href="https://language-tools.ec.europa.eu/tools/etranslation_en" target="_blank" rel="noopener" class="go-btn">Open <span class="arrow">↗</span></a>
         </div>
       </div>
 
@@ -1701,17 +1711,17 @@
 
 <!-- FOOTER -->
 <footer>
-  <p style="margin-bottom:0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--gold2)">TranslateHub</p>
-  <p style="max-width:520px;margin:0 auto 1rem;">Cel mai complet director de unelte gratuite de traducere — de la uz casnic la fluxuri CAT profesionale. Fără publicitate. Fără linkuri afiliate.</p>
+  <p style="margin-bottom:0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--gold2)" data-i18n="footer_brand">TranslateHub</p>
+  <p style="max-width:520px;margin:0 auto 1rem;" data-i18n="footer_desc">The most complete directory of free translation tools — from everyday use to professional CAT workflows. No advertising. No affiliate links.</p>
   <div class="footer-legal-row">
-    <button class="footer-legal-btn" onclick="openLegal('gdpr')">🔒 Confidențialitate & GDPR</button>
-    <button class="footer-legal-btn" onclick="openLegal('cookies')">🍪 Politica cookies</button>
-    <button class="footer-legal-btn" onclick="openLegal('impressum')">📋 Impressum</button>
-    <button class="footer-legal-btn" onclick="openLegal('accessibility')">♿ Accesibilitate</button>
-    <button class="footer-legal-btn" onclick="openLegal('tech')">⚙ Tehnologii & transparență</button>
-    <button class="footer-legal-btn" onclick="openLegal('disclaimer')">⚖ Termeni & disclaimer</button>
+    <button class="footer-legal-btn" onclick="openLegal('gdpr')" data-i18n="footer_gdpr">🔒 Privacy &amp; GDPR</button>
+    <button class="footer-legal-btn" onclick="openLegal('cookies')" data-i18n="footer_cookies">🍪 Cookie Policy</button>
+    <button class="footer-legal-btn" onclick="openLegal('impressum')" data-i18n="footer_impressum">📋 Impressum</button>
+    <button class="footer-legal-btn" onclick="openLegal('accessibility')" data-i18n="footer_access">♿ Accessibility</button>
+    <button class="footer-legal-btn" onclick="openLegal('tech')" data-i18n="footer_tech">⚙ Technologies &amp; Transparency</button>
+    <button class="footer-legal-btn" onclick="openLegal('disclaimer')" data-i18n="footer_terms">⚖ Terms &amp; Disclaimer</button>
   </div>
-  <p style="margin-top:1.25rem;font-size:0.78rem;color:rgba(138,138,154,0.45)">© 2026 TranslateHub · Construit cu grijă pentru comunitatea lingvistică · Jurisdicție: România / Uniunea Europeană</p>
+  <p style="margin-top:1.25rem;font-size:0.78rem;color:rgba(138,138,154,0.45)" data-i18n="footer_copy">© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union</p>
 </footer>
 
 <!-- LEGAL & GDPR MODAL -->
@@ -1725,168 +1735,168 @@
       <button class="legal-tab active" data-panel="gdpr" role="tab">🔒 GDPR</button>
       <button class="legal-tab" data-panel="cookies" role="tab">🍪 Cookies</button>
       <button class="legal-tab" data-panel="impressum" role="tab">📋 Impressum</button>
-      <button class="legal-tab" data-panel="accessibility" role="tab">♿ Accesibilitate</button>
-      <button class="legal-tab" data-panel="tech" role="tab">⚙ Tehnologii</button>
-      <button class="legal-tab" data-panel="disclaimer" role="tab">⚖ Termeni</button>
+      <button class="legal-tab" data-panel="accessibility" role="tab">♿ Accessibility</button>
+      <button class="legal-tab" data-panel="tech" role="tab">⚙ Technologies</button>
+      <button class="legal-tab" data-panel="disclaimer" role="tab">⚖ Terms</button>
     </div>
     <div class="legal-body">
 
       <!-- GDPR -->
       <div class="legal-panel active" id="panel-gdpr">
-        <div class="legal-highlight">TranslateHub nu colectează, nu stochează și nu prelucrează date cu caracter personal. Textele introduse în formularul de traducere sunt transmise direct către API-ul Anthropic (Claude) și nu sunt reținute de acest site.</div>
-        <h3>Temeiul legal (GDPR Art. 6)</h3>
-        <p>Prelucrarea textelor introduse de utilizator în scopul traducerii se realizează exclusiv în baza consimțământului implicit prin utilizarea serviciului (<strong>Art. 6 alin. 1 lit. a</strong>) și a interesului legitim de a furniza funcționalitatea solicitată (<strong>Art. 6 alin. 1 lit. f</strong>).</p>
-        <h3>Ce date procesează TranslateHub</h3>
+        <div class="legal-highlight">TranslateHub does not collect, store or process personal data. Text entered in the translation form is sent directly to the Anthropic API (Claude) and is not retained by this site.</div>
+        <h3>Legal basis (GDPR Art. 6)</h3>
+        <p>Processing of user-entered text for translation purposes is carried out exclusively on the basis of implicit consent through use of the service (<strong>Art. 6(1)(a)</strong>) and the legitimate interest in providing the requested functionality (<strong>Art. 6(1)(f)</strong>).</p>
+        <h3>What data TranslateHub processes</h3>
         <ul>
-          <li><strong>Textul introdus</strong> — trimis temporar către Anthropic API pentru generarea traducerii. Nu este stocat pe serverele TranslateHub.</li>
-          <li><strong>Fișierele încărcate</strong> — procesate exclusiv în browserul tău (client-side). Nu sunt trimise pe niciun server al TranslateHub.</li>
-          <li><strong>Logs de acces standard</strong> — server-ul web (dacă site-ul este găzduit) poate genera log-uri de acces standard (IP, timestamp, User-Agent) conform practicii normale de hosting. Aceste date nu sunt utilizate pentru profilare.</li>
+          <li><strong>Text entered</strong> — sent temporarily to the Anthropic API for translation generation. Not stored on TranslateHub servers.</li>
+          <li><strong>Uploaded files</strong> — processed exclusively in your browser (client-side). Not sent to any TranslateHub server.</li>
+          <li><strong>Standard access logs</strong> — the web server (if the site is hosted) may generate standard access logs (IP, timestamp, User-Agent) as per normal hosting practice. This data is not used for profiling.</li>
         </ul>
-        <h3>Date transmise către Anthropic</h3>
-        <p>Textul tău este trimis către <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">Anthropic, Inc.</a> prin API-ul lor public. Anthropic poate reține conținutul conversațiilor în conformitate cu propria lor politică de confidențialitate. Îți recomandăm să nu introduci date personale sensibile în formularul de traducere.</p>
-        <h3>Drepturile tale (GDPR Cap. III)</h3>
+        <h3>Data transmitted to Anthropic</h3>
+        <p>Your text is sent to <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">Anthropic, Inc.</a> via their public API. Anthropic may retain conversation content in accordance with their own privacy policy. We recommend not entering sensitive personal data in the translation form.</p>
+        <h3>Your rights (GDPR Chapter III)</h3>
         <ul>
-          <li>Dreptul de acces (Art. 15)</li>
-          <li>Dreptul la rectificare (Art. 16)</li>
-          <li>Dreptul la ștergere — „dreptul de a fi uitat" (Art. 17)</li>
-          <li>Dreptul la restricționarea prelucrării (Art. 18)</li>
-          <li>Dreptul la portabilitatea datelor (Art. 20)</li>
-          <li>Dreptul de a depune plângere la ANSPDCP (Autoritatea Națională de Supraveghere)</li>
+          <li>Right of access (Art. 15)</li>
+          <li>Right to rectification (Art. 16)</li>
+          <li>Right to erasure — "right to be forgotten" (Art. 17)</li>
+          <li>Right to restriction of processing (Art. 18)</li>
+          <li>Right to data portability (Art. 20)</li>
+          <li>Right to lodge a complaint with the national supervisory authority (ANSPDCP in Romania, or your local DPA)</li>
         </ul>
         <div class="legal-badge-row">
-          <span class="legal-badge green">GDPR conform</span>
-          <span class="legal-badge green">Fără tracking</span>
-          <span class="legal-badge green">Fără vânzare de date</span>
-          <span class="legal-badge gold">Jurisdicție: România / UE</span>
+          <span class="legal-badge green">GDPR compliant</span>
+          <span class="legal-badge green">No tracking</span>
+          <span class="legal-badge green">No data selling</span>
+          <span class="legal-badge gold">Jurisdiction: Romania / EU</span>
         </div>
       </div>
 
       <!-- COOKIES -->
       <div class="legal-panel" id="panel-cookies">
-        <div class="legal-highlight">TranslateHub nu folosește cookie-uri de tracking, publicitate sau profilare. Nu există reclame. Nu există rețele de publicitate terțe.</div>
-        <h3>Cookie-uri tehnice strict necesare</h3>
-        <p>Este posibil ca browserul tău să stocheze local (localStorage/sessionStorage) preferințe de interfață — cum ar fi ultima limbă selectată sau modul de traducere ales. Aceste date rămân exclusiv în browserul tău și nu sunt transmise nicăieri.</p>
-        <h3>Cookie-uri de la terți</h3>
+        <div class="legal-highlight">TranslateHub does not use tracking, advertising or profiling cookies. There are no ads. There are no third-party advertising networks.</div>
+        <h3>Strictly necessary technical cookies</h3>
+        <p>Your browser may store interface preferences locally (localStorage/sessionStorage) — such as the last selected language. This data remains exclusively in your browser and is not transmitted anywhere.</p>
+        <h3>Third-party cookies</h3>
         <ul>
-          <li><strong>Google Fonts</strong> — fonturile sunt încărcate de pe serverele Google. Google poate seta cookie-uri proprii conform <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politicii lor</a>. Pentru a evita acest lucru, poți folosi o extensie de blocare sau găzdui fonturile local.</li>
-          <li><strong>Anthropic API</strong> — apelurile API nu folosesc cookie-uri, ci autentificare prin header-e.</li>
+          <li><strong>Google Fonts</strong> — fonts are loaded from Google servers. Google may set its own cookies per <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">their policy</a>. To avoid this, use a blocking extension or host fonts locally.</li>
+          <li><strong>Anthropic API</strong> — API calls do not use cookies, but header-based authentication.</li>
         </ul>
-        <h3>Baza legală</h3>
-        <p>Cookie-urile tehnice strict necesare nu necesită consimțământ conform Directivei ePrivacy 2002/58/CE. Niciun cookie de tip analitic sau de marketing nu este utilizat.</p>
+        <h3>Legal basis</h3>
+        <p>Strictly necessary technical cookies do not require consent under the ePrivacy Directive 2002/58/EC. No analytical or marketing cookies are used.</p>
         <div class="legal-badge-row">
-          <span class="legal-badge green">Fără cookie-uri de tracking</span>
-          <span class="legal-badge green">Fără publicitate</span>
-          <span class="legal-badge gold">ePrivacy conform</span>
+          <span class="legal-badge green">No tracking cookies</span>
+          <span class="legal-badge green">No advertising</span>
+          <span class="legal-badge gold">ePrivacy compliant</span>
         </div>
       </div>
 
       <!-- IMPRESSUM -->
       <div class="legal-panel" id="panel-impressum">
-        <h3>Date editor / Impressum</h3>
+        <h3>Publisher information / Impressum</h3>
         <div class="legal-highlight">
           <strong>TranslateHub</strong><br>
-          Proiect independent, necomercial<br>
+          Independent, non-commercial project<br>
           Autor: <a href="/cdn-cgi/l/email-protection#84e5e8e1fcedebc4f0f6ebe9aaf0e2"><span class="__cf_email__" data-cfemail="d8b9b4bda0b1b798acaab7b5f6acbe">[email&#160;protected]</span></a><br>
           Web: <a href="https://alexio.tf" target="_blank" rel="noopener">alexio.tf</a><br>
-          Locație: București, România<br>
-          Ultimă actualizare: aprilie 2026
+          Location: Bucharest, Romania<br>
+          Last updated: April 2026
         </div>
-        <h3>Natura juridică</h3>
-        <p>TranslateHub este un proiect editorial independent, necomercial. Nu este o entitate juridică înregistrată. Nu colectează plăți și nu oferă servicii comerciale directe.</p>
-        <h3>Răspundere pentru conținut</h3>
-        <p>Traducerile generate de AI sunt furnizate „ca atare" (as-is), fără garanții de acuratețe, completitudine sau adecvare pentru un scop specific. Utilizatorul este responsabil pentru verificarea și utilizarea conținutului tradus.</p>
-        <h3>Răspundere pentru linkuri externe</h3>
-        <p>TranslateHub conține linkuri către servicii externe (Google Translate, DeepL, MateCat etc.). Aceste servicii sunt independente și au propriile politici de utilizare și confidențialitate. TranslateHub nu are nicio responsabilitate pentru conținutul sau practicile acestora.</p>
-        <h3>Proprietate intelectuală</h3>
-        <p>Codul sursă al interfeței TranslateHub este disponibil pentru inspecție. Conținutul curatorial (descrierile, structura, selecția uneltelor) aparține autorului. Traducerile generate aparțin utilizatorului care le-a solicitat.</p>
+        <h3>Legal nature</h3>
+        <p>TranslateHub is an independent, non-commercial editorial project. It is not a registered legal entity. It does not collect payments or provide direct commercial services.</p>
+        <h3>Liability for content</h3>
+        <p>AI-generated translations are provided "as-is", without warranties of accuracy, completeness or fitness for a particular purpose. The user is responsible for verifying and using the translated content.</p>
+        <h3>Liability for external links</h3>
+        <p>TranslateHub contains links to external services (Google Translate, DeepL, MateCat etc.). These services are independent and have their own terms of use and privacy policies. TranslateHub has no responsibility for their content or practices.</p>
+        <h3>Intellectual property</h3>
+        <p>The TranslateHub interface source code is available for inspection. The curatorial content (descriptions, structure, tool selection) belongs to the author. Generated translations belong to the user who requested them.</p>
       </div>
 
       <!-- ACCESIBILITATE -->
       <div class="legal-panel" id="panel-accessibility">
-        <div class="legal-highlight">TranslateHub se angajează să respecte standardele de accesibilitate web (WCAG 2.1 nivel AA) în măsura posibilităților tehnice ale unui proiect independent.</div>
-        <h3>Funcționalități de accesibilitate implementate</h3>
+        <div class="legal-highlight">TranslateHub is committed to meeting web accessibility standards (WCAG 2.1 level AA) to the extent technically possible for an independent project.</div>
+        <h3>Implemented accessibility features</h3>
         <ul>
-          <li>Navigare completă prin tastatură (Tab, Enter, Esc)</li>
-          <li>Atribute <code>aria-label</code>, <code>role</code> și <code>aria-modal</code> pe elementele interactive</li>
-          <li>Contrast cromatic suficient (raport minim 4.5:1 pentru text normal)</li>
-          <li>Fonturi scalabile (rem/clamp) — funcționează cu zoom de browser până la 200%</li>
-          <li>Etichete descriptive pe toate butoanele și câmpurile de formular</li>
-          <li>Scurtătură tastatură: <kbd>Ctrl</kbd>+<kbd>Enter</kbd> pentru traducere rapidă</li>
-          <li>Buton de închidere modal accesibil prin <kbd>Esc</kbd></li>
+          <li>Full keyboard navigation (Tab, Enter, Esc)</li>
+          <li><code>aria-label</code>, <code>role</code> and <code>aria-modal</code> attributes on interactive elements</li>
+          <li>Sufficient colour contrast (minimum 4.5:1 ratio for normal text)</li>
+          <li>Scalable fonts (rem/clamp) — works with browser zoom up to 200%</li>
+          <li>Descriptive labels on all buttons and form fields</li>
+          <li>Keyboard shortcut: <kbd>Ctrl</kbd>+<kbd>Enter</kbd> for quick translation</li>
+          <li>Modal close button accessible via <kbd>Esc</kbd></li>
         </ul>
-        <h3>Limitări cunoscute</h3>
+        <h3>Known limitations</h3>
         <ul>
-          <li>Editorul Rich Text (contenteditable) poate avea comportament variabil cu screen reader-ele. Se recomandă modul Plain Text pentru utilizatorii cu screen reader.</li>
-          <li>Animațiile de fundal din hero pot fi deranjante pentru persoane cu sensibilitate la mișcare. Acestea pot fi dezactivate din setările sistemului de operare (prefers-reduced-motion).</li>
+          <li>The Rich Text editor (contenteditable) may behave variably with screen readers. Plain Text mode is recommended for screen reader users.</li>
+          <li>Background animations in the hero may be disturbing for people with motion sensitivity. They can be disabled from OS settings (prefers-reduced-motion).</li>
         </ul>
-        <h3>Raportare probleme de accesibilitate</h3>
-        <p>Dacă întâmpini dificultăți de accesibilitate, contactează: <a href="/cdn-cgi/l/email-protection#bbdad7dec3d2d4fbcfc9d4d695cfdd"><span class="__cf_email__" data-cfemail="4e2f222b3627210e3a3c2123603a28">[email&#160;protected]</span></a></p>
+        <h3>Reporting accessibility issues</h3>
+        <p>If you experience accessibility difficulties, contact: <a href="/cdn-cgi/l/email-protection#bbdad7dec3d2d4fbcfc9d4d695cfdd"><span class="__cf_email__" data-cfemail="4e2f222b3627210e3a3c2123603a28">[email&#160;protected]</span></a></p>
         <div class="legal-badge-row">
-          <span class="legal-badge green">WCAG 2.1 AA (parțial)</span>
-          <span class="legal-badge violet">Navigare tastatură</span>
+          <span class="legal-badge green">WCAG 2.1 AA (partial)</span>
+          <span class="legal-badge violet">Keyboard navigation</span>
           <span class="legal-badge violet">ARIA roles</span>
         </div>
       </div>
 
       <!-- TEHNOLOGII -->
       <div class="legal-panel" id="panel-tech">
-        <h3>Stack tehnologic</h3>
+        <h3>Technology stack</h3>
         <div class="legal-badge-row">
           <span class="legal-badge violet">HTML5 · CSS3 · JavaScript ES2022</span>
-          <span class="legal-badge gold">Fără framework-uri frontend</span>
+          <span class="legal-badge gold">No frontend frameworks</span>
           <span class="legal-badge green">Single-file app</span>
         </div>
         <ul>
-          <li><strong>Claude Sonnet (Anthropic)</strong> — motor de traducere AI, accesat prin API public. Model: <code>claude-sonnet-4-20250514</code>.</li>
-          <li><strong>mammoth.js v1.6</strong> — extragere text din fișiere .docx, rulează exclusiv în browser (client-side, CDN jsdelivr).</li>
-          <li><strong>Google Fonts</strong> — Cormorant Garamond, Barlow, Barlow Condensed. Încărcate din CDN Google.</li>
-          <li><strong>Web APIs native</strong>: Fetch API, Streams API, File API, Clipboard API, Blob API, DOMParser, execCommand (Rich Text), contenteditable.</li>
+          <li><strong>Claude Sonnet (Anthropic)</strong> — AI translation engine, accessed via public API. Model: <code>claude-sonnet-4-20250514</code>.</li>
+          <li><strong>mammoth.js v1.6</strong> — text extraction from .docx files, runs exclusively in the browser (client-side, CDN jsdelivr).</li>
+          <li><strong>Google Fonts</strong> — Cormorant Garamond, Barlow, Barlow Condensed. Loaded from Google CDN.</li>
+          <li><strong>Native Web APIs</strong>: Fetch API, Streams API, File API, Clipboard API, Blob API, DOMParser, execCommand (Rich Text), contenteditable.</li>
         </ul>
-        <h3>Arhitectură & transparență</h3>
+        <h3>Architecture & transparency</h3>
         <ul>
-          <li>TranslateHub este o aplicație single-file HTML. Tot codul sursă este inspectat prin „View Page Source" în browser.</li>
-          <li>Nu există backend propriu. Toate apelurile AI merg direct la <code>api.anthropic.com</code>.</li>
-          <li>Procesarea fișierelor (.docx, .csv, .json, .po, .srt) se face integral în browser, fără upload pe niciun server al TranslateHub.</li>
-          <li>Traducerea textelor lungi folosește un sistem de chunking automat cu fereastră de context de 400 de caractere între segmente, pentru coerență.</li>
+          <li>TranslateHub is a single-file HTML application. All source code can be inspected via "View Page Source" in the browser.</li>
+          <li>No proprietary backend. All AI calls go directly to <code>api.anthropic.com</code>.</li>
+          <li>File processing (.docx, .csv, .json, .po, .srt) is done entirely in the browser, with no upload to any TranslateHub server.</li>
+          <li>Long text translation uses an automatic chunking system with a 400-character context window between segments for coherence.</li>
         </ul>
-        <h3>Dependențe externe</h3>
+        <h3>External dependencies</h3>
         <ul>
-          <li><code>api.anthropic.com</code> — API de traducere AI (obligatoriu)</li>
-          <li><code>fonts.googleapis.com</code> — fonturi (opțional, poate fi înlocuit cu fonturi locale)</li>
-          <li><code>cdn.jsdelivr.net</code> — mammoth.js (opțional, necesar doar pentru .docx)</li>
+          <li><code>api.anthropic.com</code> — AI translation API (required)</li>
+          <li><code>fonts.googleapis.com</code> — fonts (optional, can be replaced with local fonts)</li>
+          <li><code>cdn.jsdelivr.net</code> — mammoth.js (optional, needed only for .docx)</li>
         </ul>
         <div class="legal-badge-row">
-          <span class="legal-badge green">Cod sursă inspectabil</span>
-          <span class="legal-badge green">Fără telemetrie proprie</span>
-          <span class="legal-badge gold">Procesare locală fișiere</span>
+          <span class="legal-badge green">Source code inspectable</span>
+          <span class="legal-badge green">No proprietary telemetry</span>
+          <span class="legal-badge gold">Local file processing</span>
         </div>
       </div>
 
       <!-- TERMENI & DISCLAIMER -->
       <div class="legal-panel" id="panel-disclaimer">
-        <div class="legal-highlight">⚠ Traducerile generate de AI pot conține erori. Verifică întotdeauna traducerile critice (medicale, juridice, financiare) cu un translator profesionist uman.</div>
-        <h3>Termeni de utilizare</h3>
-        <p>Prin utilizarea TranslateHub, ești de acord cu următorii termeni:</p>
+        <div class="legal-highlight">⚠ AI-generated translations may contain errors. Always verify critical translations (medical, legal, financial) with a professional human translator.</div>
+        <h3>Terms of use</h3>
+        <p>By using TranslateHub, you agree to the following terms:</p>
         <ul>
-          <li>Serviciul este furnizat gratuit, „ca atare" (as-is), fără nicio garanție expresă sau implicită.</li>
-          <li>Nu introduci date personale sensibile, date medicale, date financiare confidențiale sau secrete comerciale în formularul de traducere.</li>
-          <li>Nu utilizezi serviciul pentru conținut ilegal, discurs instigator la ură, spam sau orice altă utilizare interzisă de <a href="https://www.anthropic.com/legal/usage-policy" target="_blank" rel="noopener">Politica de utilizare Anthropic</a>.</li>
-          <li>Ești responsabil pentru utilizarea și verificarea conținutului tradus.</li>
+          <li>The service is provided free of charge "as-is", without any express or implied warranty.</li>
+          <li>You do not enter sensitive personal data, medical data, confidential financial data or trade secrets in the translation form.</li>
+          <li>You do not use the service for illegal content, hate speech, spam or any other use prohibited by <a href="https://www.anthropic.com/legal/usage-policy" target="_blank" rel="noopener">Anthropic's Usage Policy</a>.</li>
+          <li>You are responsible for using and verifying the translated content.</li>
         </ul>
-        <h3>Limitarea răspunderii</h3>
-        <p>TranslateHub și autorul său nu pot fi trași la răspundere pentru:</p>
+        <h3>Limitation of liability</h3>
+        <p>TranslateHub and its author cannot be held liable for:</p>
         <ul>
-          <li>Erori, omisiuni sau inexactități în traducerile generate</li>
-          <li>Pierderi de date cauzate de întreruperi ale serviciului API</li>
-          <li>Daune directe sau indirecte rezultate din utilizarea traducerilor</li>
-          <li>Indisponibilitatea serviciului din cauza întreruperilor Anthropic API</li>
+          <li>Errors, omissions or inaccuracies in generated translations</li>
+          <li>Data loss caused by API service interruptions</li>
+          <li>Direct or indirect damages resulting from the use of translations</li>
+          <li>Service unavailability due to Anthropic API outages</li>
         </ul>
-        <h3>Drepturi de proprietate intelectuală</h3>
-        <p>Conținutul original introdus de utilizator rămâne proprietatea utilizatorului. Traducerile generate aparțin utilizatorului care le-a solicitat. TranslateHub nu revendică niciun drept asupra conținutului procesat.</p>
-        <h3>Modificări ale termenilor</h3>
-        <p>Acești termeni pot fi actualizați fără notificare prealabilă. Data ultimei modificări este indicată în footer. Continuarea utilizării serviciului după o modificare constituie acceptul noilor termeni.</p>
+        <h3>Intellectual property rights</h3>
+        <p>Original content entered by the user remains the property of the user. Generated translations belong to the user who requested them. TranslateHub claims no rights over processed content.</p>
+        <h3>Changes to terms</h3>
+        <p>These terms may be updated without prior notice. The date of last modification is indicated in the footer. Continued use of the service after a modification constitutes acceptance of the new terms.</p>
         <div class="legal-sep"></div>
-        <p style="font-size:0.8rem;color:var(--muted)">Ultima actualizare: aprilie 2026 · Jurisdicție principală: România / Uniunea Europeană · Contact: <a href="/cdn-cgi/l/email-protection#6b0a070e1302042b1f190406451f0d"><span class="__cf_email__" data-cfemail="d7b6bbb2afbeb897a3a5b8baf9a3b1">[email&#160;protected]</span></a></p>
+        <p style="font-size:0.8rem;color:var(--muted)">Last updated: April 2026 · Primary jurisdiction: Romania / European Union · Contact: <a href="/cdn-cgi/l/email-protection#6b0a070e1302042b1f190406451f0d"><span class="__cf_email__" data-cfemail="d7b6bbb2afbeb897a3a5b8baf9a3b1">[email&#160;protected]</span></a></p>
       </div>
 
     </div><!-- /legal-body -->
@@ -2709,7 +2719,8 @@ async function setUILang(code,name){
   if(UI_TRANSLATIONS[code]){
     applyUI(UI_TRANSLATIONS[code]);
     // Cache to sessionStorage for consistency
-    try{ sessionStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code])); }catch(e){}
+    try{ try{localStorage.setItem('ui_lang_pref',code);localStorage.setItem('ui_lang_name',name);}catch(e){}
+try{localStorage.setItem('ui_'+code, JSON.stringify(UI_TRANSLATIONS[code]));}catch(e){} }catch(e){}
     label.textContent=shortCode;
     btn.disabled=false;
     buildLangPickerItems('');
@@ -2719,7 +2730,7 @@ async function setUILang(code,name){
 
   // ── 2. Try sessionStorage cache ───────────────────────────────────────────
   try{
-    const cached=sessionStorage.getItem('ui_'+code);
+    const cached=localStorage.getItem('ui_'+code);
     if(cached){
       applyUI(JSON.parse(cached));
       label.textContent=shortCode;
@@ -2767,7 +2778,8 @@ async function setUILang(code,name){
     }
   }
 
-  try{ sessionStorage.setItem('ui_'+code,JSON.stringify(translated)); }catch(e){}
+  try{ try{localStorage.setItem('ui_lang_pref',code);localStorage.setItem('ui_lang_name',name);}catch(e){}
+localStorage.setItem('ui_'+code,JSON.stringify(translated)); }catch(e){}
   label.textContent=shortCode;
   btn.disabled=false;
   buildLangPickerItems('');
@@ -2797,6 +2809,24 @@ async function translateLegalIfNeeded(){
     console.error('Legal translation error',e);
   }
 }
+
+/* ── RESTORE UI LANGUAGE FROM LOCALSTORAGE ── */
+(function(){
+  const savedCode=localStorage.getItem('ui_lang_pref');
+  const savedName=localStorage.getItem('ui_lang_name');
+  if(savedCode && savedCode!=='en' && savedName){
+    // Apply instantly from cache without API call
+    const cached=localStorage.getItem('ui_'+savedCode);
+    if(cached){
+      try{
+        uiLang={code:savedCode,name:savedName};
+        applyUI(JSON.parse(cached));
+        const label=document.getElementById('ui-lang-label');
+        if(label) label.textContent=savedCode.slice(0,4).toUpperCase();
+      }catch(e){ console.warn('[i18n] restore failed',e); }
+    }
+  }
+})();
 
 /* ── UI LANGUAGE PICKER ── */
 function openUILang(){
@@ -2851,15 +2881,6 @@ let _pickerLangs=[];
   buildLangPickerItems('');
   searchInput.addEventListener('input',e=>buildLangPickerItems(e.target.value));
   document.getElementById('ui-lang-btn').addEventListener('click',()=>buildLangPickerItems(searchInput.value));
-  // Auto-show API key banner when running locally
-  (function(){
-    if(window.location.protocol==='file:'||window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'){
-      const b=document.getElementById('apikey-banner');
-      if(b) b.classList.remove('hidden');
-      if(getApiKey()) showApiKeyStatus('✓ Key loaded from storage','ok');
-    }
-  })();
-
   // Close on outside click
   document.addEventListener('click',e=>{
     const wrap=document.getElementById('ui-lang-wrap');
