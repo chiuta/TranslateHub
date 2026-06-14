@@ -56,7 +56,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com https://cdn.jsdelivr.net; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
 <meta name="theme-color" content="#0b0e14">
 <meta name="color-scheme" content="dark">
 <title>TranslateHub — Best Free Translation Tools Directory</title>
@@ -1852,9 +1852,8 @@
         <p>By using this page you establish connections to the following non-EU services. Your IP address is technically transmitted to each of them:</p>
         <ul>
           <li><strong>Anthropic, Inc. (USA)</strong> — <code>api.anthropic.com</code> — receives your translation input. Per Anthropic's API policy, prompts and completions are retained for up to 30 days for abuse monitoring unless you use a Zero Data Retention agreement. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>.</li>
-          <li><strong>Cloudflare, Inc. (USA)</strong> — <code>cdn.jsdelivr.net</code> — receives your IP only if you upload a <code>.docx</code> file (mammoth.js is lazy-loaded on demand). See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a>.</li>
         </ul>
-        <p>These transfers rely on the standard contractual clauses and the EU–US Data Privacy Framework adequacy decision (July 2023). Web fonts are now embedded directly in this file (self-hosted, inline woff2), so no request is made to Google. The only remaining optional dependency is mammoth.js, loaded solely when you upload a <code>.docx</code>.</p>
+        <p>These transfers rely on the standard contractual clauses and the EU–US Data Privacy Framework adequacy decision (July 2023). Web fonts are embedded directly in this file (self-hosted, inline woff2), so no request is made to Google. The <code>.docx</code> parser (mammoth.js) is now bundled locally in <code>./vendor/</code> and loads from this same origin — no third-party CDN request is made for it anymore.</p>
         <h3>Your rights (GDPR Chapter III)</h3>
         <ul>
           <li>Right of access (Art. 15)</li>
@@ -1886,7 +1885,7 @@
         <h3>Third-party connections that may set cookies</h3>
         <ul>
           <li><strong>Web fonts</strong> — embedded inline in this file (self-hosted woff2). No request is made to Google; no third-party font CDN is contacted.</li>
-          <li><strong>jsdelivr CDN</strong> (<code>cdn.jsdelivr.net</code>) — used only when you upload a <code>.docx</code> file to lazy-load mammoth.js. Operated by Cloudflare.</li>
+          <li><strong>None</strong> — the <code>.docx</code> parser (mammoth.js) is bundled locally in <code>./vendor/</code> and is no longer fetched from a third-party CDN.</li>
           <li><strong>Anthropic API</strong> (<code>api.anthropic.com</code>) — API calls use header-based auth only, no cookies.</li>
         </ul>
         <h3>Legal basis</h3>
@@ -1957,7 +1956,7 @@
         </div>
         <ul>
           <li><strong>Claude Sonnet (Anthropic)</strong> — AI translation engine, accessed via public API. Model: <code>claude-sonnet-4-20250514</code>.</li>
-          <li><strong>mammoth.js v1.6</strong> — text extraction from .docx files, runs exclusively in the browser (client-side, CDN jsdelivr).</li>
+          <li><strong>mammoth.js v1.6</strong> — text extraction from .docx files, runs exclusively in the browser (client-side, bundled locally in ./vendor/).</li>
           <li><strong>Google Fonts</strong> — Cormorant Garamond, Barlow, Barlow Condensed. Loaded from Google CDN.</li>
           <li><strong>Native Web APIs</strong>: Fetch API, Streams API, File API, Clipboard API, Blob API, DOMParser, execCommand (Rich Text), contenteditable.</li>
         </ul>
@@ -1972,7 +1971,7 @@
         <ul>
           <li><code>api.anthropic.com</code> — AI translation API (required)</li>
           <li>Web fonts — embedded inline in this file (self-hosted, no external request)</li>
-          <li><code>cdn.jsdelivr.net</code> — mammoth.js (optional, needed only for .docx)</li>
+          <li><code>./vendor/mammoth.browser.min.js</code> — mammoth.js, bundled locally (optional, needed only for .docx)</li>
         </ul>
         <div class="legal-badge-row">
           <span class="legal-badge green">Source code inspectable</span>
@@ -2175,7 +2174,7 @@ async function loadMammoth(){
   _mammothPromise=new Promise((resolve,reject)=>{
     if(window.mammoth) return resolve(window.mammoth);
     const s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js';
+    s.src='./vendor/mammoth.browser.min.js';
     s.onload=()=>resolve(window.mammoth);
     s.onerror=()=>{_mammothPromise=null;reject(new Error('Could not load .docx parser'));};
     document.head.appendChild(s);
