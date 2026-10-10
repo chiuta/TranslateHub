@@ -56,7 +56,7 @@
 </style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';">
 <meta name="theme-color" content="#0b0e14">
 <meta name="color-scheme" content="dark">
 <title>TranslateHub — Best Free Translation Tools Directory</title>
@@ -660,7 +660,7 @@
   textarea.tr-input { flex: 1; width: 100%; min-height: 140px; background: transparent; border: none; outline: none; padding: 0.5rem 1.2rem 1rem; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 1.05rem; font-weight: 300; line-height: 1.7; resize: vertical; }
   textarea.tr-input::placeholder { color: rgba(138,138,154,0.5); }
   .tr-output { flex: 1; min-height: 140px; padding: 0.5rem 1.2rem 1rem; font-family: 'Barlow', sans-serif; font-size: 1.05rem; font-weight: 300; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-break: break-word; overflow-y: auto; }
-  .tr-output.placeholder { color: rgba(138,138,154,0.4); font-style: italic; }
+  .tr-output.placeholder { color: var(--muted); font-style: italic; }
   .tr-panel-footer { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem 0.8rem; border-top: 1px solid var(--border); gap: 0.5rem; flex-wrap: wrap; }
   .char-count { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: var(--muted); }
   .char-count.warn { color: var(--rose); }
@@ -686,7 +686,7 @@
   .rt-editor td,.rt-editor th,.rt-output td,.rt-output th { border: 1px solid var(--border2); padding: 0.4rem 0.7rem; min-width: 60px; }
   .rt-editor th,.rt-output th { background: rgba(167,139,250,0.1); font-weight: 500; }
   .rt-output { min-height: 140px; padding: 0.8rem 1.2rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: 'Barlow', sans-serif; font-size: 1rem; font-weight: 300; line-height: 1.7; word-break: break-word; overflow-y: auto; }
-  .rt-output.placeholder { color: rgba(138,138,154,0.4); font-style: italic; }
+  .rt-output.placeholder { color: var(--muted); font-style: italic; }
   .rt-panel-footer { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 0 0; }
 
   /* File upload mode */
@@ -1815,7 +1815,7 @@
     <button class="footer-legal-btn" type="button" onclick="openLegal('tech')">⚙ Technologies &amp; Transparency</button>
     <button class="footer-legal-btn" type="button" onclick="openLegal('disclaimer')">⚖ Terms &amp; Disclaimer</button>
   </div>
-  <p id="footer-copy" style="margin-top:1.25rem;font-size:0.78rem;color:rgba(138,138,154,0.45)">© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union</p>
+  <p id="footer-copy" style="margin-top:1.25rem;font-size:0.78rem;color:var(--muted)">© 2026 TranslateHub · Built with care for the language community · Jurisdiction: Romania / European Union</p>
 </footer>
 
 <!-- LEGAL & GDPR MODAL -->
@@ -3429,7 +3429,7 @@ let _pickerLangs=[];
 @media (max-width:560px){#tf-donate .tf-lbl{display:none}}
 @media print{#tf-donate{display:none}}
 </style>
-<input type="checkbox" id="tf-donate-cb" class="tf-cb" aria-hidden="true">
+<input type="checkbox" id="tf-donate-cb" class="tf-cb" aria-hidden="true" tabindex="-1">
 <div class="tf-panel">
 <span class="tf-lbl">Sprijină:</span>
 <a class="tf-b tf-pat" href="https://www.patreon.com/c/alexio_tf" target="_blank" rel="noopener" aria-label="Sprijină pe Patreon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="15.4" cy="9.4" r="6.6" fill="currentColor"/><rect x="2.4" y="2.4" width="3.7" height="19.2" fill="currentColor"/></svg>Patreon</a>

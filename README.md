@@ -37,7 +37,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 
 ## Confidențialitate și rețea
 
-- **Stocare locală:** `localStorage` — codul limbii interfeței (`ui_lang_pref`, `ui_lang_name`) și traducerile de interfață păstrate în cache (`ui_<cod>`). `sessionStorage` — cheia API Anthropic (`th_apikey`), ștearsă la închiderea filei. Aplicația nu setează cookie-uri.
+- **Stocare locală:** `localStorage` — codul limbii interfeței (`ui_lang_pref`, `ui_lang_name`) și traducerile de interfață păstrate în cache (`ui_<cod>`). `sessionStorage` — cheia API Anthropic (`th_apikey`), ștearsă la închiderea filei; tot în `sessionStorage` se păstrează temporar traducerea secțiunilor juridice/GDPR, dacă o cereți prin API. Aplicația nu setează cookie-uri.
 - **Rețea:** aplicația contactează `https://api.anthropic.com/v1/messages` **doar** când folosiți traducerea cu AI sau când alegeți o limbă de interfață fără traducere încorporată. Textul introdus (sau conținutul fișierului) și cheia dumneavoastră sunt trimise către Anthropic; politica aplicației menționează păstrarea datelor de către Anthropic până la 30 de zile. Politica de securitate a paginii (CSP) permite conexiuni doar către acest host.
 - Fonturile sunt încorporate în fișier; parserul `.docx` (mammoth.js) este inclus local în `vendor/`.
 - Link-urile din director către site-urile instrumentelor sunt simple legături; nu se face nicio cerere către ele până nu le deschideți.
@@ -50,6 +50,10 @@ Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și
 ## Licență
 
 CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
+
+## Audit
+
+Audit: 2026-10-10 — descrierile din README corespund codului (singurul host contactat: `api.anthropic.com`, doar la traducerea AI / la traducerea interfeței în limbi fără traducere încorporată). Corecturi minore de accesibilitate (contrast, focus). Traducerea automată poate conține erori; nu o folosiți fără verificare pentru documente oficiale sau cu date personale sensibile.
 
 ## Autor
 
