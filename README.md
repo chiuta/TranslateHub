@@ -21,7 +21,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 - Filtre rapide (chips) sub zona traducătorului, generate din etichetele cardurilor (ex. „Open source”, „API”); scurtături: `/` mută focusul pe căutare, `Esc` o golește.
 - Trei moduri de traducere cu AI: **Plain Text**, **Rich Text** (bară de formatare B / I / U / H1–H3 / liste / tabel; export `.html`) și **File Upload**.
 - Încărcare de fișiere (max. 2 MB): `.txt`, `.md`, `.html`, `.docx`, `.srt`, `.po`, `.csv`, `.json`; previzualizare și descărcarea fișierului tradus.
-- Alegerea limbii sursă (cu „Auto-detect") și a limbii țintă, buton de inversare (⇄), căutare în lista de limbi.
+- Alegerea limbii sursă (cu „Auto-detect") și a limbii țintă, buton de inversare (⇄; cu „Auto-detect” folosește limba detectată la ultima traducere, ceea ce permite verificarea prin retraducere), căutare în lista de limbi.
 - Contor de caractere și cuvinte, butoane „Clear", „Copy", „↓ .txt".
 - Buton „Cancel" pentru o traducere în curs.
 - Limba interfeței: selector „EN" în bara de sus. Traduceri încorporate pentru 20 de limbi (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); pentru alte limbi interfața este tradusă prin API-ul Claude și păstrată în cache local.
@@ -52,6 +52,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 11 octombrie 2026 (a treia trecere)
+- Butonul ⇄ funcționează și cu sursa „Auto-detect”: folosește limba detectată la ultima traducere (insigna „Detected: …”), așa încât retraducerea pentru verificare e un singur clic; altfel mesajul explică ce de făcut. Verificat cu un răspuns API simulat (fără rețea). CSP: hash recalculat.
 
 ### 11 octombrie 2026 (a doua trecere)
 - Director: filtre rapide pe etichete (generate automat din carduri, fără date noi) și scurtături de tastatură pentru căutare (`/`, `Esc`); butonul Translate arată `Ctrl+Enter` ca titlu. CSP: hash-ul scriptului recalculat.

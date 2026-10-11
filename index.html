@@ -56,7 +56,7 @@
 </style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-gSWTWbrIPjvbU3H0z+mhjmqynQD4VHeP/manrqt35t8='; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-cJZ/C1O1FhA/EZk/pzj2h3/dEhV3cXBD/Cgsaau41ek='; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';">
 <meta name="theme-color" content="#0b0e14">
 <meta name="color-scheme" content="dark">
 <title>TranslateHub — Best Free Translation Tools Directory</title>
@@ -2129,7 +2129,13 @@ document.querySelectorAll('.mode-tab').forEach(btn=>{
 
 /* ── SWAP BUTTON ── */
 document.getElementById('swap-btn').addEventListener('click',()=>{
-  if(srcSel.value==='auto'){ showToast('⚠ Set a specific source language to swap','error',2200); return; }
+  if(srcSel.value==='auto'){
+    // cu „Auto-detect”, se folosește limba detectată la ultima traducere (insigna „Detected: …”), dacă există în listă
+    const det=(document.getElementById('detect-badge').textContent.split('Detected:')[1]||'').trim().toLowerCase();
+    const hit=det&&LANGUAGES.find(([n])=>n.toLowerCase()===det||det.startsWith(n.toLowerCase()+' ')||det.startsWith(n.toLowerCase()+' ('));
+    if(!hit){ showToast('⚠ Set a specific source language to swap (or translate once with Auto-detect first)','error',2600); return; }
+    srcSel.value=hit[1];
+  }
   [srcSel.value,tgtSel.value]=[tgtSel.value,srcSel.value];
   if(currentMode==='text'){
     const out=document.getElementById('tr-output');
