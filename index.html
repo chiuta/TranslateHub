@@ -56,7 +56,7 @@
 </style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-d9NYIZ4kyOvW50WRv6/slAJdGMtTiNBIssq49q1AqC4='; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-gSWTWbrIPjvbU3H0z+mhjmqynQD4VHeP/manrqt35t8='; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src https://api.anthropic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none';">
 <meta name="theme-color" content="#0b0e14">
 <meta name="color-scheme" content="dark">
 <title>TranslateHub — Best Free Translation Tools Directory</title>
@@ -519,6 +519,13 @@
   }
 
   /* --- NO RESULTS --- */
+  .tag-filters{max-width:1180px;margin:1.2rem auto 0;padding:0 1.5rem;display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+  .tag-filters[hidden]{display:none}
+  .tag-chip{font:inherit;font-size:.82rem;cursor:pointer;background:transparent;color:var(--muted,#9aa);border:1px solid rgba(232,168,37,.35);border-radius:999px;padding:.3rem .8rem;min-height:32px}
+  .tag-chip:hover{background:rgba(232,168,37,.1)}
+  .tag-chip[aria-pressed="true"]{background:rgba(232,168,37,.22);color:#fff;border-color:rgba(232,168,37,.8)}
+  .tag-chip:focus-visible{outline:2px solid #e8a825;outline-offset:2px}
+  .kbd-hint{font-size:.75rem;opacity:.75}
   #no-results {
     text-align: center;
     padding: 4rem 2rem;
@@ -1241,7 +1248,7 @@
       </div>
 
       <div class="tr-action-row">
-        <button class="translate-btn" type="button" id="translate-btn">
+        <button class="translate-btn" type="button" id="translate-btn" title="Ctrl+Enter">
           <span class="btn-icon" aria-hidden="true">✦</span> Translate
         </button>
       </div>
@@ -1251,6 +1258,8 @@
 </section>
 
 <!-- MAIN -->
+
+  <div class="tag-filters" id="tag-filters" role="group" aria-label="Filter tools by feature" hidden></div>
 
   <!-- ===== BEGINNERS ===== -->
   <section class="section" id="beginners">
@@ -2062,7 +2071,41 @@ function filterCards(q) {
   if(sr) sr.textContent = q ? (vis+' '+(vis===1?'tool':'tools')+' match "'+q+'"') : '';
 }
 const ns=document.getElementById('search-nav');
-ns.addEventListener('input',e=>filterCards(e.target.value));
+ns.addEventListener('input',e=>{filterCards(e.target.value);syncChips();});
+
+/* ── QUICK FILTER CHIPS (derived from the cards' own tags) + "/" shortcut ── */
+const tagBox=document.getElementById('tag-filters');
+function syncChips(){
+  const q=ns.value.toLowerCase().trim();
+  tagBox.querySelectorAll('.tag-chip').forEach(b=>b.setAttribute('aria-pressed',String(q!==''&&b.dataset.tag.toLowerCase()===q)));
+}
+(function buildChips(){
+  const cnt=new Map();
+  document.querySelectorAll('.card .tag').forEach(t=>{
+    const k=t.textContent.trim(); if(!k) return;
+    const key=k.toLowerCase(); const e=cnt.get(key)||{label:k,n:0}; e.n++; cnt.set(key,e);
+  });
+  const top=[...cnt.values()].filter(e=>e.n>=2).sort((a,b)=>b.n-a.n||a.label.localeCompare(b.label)).slice(0,9);
+  if(!top.length) return;
+  top.forEach(e=>{
+    const b=document.createElement('button');
+    b.type='button'; b.className='tag-chip'; b.dataset.tag=e.label; b.setAttribute('aria-pressed','false');
+    b.textContent=e.label+' ('+e.n+')';
+    b.addEventListener('click',()=>{
+      const on=b.getAttribute('aria-pressed')==='true';
+      ns.value=on?'':e.label; filterCards(ns.value); syncChips();
+    });
+    tagBox.appendChild(b);
+  });
+  tagBox.hidden=false;
+})();
+document.addEventListener('keydown',e=>{
+  const el=document.activeElement, tn=el&&el.tagName;
+  const typing=tn==='INPUT'||tn==='TEXTAREA'||tn==='SELECT'||(el&&el.isContentEditable);
+  if(e.key==='/'&&!typing&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();ns.focus();ns.select();}
+  else if(e.key==='Escape'&&el===ns&&ns.value){ns.value='';filterCards('');syncChips();}
+});
+ns.title='Shortcut: / to focus, Esc to clear';
 
 /* ── LANGUAGE LIST (ISO 639-1/2/3 real codes only) ── */
 const LANGUAGES=[["Abkhazian","ab"],["Afar","aa"],["Afrikaans","af"],["Akan","ak"],["Albanian","sq"],["Amharic","am"],["Arabic","ar"],["Aragonese","an"],["Armenian","hy"],["Assamese","as"],["Avaric","av"],["Avestan","ae"],["Aymara","ay"],["Azerbaijani","az"],["Bambara","bm"],["Bashkir","ba"],["Basque","eu"],["Belarusian","be"],["Bengali","bn"],["Bislama","bi"],["Bosnian","bs"],["Breton","br"],["Bulgarian","bg"],["Burmese","my"],["Catalan","ca"],["Chamorro","ch"],["Chechen","ce"],["Chichewa","ny"],["Chinese (Simplified)","zh-Hans"],["Chinese (Traditional)","zh-Hant"],["Chuvash","cv"],["Cornish","kw"],["Corsican","co"],["Cree","cr"],["Croatian","hr"],["Czech","cs"],["Danish","da"],["Divehi","dv"],["Dutch","nl"],["Dzongkha","dz"],["English","en"],["Esperanto","eo"],["Estonian","et"],["Ewe","ee"],["Faroese","fo"],["Fijian","fj"],["Finnish","fi"],["French","fr"],["Fula","ff"],["Galician","gl"],["Georgian","ka"],["German","de"],["Greek","el"],["Guaraní","gn"],["Gujarati","gu"],["Haitian Creole","ht"],["Hausa","ha"],["Hebrew","he"],["Hindi","hi"],["Hungarian","hu"],["Icelandic","is"],["Ido","io"],["Igbo","ig"],["Indonesian","id"],["Interlingua","ia"],["Irish","ga"],["Italian","it"],["Inuktitut","iu"],["Japanese","ja"],["Javanese","jv"],["Kalaallisut","kl"],["Kannada","kn"],["Kashmiri","ks"],["Kazakh","kk"],["Khmer","km"],["Kinyarwanda","rw"],["Korean","ko"],["Kurdish","ku"],["Kyrgyz","ky"],["Lao","lo"],["Latin","la"],["Latvian","lv"],["Lingala","ln"],["Lithuanian","lt"],["Luxembourgish","lb"],["Macedonian","mk"],["Malagasy","mg"],["Malay","ms"],["Malayalam","ml"],["Maltese","mt"],["Māori","mi"],["Marathi","mr"],["Mongolian","mn"],["Nauru","na"],["Navajo","nv"],["Nepali","ne"],["Norwegian","no"],["Norwegian Bokmål","nb"],["Norwegian Nynorsk","nn"],["Occitan","oc"],["Oromo","om"],["Oriya","or"],["Ossetian","os"],["Punjabi","pa"],["Pashto","ps"],["Persian","fa"],["Polish","pl"],["Portuguese","pt"],["Quechua","qu"],["Romansh","rm"],["Romanian","ro"],["Russian","ru"],["Samoan","sm"],["Sanskrit","sa"],["Sardinian","sc"],["Scottish Gaelic","gd"],["Serbian","sr"],["Sesotho","st"],["Shona","sn"],["Sindhi","sd"],["Sinhala","si"],["Slovak","sk"],["Slovenian","sl"],["Somali","so"],["Spanish","es"],["Sundanese","su"],["Swahili","sw"],["Swedish","sv"],["Tagalog","tl"],["Tajik","tg"],["Tamil","ta"],["Tatar","tt"],["Telugu","te"],["Thai","th"],["Tibetan","bo"],["Tigrinya","ti"],["Tonga","to"],["Tsonga","ts"],["Tswana","tn"],["Turkish","tr"],["Turkmen","tk"],["Twi","tw"],["Ukrainian","uk"],["Urdu","ur"],["Uyghur","ug"],["Uzbek","uz"],["Vietnamese","vi"],["Volapük","vo"],["Welsh","cy"],["Wolof","wo"],["Xhosa","xh"],["Yiddish","yi"],["Yoruba","yo"],["Zulu","zu"],["Acehnese","ace"],["Asturian","ast"],["Balinese","ban"],["Buginese","bug"],["Friulian","fur"],["Ligurian","lij"],["Minangkabau","min"],["Mirandese","mwl"],["Neapolitan","nap"],["Papiamento","pap"],["Sicilian","scn"],["Tok Pisin","tpi"],["Venetian","vec"],["Nahuatl","nah"],["Maya (Yucatec)","yua"],["Mapuche","arn"],["Ga","gaa"],["Dioula","dyu"],["Mandinka","mnk"],["Soninke","snk"],["Zarma","dje"],["Efik","efi"],["Luo","luo"],["Tumbuka","tum"],["Comorian","swb"],["Seychellois Creole","crs"],["Mauritian Creole","mfe"],["Lojban","jbo"],["Toki Pona","tok"],["Lingua Franca Nova","lfn"],["Klingon","tlh"]];

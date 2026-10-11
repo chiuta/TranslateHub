@@ -18,6 +18,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 ## Funcții
 
 - Director cu fișe pentru fiecare instrument (descriere, caracteristici, număr aproximativ de limbi, buton „Open ↗"), cu căutare („Search translation tools") și link-uri de navigare pe niveluri.
+- Filtre rapide (chips) sub zona traducătorului, generate din etichetele cardurilor (ex. „Open source”, „API”); scurtături: `/` mută focusul pe căutare, `Esc` o golește.
 - Trei moduri de traducere cu AI: **Plain Text**, **Rich Text** (bară de formatare B / I / U / H1–H3 / liste / tabel; export `.html`) și **File Upload**.
 - Încărcare de fișiere (max. 2 MB): `.txt`, `.md`, `.html`, `.docx`, `.srt`, `.po`, `.csv`, `.json`; previzualizare și descărcarea fișierului tradus.
 - Alegerea limbii sursă (cu „Auto-detect") și a limbii țintă, buton de inversare (⇄), căutare în lista de limbi.
@@ -51,6 +52,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 11 octombrie 2026 (a doua trecere)
+- Director: filtre rapide pe etichete (generate automat din carduri, fără date noi) și scurtături de tastatură pentru căutare (`/`, `Esc`); butonul Translate arată `Ctrl+Enter` ca titlu. CSP: hash-ul scriptului recalculat.
 
 ### 11 octombrie 2026
 - Accesibilitate: conținutul paginii (inclusiv zona traducătorului) este acum încadrat în `<main>`, iar widgetul de sprijin are rol de reper; axe-core raportează 0 încălcări la 1280 și 360 px.
