@@ -4,6 +4,8 @@ Director de instrumente gratuite de traducere, cu un traducător AI integrat (Cl
 
 **Live:** https://chiuta.github.io/TranslateHub/
 
+**Ultima actualizare:** 11 octombrie 2026
+
 ![Captura de ecran](screenshot.png)
 
 ## Ce este
@@ -38,7 +40,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 ## Confidențialitate și rețea
 
 - **Stocare locală:** `localStorage` — codul limbii interfeței (`ui_lang_pref`, `ui_lang_name`) și traducerile de interfață păstrate în cache (`ui_<cod>`). `sessionStorage` — cheia API Anthropic (`th_apikey`), ștearsă la închiderea filei; tot în `sessionStorage` se păstrează temporar traducerea secțiunilor juridice/GDPR, dacă o cereți prin API. Aplicația nu setează cookie-uri.
-- **Rețea:** aplicația contactează `https://api.anthropic.com/v1/messages` **doar** când folosiți traducerea cu AI sau când alegeți o limbă de interfață fără traducere încorporată. Textul introdus (sau conținutul fișierului) și cheia dumneavoastră sunt trimise către Anthropic; politica aplicației menționează păstrarea datelor de către Anthropic până la 30 de zile. Politica de securitate a paginii (CSP) permite conexiuni doar către acest host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `'unsafe-inline'` rămâne în `script-src` din cauza handler-elor inline (`onclick=`).
+- **Rețea:** aplicația contactează `https://api.anthropic.com/v1/messages` **doar** când folosiți traducerea cu AI sau când alegeți o limbă de interfață fără traducere încorporată. Textul introdus (sau conținutul fișierului) și cheia dumneavoastră sunt trimise către Anthropic; politica aplicației menționează păstrarea datelor de către Anthropic până la 30 de zile. Politica de securitate a paginii (CSP) permite conexiuni doar către acest host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` permite doar scriptul propriu, identificat prin hash SHA-256, fără handler-e inline.
 - **Avertisment vizibil înainte de modul AI:** deasupra selectorului de moduri, panoul de traducere afișează o notă (EN, RO, FR, ES, DE, IT, PT; celelalte limbi o primesc în engleză) care spune că textul sau fișierul sunt trimise la Anthropic (SUA), cu cheia utilizatorului, că nu trebuie introduse date personale/sensibile și că nimic nu se trimite înainte de „Translate”. Textul GDPR din aplicație a fost aliniat (nu mai afirmă că aplicația „nu prelucrează date personale”).
 - Fonturile sunt încorporate în fișier; parserul `.docx` (mammoth.js) este inclus local în `vendor/`.
 - Link-urile din director către site-urile instrumentelor sunt simple legături; nu se face nicio cerere către ele până nu le deschideți.
@@ -48,13 +50,24 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
+## Istoric / Changelog
+
+### 11 octombrie 2026
+- Accesibilitate: conținutul paginii (inclusiv zona traducătorului) este acum încadrat în `<main>`, iar widgetul de sprijin are rol de reper; axe-core raportează 0 încălcări la 1280 și 360 px.
+- Securitate: handler-ele `onclick` inline au fost înlocuite cu un handler delegat, iar CSP permite doar scriptul propriu prin hash SHA-256 (fără `'unsafe-inline'` în `script-src`).
+- Fără cheie API, eroarea „Failed to fetch” este înlocuită cu un mesaj explicit, iar bannerul „API key required” se afișează și primește focus.
+- Eticheta „100% Free to use” a devenit „Free directory” (în toate cele 20 de limbi): directorul e gratuit, dar traducerea AI folosește cheia API proprie, plătită de utilizator.
+- Date actualizate: Google Translate 249 limbi, DeepL 120 limbi; limita „3 documente/lună” DeepL eliminată (nu a putut fi confirmată). Textele „Last updated” din secțiunile juridice: octombrie 2026.
+
+**Surse verificate la 11.10.2026:** Wikipedia — Google Translate (249 limbi, septembrie 2026); Wikipedia — DeepL Translator (120 limbi, iulie 2026).
+
 ## Licență
 
 CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
 
 ## Audit
 
-Audit: 2026-10-10 — descrierile din README corespund codului (singurul host contactat: `api.anthropic.com`, doar la traducerea AI / la traducerea interfeței în limbi fără traducere încorporată). Corecturi minore de accesibilitate (contrast, focus). Traducerea automată poate conține erori; nu o folosiți fără verificare pentru documente oficiale sau cu date personale sensibile.
+Audit: 2026-10-10 (revizuit 2026-10-11) — descrierile din README corespund codului (singurul host contactat: `api.anthropic.com`, doar la traducerea AI / la traducerea interfeței în limbi fără traducere încorporată). Corecturi minore de accesibilitate (contrast, focus). Traducerea automată poate conține erori; nu o folosiți fără verificare pentru documente oficiale sau cu date personale sensibile.
 
 ## Autor
 
