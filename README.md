@@ -1,10 +1,10 @@
 # TranslateHub
 
+**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
+
 Director de instrumente gratuite de traducere, cu un traducător AI integrat (Claude), într-un singur fișier HTML.
 
 **Live:** https://chiuta.github.io/TranslateHub/
-
-**Ultima actualizare:** 11 octombrie 2026
 
 ![Captura de ecran](screenshot.png)
 
@@ -52,6 +52,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 12 octombrie 2026 — versiunea 1.0.0
+- 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
 
 ### 11 octombrie 2026 (a treia trecere)
 - Butonul ⇄ funcționează și cu sursa „Auto-detect”: folosește limba detectată la ultima traducere (insigna „Detected: …”), așa încât retraducerea pentru verificare e un singur clic; altfel mesajul explică ce de făcut. Verificat cu un răspuns API simulat (fără rețea). CSP: hash recalculat.
