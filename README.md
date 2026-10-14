@@ -1,6 +1,6 @@
 # TranslateHub
 
-**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
+**Versiune:** 1.1.0 · **Ultima actualizare:** 14 octombrie 2026
 
 Director de instrumente gratuite de traducere, cu un traducător AI integrat (Claude), într-un singur fișier HTML.
 
@@ -27,6 +27,20 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 - Limba interfeței: selector „EN" în bara de sus. Traduceri încorporate pentru 20 de limbi (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); pentru alte limbi interfața este tradusă prin API-ul Claude și păstrată în cache local.
 - Secțiuni juridice/de confidențialitate în aplicație (GDPR, stocare în browser, transferuri către terți).
 
+## Funcții noi (1.1.0)
+
+- **Verificare locală de date personale înainte de „Translate”** (`FFF.pii`), în toate cele trei moduri (text simplu, text formatat, fișier): dacă textul conține e-mailuri, telefoane, IBAN, CNP, carduri, IP sau chei, nimic nu pleacă spre `api.anthropic.com` până nu alegi „Maschează bifatele și continuă”, „Continuă fără mascare” sau „Anulează”. Funcționează și cu Ctrl+Enter. Se poate opri (preferința se păstrează).
+- **Indicator „ce pleacă”:** „↗ La «Traduce», textul pleacă spre api.anthropic.com”, cu explicație (cheia ta, păstrată doar în filă). Directorul de instrumente și căutarea rulează local.
+- **Istoric local de traduceri, opțional (oprit implicit):** doar rezultate reale primite de la API; panou „🗂 Istoric traduceri” cu căutare locală după sens (`FFF.search`), reluarea textului sursă, copiere, export Markdown, ștergere, scanare/mascare de date personale în istoric.
+- **Copie criptată** prin eticheta de transparență (`FFF.bundle`). Cheia API rămâne în `sessionStorage` și **nu** intră în copie.
+
+### Limite
+- Detecția de date personale este euristică și poate rata ceva; mascarea înlocuiește valorile cu etichete, ceea ce poate schimba traducerea.
+- În modul „text formatat” mascarea se aplică nodurilor de text; formatarea rămâne.
+- Istoricul are plafon (200 intrări / ~1,5 M caractere).
+
+**Kit FFF.** Din `fff-kit` (lipit în `index.html`, fără rețea) se folosesc modulele `core, label, bundle, pii, search`: etichetă de transparență (apasă versiunea din subsol), export/import/ștergere `.fff.json` cu criptare opțională AES-GCM + PBKDF2, detecția locală de date personale și căutarea locală BM25. Politica CSP **nu a fost schimbată** față de versiunea anterioară în afară de hash-urile `sha256` ale scripturilor inline (stilurile noi sunt în `<style>`, acoperit de `style-src 'unsafe-inline'` deja prezent; nu s-a adăugat nicio gazdă nouă). Traducerile textelor noi în fr/it/es/pt/hu/de sunt automate și **neverificate nativ**. Detecția de date personale este euristică: poate rata sau semnala greșit; nu înlocuiește verificarea ta.
+
 ## Manual de utilizare
 
 1. Deschideți pagina. Pentru traducerea cu AI, în bannerul „API key required" introduceți cheia Anthropic în câmpul „Anthropic API key" și apăsați „Save key". „Clear" o șterge; „Get key ↗" deschide pagina de obținere a cheii.
@@ -52,6 +66,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 14 octombrie 2026 — versiunea 1.1.0
+- Verificare locală de date personale înainte de trimitere, indicator „ce pleacă”, istoric local opțional căutabil, copie criptată `.fff.json`, etichetă de transparență; teste în `tests/fff-r8.test.mjs`.
 
 ### 12 octombrie 2026 — versiunea 1.0.0
 - 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație

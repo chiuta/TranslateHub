@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "slug": "translatehub",
+  "name": "TranslateHub — Best Free Translation Tools Directory",
+  "version": "1.1.0",
+  "updated": "2026-10-14",
+  "description": "Curated directory of 22 free translation tools — Google Translate, DeepL, MateCat, OmegaT, LibreTranslate and more. Plus a built-in AI translator powered by Claude.",
+  "egress": [
+    {
+      "host": "api.anthropic.com",
+      "via": [
+        "csp:connect-src",
+        "fetch"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboard",
+    "serviceWorker",
+    "localStorage"
+  ],
+  "storageKeys": [
+    "ui_",
+    "ui_lang_name",
+    "ui_lang_pref"
+  ],
+  "sizeBytes": 949684,
+  "sha256": "ae587e1fde8a46c9fede5e2c6e9551ef302a2cf44f7f61fb0805078f9334e232",
+  "csp": {
+    "present": true,
+    "directives": {
+      "default-src": "'self'",
+      "script-src": "'self' sha256×4",
+      "style-src": "'self' 'unsafe-inline'",
+      "font-src": "'self' data:",
+      "connect-src": "https://api.anthropic.com",
+      "img-src": "'self' data:",
+      "object-src": "'none'",
+      "base-uri": "'self'",
+      "form-action": "'none'",
+      "manifest-src": "'self'",
+      "worker-src": "'self'"
+    },
+    "scriptInline": "hash",
+    "connect": "https://api.anthropic.com"
+  },
+  "features": {
+    "export": true,
+    "import": true,
+    "i18n": [
+      "ro",
+      "en",
+      "fr",
+      "it",
+      "es",
+      "pt",
+      "hu",
+      "de"
+    ],
+    "pwa": {
+      "manifest": true,
+      "serviceWorker": true
+    },
+    "modules": [
+      "core",
+      "label",
+      "bundle",
+      "pii",
+      "search"
+    ]
+  },
+  "kit": {
+    "version": "1.0.0",
+    "modules": [
+      "core",
+      "label",
+      "bundle",
+      "pii",
+      "search"
+    ]
+  },
+  "selfSerializing": true
+}
