@@ -24,8 +24,8 @@
     "ui_lang_name",
     "ui_lang_pref"
   ],
-  "sizeBytes": 950727,
-  "sha256": "5f1575a63efa6d8b32978158582f30daaae02665173e4c4edf131af48f04bd7b",
+  "sizeBytes": 950638,
+  "sha256": "6ad22fe67aa77eeda49714a03883609d2c9ddfa8f508e01ae0e2167af118fb55",
   "csp": {
     "present": true,
     "directives": {
