@@ -4,6 +4,8 @@
 
 **Verzió:** 1.1.0 · **Utolsó frissítés:** 2026-10-14
 
+A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
+
 Ingyenes fordítóeszközök címtára beépített MI-fordítóval (Claude), egyetlen HTML-fájlban.
 
 **Élő változat:** https://chiuta.github.io/TranslateHub/

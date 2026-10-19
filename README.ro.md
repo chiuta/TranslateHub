@@ -4,6 +4,8 @@
 
 **Versiune:** 1.1.0 · **Ultima actualizare:** 2026-10-14
 
+Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
+
 Director de instrumente gratuite de traducere, cu un traducător AI integrat (Claude), într-un singur fișier HTML.
 
 **Live:** https://chiuta.github.io/TranslateHub/

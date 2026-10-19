@@ -4,6 +4,8 @@
 
 **Versión:** 1.1.0 · **Última actualización:** 2026-10-14
 
+Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
+
 Un directorio de herramientas de traducción gratuitas, con un traductor de IA integrado (Claude), en un único archivo HTML.
 
 **En línea:** https://chiuta.github.io/TranslateHub/

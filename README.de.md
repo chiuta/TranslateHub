@@ -4,6 +4,8 @@
 
 **Version:** 1.1.0 · **Zuletzt aktualisiert:** 2026-10-14
 
+Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
+
 Ein Verzeichnis kostenloser Übersetzungswerkzeuge, mit integriertem KI-Übersetzer (Claude), in einer einzigen HTML-Datei.
 
 **Online:** https://chiuta.github.io/TranslateHub/
