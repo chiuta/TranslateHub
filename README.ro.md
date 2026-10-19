@@ -104,6 +104,6 @@ Audit: 2026-10-10 (revizuit 2026-10-11) — descrierile din README corespund cod
 
 Alexio — Alexandru-Ionuț Chiuță. Contact: alexio@trom.tf
 
-## English summary
+## Rezumat
 
-TranslateHub is a single-file HTML page with a curated directory of 22 free translation tools plus an AI translator (plain text, rich text, file upload for 8 formats) that calls the Anthropic API with the user's own key, kept in sessionStorage. The UI ships with 20 built-in languages. The only host contacted is api.anthropic.com, and only when AI features are used. MIT licence.
+TranslateHub este o pagină HTML într-un singur fișier cu un director curatoriat de 22 de instrumente gratuite de traducere plus un traducător AI (text simplu, text îmbogățit, încărcare de fișiere pentru 8 formate) care apelează API-ul Anthropic cu cheia proprie a utilizatorului, păstrată în sessionStorage. Interfața vine cu 20 de limbi integrate. Singura gazdă contactată este api.anthropic.com, și doar când se folosesc funcțiile AI. Licență MIT.
