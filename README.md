@@ -10,7 +10,7 @@ A directory of free translation tools, with a built-in AI translator (Claude), i
 
 **Live:** https://chiuta.github.io/TranslateHub/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 ## What it is
 

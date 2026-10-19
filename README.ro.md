@@ -10,7 +10,7 @@ Director de instrumente gratuite de traducere, cu un traducător AI integrat (Cl
 
 **Live:** https://chiuta.github.io/TranslateHub/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 ## Ce este
 

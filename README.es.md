@@ -10,7 +10,7 @@ Un directorio de herramientas de traducción gratuitas, con un traductor de IA i
 
 **En línea:** https://chiuta.github.io/TranslateHub/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 ## Qué es
 

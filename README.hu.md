@@ -10,7 +10,7 @@ Ingyenes fordítóeszközök címtára beépített MI-fordítóval (Claude), egy
 
 **Élő változat:** https://chiuta.github.io/TranslateHub/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 ## Mi ez
 

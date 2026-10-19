@@ -10,7 +10,7 @@ Un elenco di strumenti di traduzione gratuiti, con un traduttore IA integrato (C
 
 **Online:** https://chiuta.github.io/TranslateHub/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 ## Che cos'è
 

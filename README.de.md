@@ -10,7 +10,7 @@ Ein Verzeichnis kostenloser Übersetzungswerkzeuge, mit integriertem KI-Überset
 
 **Online:** https://chiuta.github.io/TranslateHub/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 ## Was es ist
 
