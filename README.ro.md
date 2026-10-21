@@ -28,7 +28,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 - Alegerea limbii sursă (cu „Auto-detect") și a limbii țintă, buton de inversare (⇄; cu „Auto-detect” folosește limba detectată la ultima traducere, ceea ce permite verificarea prin retraducere), căutare în lista de limbi.
 - Contor de caractere și cuvinte, butoane „Clear", „Copy", „↓ .txt".
 - Buton „Cancel" pentru o traducere în curs.
-- Limba interfeței: selector „EN" în bara de sus. Traduceri încorporate pentru 20 de limbi (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); pentru alte limbi interfața este tradusă prin API-ul Claude și păstrată în cache local.
+- Limba interfeței: selector „EN" în bara de sus. Traduceri încorporate pentru 20 de limbi (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); pentru alte limbi interfața este tradusă prin API-ul Claude și păstrată în cache local. Textele pentru verificarea datelor personale, indicatorul „ce pleacă” și istoric există în 8 limbi (ro, en, fr, it, es, pt, de, hu); în celelalte 12 limbi încorporate apar în engleză.
 - Secțiuni juridice/de confidențialitate în aplicație (GDPR, stocare în browser, transferuri către terți).
 
 ## Funcții noi (1.1.0)
@@ -60,7 +60,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 
 - **Stocare locală:** `localStorage` — codul limbii interfeței (`ui_lang_pref`, `ui_lang_name`) și traducerile de interfață păstrate în cache (`ui_<cod>`). `sessionStorage` — cheia API Anthropic (`th_apikey`), ștearsă la închiderea filei; tot în `sessionStorage` se păstrează temporar traducerea secțiunilor juridice/GDPR, dacă o cereți prin API. Aplicația nu setează cookie-uri.
 - **Rețea:** aplicația contactează `https://api.anthropic.com/v1/messages` **doar** când folosiți traducerea cu AI sau când alegeți o limbă de interfață fără traducere încorporată. Textul introdus (sau conținutul fișierului) și cheia dumneavoastră sunt trimise către Anthropic; politica aplicației menționează păstrarea datelor de către Anthropic până la 30 de zile. Politica de securitate a paginii (CSP) permite conexiuni doar către acest host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` permite doar scriptul propriu, identificat prin hash SHA-256, fără handler-e inline.
-- **Avertisment vizibil înainte de modul AI:** deasupra selectorului de moduri, panoul de traducere afișează o notă (EN, RO, FR, ES, DE, IT, PT; celelalte limbi o primesc în engleză) care spune că textul sau fișierul sunt trimise la Anthropic (SUA), cu cheia utilizatorului, că nu trebuie introduse date personale/sensibile și că nimic nu se trimite înainte de „Translate”. Textul GDPR din aplicație a fost aliniat (nu mai afirmă că aplicația „nu prelucrează date personale”).
+- **Avertisment vizibil înainte de modul AI:** deasupra selectorului de moduri, panoul de traducere afișează o notă (EN, RO, FR, ES, DE, IT, PT, HU; celelalte limbi o primesc în engleză) care spune că textul sau fișierul sunt trimise la Anthropic (SUA), cu cheia utilizatorului, că nu trebuie introduse date personale/sensibile și că nimic nu se trimite înainte de „Translate”. Textul GDPR din aplicație a fost aliniat (nu mai afirmă că aplicația „nu prelucrează date personale”).
 - Fonturile sunt încorporate în fișier; parserul `.docx` (mammoth.js) este inclus local în `vendor/`.
 - Link-urile din director către site-urile instrumentelor sunt simple legături; nu se face nicio cerere către ele până nu le deschideți.
 - Fără analitice și fără reclame (conform notei din aplicație).
@@ -70,6 +70,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 19 octombrie 2026 — versiunea 1.3.1
+- Verificarea datelor personale înainte de „Translate”, indicatorul „ce pleacă” și istoricul local opțional (vezi 1.1.0) sunt prezente în versiunea curentă: fuseseră eliminate din greșeală într-o curățare anterioară și au fost reimplementate (1.3.0) cu același comportament și teste noi. Descrierile cardurilor de instrumente și mesajele de alertă/confirmare sunt traduse în cele 8 limbi (ro, en, fr, it, es, pt, de, hu).
 
 ### 14 octombrie 2026 — versiunea 1.1.0
 - Verificare locală de date personale înainte de trimitere, indicator „ce pleacă”, istoric local opțional căutabil, copie criptată `.fff.json`, etichetă de transparență; teste în `tests/fff-r8.test.mjs`.

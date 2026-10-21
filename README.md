@@ -28,7 +28,7 @@ TranslateHub is a single page (`index.html`) that combines two things:
 - Choice of the source language (with "Auto-detect") and the target language, a swap button (⇄; with "Auto-detect" it uses the language detected in the last translation, which allows checking by back-translation), search in the language list.
 - Character and word counter, "Clear", "Copy", "↓ .txt" buttons.
 - "Cancel" button for a translation in progress.
-- Interface language: "EN" selector in the top bar. Built-in translations for 20 languages (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); for other languages the interface is translated through the Claude API and cached locally.
+- Interface language: "EN" selector in the top bar. Built-in translations for 20 languages (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); for other languages the interface is translated through the Claude API and cached locally. The texts of the personal-data check, the "what leaves" indicator and the history exist in 8 languages (ro, en, fr, it, es, pt, de, hu); in the other 12 built-in languages they appear in English.
 - Legal/privacy sections in the app (GDPR, browser storage, transfers to third parties).
 
 ## New features (1.1.0)
@@ -60,7 +60,7 @@ TranslateHub is a single page (`index.html`) that combines two things:
 
 - **Local storage:** `localStorage` — the interface language code (`ui_lang_pref`, `ui_lang_name`) and the cached interface translations (`ui_<code>`). `sessionStorage` — the Anthropic API key (`th_apikey`), deleted when the tab is closed; the translation of the legal/GDPR sections is also kept temporarily in `sessionStorage`, if you request it through the API. The app sets no cookies.
 - **Network:** the app contacts `https://api.anthropic.com/v1/messages` **only** when you use AI translation or when you choose an interface language with no built-in translation. The text you enter (or the file content) and your key are sent to Anthropic; the app's policy mentions Anthropic's retention of data for up to 30 days. The page's security policy (CSP) allows connections only to this host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` allows only the page's own script, identified by a SHA-256 hash, with no inline handlers.
-- **Visible warning before AI mode:** above the mode selector, the translation panel displays a note (EN, RO, FR, ES, DE, IT, PT; the other languages get it in English) saying that the text or file is sent to Anthropic (USA), with the user's key, that no personal/sensitive data should be entered, and that nothing is sent before "Translate". The GDPR text in the app was aligned (it no longer states that the app "does not process personal data").
+- **Visible warning before AI mode:** above the mode selector, the translation panel displays a note (EN, RO, FR, ES, DE, IT, PT, HU; the other languages get it in English) saying that the text or file is sent to Anthropic (USA), with the user's key, that no personal/sensitive data should be entered, and that nothing is sent before "Translate". The GDPR text in the app was aligned (it no longer states that the app "does not process personal data").
 - Fonts are embedded in the file; the `.docx` parser (mammoth.js) is included locally in `vendor/`.
 - The links in the directory to the tools' sites are plain links; no request is made to them until you open them.
 - No analytics and no ads (according to the note in the app).
@@ -70,6 +70,9 @@ TranslateHub is a single page (`index.html`) that combines two things:
 Download `index.html` (and, for `.docx` files, the `vendor/` folder) and open it in a browser. The tool directory and the interface in the 20 built-in languages work without internet; AI translation requires an internet connection and an Anthropic API key.
 
 ## History / Changelog
+
+### 19 October 2026 — version 1.3.1
+- The personal-data check before "Translate", the "what leaves" indicator and the optional local history (see 1.1.0) are present in the current version: they had been removed by mistake in an earlier cleanup and were reimplemented (1.3.0) with the same behaviour and new tests. The descriptions of the tool cards and the alert/confirmation messages are translated into the 8 languages (ro, en, fr, it, es, pt, de, hu).
 
 ### 14 October 2026 — version 1.1.0
 - Local personal-data check before sending, "what leaves" indicator, optional searchable local history, encrypted `.fff.json` backup, transparency label; tests in `tests/fff-r8.test.mjs`.

@@ -28,7 +28,7 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 - A forrásnyelv („Auto-detect” lehetőséggel) és a célnyelv kiválasztása, felcserélő gomb (⇄; az „Auto-detect” esetén az utolsó fordításnál felismert nyelvet használja, ami lehetővé teszi az ellenőrzést visszafordítással), keresés a nyelvlistában.
 - Karakter- és szószámláló, „Clear”, „Copy”, „↓ .txt” gombok.
 - „Cancel” gomb a folyamatban lévő fordításhoz.
-- A felület nyelve: „EN” választó a felső sávban. Beépített fordítások 20 nyelvre (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); más nyelveknél a felületet a Claude API fordítja le, és helyben gyorsítótárazza.
+- A felület nyelve: „EN” választó a felső sávban. Beépített fordítások 20 nyelvre (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); más nyelveknél a felületet a Claude API fordítja le, és helyben gyorsítótárazza. A személyesadat-ellenőrzés, a „mi megy ki” jelző és az előzmények szövegei 8 nyelven léteznek (ro, en, fr, it, es, pt, de, hu); a többi 12 beépített nyelven angolul jelennek meg.
 - Jogi/adatvédelmi szakaszok az alkalmazásban (GDPR, tárolás a böngészőben, harmadik félnek történő átadás).
 
 ## Újdonságok (1.1.0)
@@ -60,7 +60,7 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 
 - **Helyi tárolás:** `localStorage` — a felület nyelvének kódja (`ui_lang_pref`, `ui_lang_name`) és a gyorsítótárazott felületi fordítások (`ui_<kód>`). `sessionStorage` — az Anthropic API-kulcs (`th_apikey`), a lap bezárásakor törlődik; szintén a `sessionStorage`-ban őrződik ideiglenesen a jogi/GDPR-szakaszok fordítása, ha az API-n keresztül kéred. Az alkalmazás nem állít be sütiket.
 - **Hálózat:** az alkalmazás a `https://api.anthropic.com/v1/messages` címet **csak** akkor keresi meg, ha MI-fordítást használsz, vagy olyan felületi nyelvet választasz, amelyhez nincs beépített fordítás. A megadott szöveg (vagy a fájl tartalma) és a kulcsod az Anthropichoz kerül; az alkalmazás szabályzata megemlíti, hogy az Anthropic az adatokat legfeljebb 30 napig megőrzi. Az oldal biztonsági szabályzata (CSP) csak erre a hostra engedélyez kapcsolatokat (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); a `script-src` csak az oldal saját, SHA-256 hash-sel azonosított szkriptjét engedi, beágyazott eseménykezelők nélkül.
-- **Látható figyelmeztetés az MI-mód előtt:** a módválasztó felett a fordítópanel megjegyzést jelenít meg (EN, RO, FR, ES, DE, IT, PT; a többi nyelv angolul kapja), amely szerint a szöveg vagy a fájl a felhasználó kulcsával az Anthropichoz (USA) kerül, nem szabad személyes/érzékeny adatokat megadni, és a „Translate” előtt semmi sem kerül elküldésre. Az alkalmazás GDPR-szövege összhangba került (már nem állítja, hogy az alkalmazás „nem kezel személyes adatokat”).
+- **Látható figyelmeztetés az MI-mód előtt:** a módválasztó felett a fordítópanel megjegyzést jelenít meg (EN, RO, FR, ES, DE, IT, PT, HU; a többi nyelv angolul kapja), amely szerint a szöveg vagy a fájl a felhasználó kulcsával az Anthropichoz (USA) kerül, nem szabad személyes/érzékeny adatokat megadni, és a „Translate” előtt semmi sem kerül elküldésre. Az alkalmazás GDPR-szövege összhangba került (már nem állítja, hogy az alkalmazás „nem kezel személyes adatokat”).
 - A betűtípusok be vannak ágyazva a fájlba; a `.docx`-értelmező (mammoth.js) helyben, a `vendor/` mappában található.
 - A címtár hivatkozásai az eszközök oldalaira egyszerű linkek; amíg meg nem nyitod őket, nem indul feléjük kérés.
 - Nincs analitika és nincsenek reklámok (az alkalmazás megjegyzése szerint).
@@ -70,6 +70,9 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 Töltsd le az `index.html` fájlt (és `.docx` fájlokhoz a `vendor/` mappát), és nyisd meg böngészőben. Az eszközcímtár és a 20 beépített nyelvű felület internet nélkül is működik; az MI-fordításhoz internetkapcsolat és Anthropic API-kulcs szükséges.
 
 ## Előzmények / Changelog
+
+### 2026. október 19. — 1.3.1 verzió
+- A „Translate” előtti személyesadat-ellenőrzés, a „mi megy ki” jelző és az opcionális helyi előzmények (lásd 1.1.0) megvannak a jelenlegi verzióban: egy korábbi takarításkor tévedésből eltávolították őket, és (1.3.0) azonos viselkedéssel, új tesztekkel újra megvalósítottuk őket. Az eszközkártyák leírásai és a figyelmeztető/megerősítő üzenetek le vannak fordítva a 8 nyelvre (ro, en, fr, it, es, pt, de, hu).
 
 ### 2026. október 14. — 1.1.0 verzió
 - Helyi személyesadat-ellenőrzés küldés előtt, „mi megy ki” jelző, opcionális kereshető helyi előzmények, titkosított `.fff.json` mentés, átláthatósági címke; tesztek a `tests/fff-r8.test.mjs` fájlban.

@@ -28,7 +28,7 @@ TranslateHub è una pagina unica (`index.html`) che combina due cose:
 - Scelta della lingua di partenza (con «Auto-detect») e della lingua di arrivo, pulsante di inversione (⇄; con «Auto-detect» usa la lingua rilevata nell'ultima traduzione, il che permette la verifica tramite retrotraduzione), ricerca nell'elenco delle lingue.
 - Contatore di caratteri e parole, pulsanti «Clear», «Copy», «↓ .txt».
 - Pulsante «Cancel» per una traduzione in corso.
-- Lingua dell'interfaccia: selettore «EN» nella barra superiore. Traduzioni integrate per 20 lingue (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); per le altre lingue l'interfaccia viene tradotta tramite l'API di Claude e conservata nella cache locale.
+- Lingua dell'interfaccia: selettore «EN» nella barra superiore. Traduzioni integrate per 20 lingue (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); per le altre lingue l'interfaccia viene tradotta tramite l'API di Claude e conservata nella cache locale. I testi della verifica dei dati personali, dell'indicatore «cosa parte» e della cronologia esistono in 8 lingue (ro, en, fr, it, es, pt, de, hu); nelle altre 12 lingue integrate compaiono in inglese.
 - Sezioni legali/sulla privacy nell'applicazione (GDPR, archiviazione nel browser, trasferimenti a terzi).
 
 ## Novità (1.1.0)
@@ -60,7 +60,7 @@ TranslateHub è una pagina unica (`index.html`) che combina due cose:
 
 - **Archiviazione locale:** `localStorage` — il codice della lingua dell'interfaccia (`ui_lang_pref`, `ui_lang_name`) e le traduzioni dell'interfaccia in cache (`ui_<codice>`). `sessionStorage` — la chiave API Anthropic (`th_apikey`), cancellata alla chiusura della scheda; sempre in `sessionStorage` viene conservata temporaneamente la traduzione delle sezioni legali/GDPR, se la richiedi tramite API. L'applicazione non imposta cookie.
 - **Rete:** l'applicazione contatta `https://api.anthropic.com/v1/messages` **solo** quando usi la traduzione con IA o quando scegli una lingua dell'interfaccia senza traduzione integrata. Il testo inserito (o il contenuto del file) e la tua chiave vengono inviati ad Anthropic; la politica dell'applicazione menziona la conservazione dei dati da parte di Anthropic fino a 30 giorni. La politica di sicurezza della pagina (CSP) consente connessioni solo verso questo host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` consente solo lo script proprio, identificato da un hash SHA-256, senza gestori inline.
-- **Avviso visibile prima della modalità IA:** sopra il selettore delle modalità, il pannello di traduzione mostra una nota (EN, RO, FR, ES, DE, IT, PT; le altre lingue la ricevono in inglese) che dice che il testo o il file vengono inviati ad Anthropic (USA), con la chiave dell'utente, che non vanno inseriti dati personali/sensibili e che nulla viene inviato prima di «Translate». Il testo GDPR dell'applicazione è stato allineato (non afferma più che l'applicazione «non tratta dati personali»).
+- **Avviso visibile prima della modalità IA:** sopra il selettore delle modalità, il pannello di traduzione mostra una nota (EN, RO, FR, ES, DE, IT, PT, HU; le altre lingue la ricevono in inglese) che dice che il testo o il file vengono inviati ad Anthropic (USA), con la chiave dell'utente, che non vanno inseriti dati personali/sensibili e che nulla viene inviato prima di «Translate». Il testo GDPR dell'applicazione è stato allineato (non afferma più che l'applicazione «non tratta dati personali»).
 - I font sono incorporati nel file; il parser `.docx` (mammoth.js) è incluso in locale in `vendor/`.
 - I link dell'elenco verso i siti degli strumenti sono semplici collegamenti; non viene fatta alcuna richiesta verso di essi finché non li apri.
 - Nessuna analitica e nessuna pubblicità (secondo la nota nell'applicazione).
@@ -70,6 +70,9 @@ TranslateHub è una pagina unica (`index.html`) che combina due cose:
 Scarica `index.html` (e, per i file `.docx`, la cartella `vendor/`) e aprilo nel browser. L'elenco degli strumenti e l'interfaccia nelle 20 lingue integrate funzionano senza internet; la traduzione con IA richiede una connessione a internet e una chiave API Anthropic.
 
 ## Cronologia / Changelog
+
+### 19 ottobre 2026 — versione 1.3.1
+- La verifica dei dati personali prima di «Translate», l'indicatore «cosa parte» e la cronologia locale facoltativa (vedi 1.1.0) sono presenti nella versione attuale: erano stati rimossi per errore in una pulizia precedente e sono stati reimplementati (1.3.0) con lo stesso comportamento e nuovi test. Le descrizioni delle schede degli strumenti e i messaggi di avviso/conferma sono tradotti nelle 8 lingue (ro, en, fr, it, es, pt, de, hu).
 
 ### 14 ottobre 2026 — versione 1.1.0
 - Verifica locale dei dati personali prima dell'invio, indicatore «cosa parte», cronologia locale facoltativa con ricerca, copia cifrata `.fff.json`, etichetta di trasparenza; test in `tests/fff-r8.test.mjs`.

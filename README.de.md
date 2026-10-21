@@ -28,7 +28,7 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 - Wahl der Ausgangssprache (mit „Auto-detect") und der Zielsprache, Tauschschaltfläche (⇄; mit „Auto-detect" nutzt sie die bei der letzten Übersetzung erkannte Sprache, was die Prüfung durch Rückübersetzung ermöglicht), Suche in der Sprachliste.
 - Zeichen- und Wortzähler, Schaltflächen „Clear", „Copy", „↓ .txt".
 - Schaltfläche „Cancel" für eine laufende Übersetzung.
-- Oberflächensprache: Auswahl „EN" in der oberen Leiste. Eingebaute Übersetzungen für 20 Sprachen (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); für andere Sprachen wird die Oberfläche über die Claude-API übersetzt und lokal zwischengespeichert.
+- Oberflächensprache: Auswahl „EN" in der oberen Leiste. Eingebaute Übersetzungen für 20 Sprachen (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); für andere Sprachen wird die Oberfläche über die Claude-API übersetzt und lokal zwischengespeichert. Die Texte der Prüfung auf personenbezogene Daten, der Anzeige „was geht raus“ und des Verlaufs gibt es in 8 Sprachen (ro, en, fr, it, es, pt, de, hu); in den übrigen 12 eingebauten Sprachen erscheinen sie auf Englisch.
 - Rechtliche/Datenschutz-Abschnitte in der Anwendung (DSGVO, Speicherung im Browser, Übermittlung an Dritte).
 
 ## Neue Funktionen (1.1.0)
@@ -60,7 +60,7 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 
 - **Lokaler Speicher:** `localStorage` — der Code der Oberflächensprache (`ui_lang_pref`, `ui_lang_name`) und die zwischengespeicherten Oberflächenübersetzungen (`ui_<Code>`). `sessionStorage` — der Anthropic-API-Schlüssel (`th_apikey`), beim Schließen des Tabs gelöscht; ebenfalls im `sessionStorage` wird vorübergehend die Übersetzung der rechtlichen/DSGVO-Abschnitte gehalten, wenn du sie über die API anforderst. Die Anwendung setzt keine Cookies.
 - **Netzwerk:** Die Anwendung kontaktiert `https://api.anthropic.com/v1/messages` **nur**, wenn du die KI-Übersetzung nutzt oder eine Oberflächensprache ohne eingebaute Übersetzung wählst. Der eingegebene Text (oder der Dateiinhalt) und dein Schlüssel werden an Anthropic gesendet; die Richtlinie der Anwendung erwähnt die Aufbewahrung der Daten durch Anthropic bis zu 30 Tage. Die Sicherheitsrichtlinie der Seite (CSP) erlaubt Verbindungen nur zu diesem Host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` erlaubt nur das eigene Skript, identifiziert durch einen SHA-256-Hash, ohne Inline-Handler.
-- **Sichtbarer Hinweis vor dem KI-Modus:** Über der Modusauswahl zeigt das Übersetzungspanel einen Hinweis (EN, RO, FR, ES, DE, IT, PT; die übrigen Sprachen erhalten ihn auf Englisch), dass Text oder Datei mit dem Schlüssel des Nutzers an Anthropic (USA) gesendet werden, dass keine personenbezogenen/sensiblen Daten eingegeben werden sollen und dass vor „Translate" nichts gesendet wird. Der DSGVO-Text der Anwendung wurde angeglichen (er behauptet nicht mehr, die Anwendung „verarbeite keine personenbezogenen Daten").
+- **Sichtbarer Hinweis vor dem KI-Modus:** Über der Modusauswahl zeigt das Übersetzungspanel einen Hinweis (EN, RO, FR, ES, DE, IT, PT, HU; die übrigen Sprachen erhalten ihn auf Englisch), dass Text oder Datei mit dem Schlüssel des Nutzers an Anthropic (USA) gesendet werden, dass keine personenbezogenen/sensiblen Daten eingegeben werden sollen und dass vor „Translate" nichts gesendet wird. Der DSGVO-Text der Anwendung wurde angeglichen (er behauptet nicht mehr, die Anwendung „verarbeite keine personenbezogenen Daten").
 - Die Schriften sind in die Datei eingebettet; der `.docx`-Parser (mammoth.js) ist lokal in `vendor/` enthalten.
 - Die Links im Verzeichnis zu den Websites der Werkzeuge sind einfache Verweise; an sie wird keine Anfrage gestellt, bis du sie öffnest.
 - Keine Analytics und keine Werbung (laut Hinweis in der Anwendung).
@@ -70,6 +70,9 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 Lade `index.html` (und für `.docx`-Dateien den Ordner `vendor/`) herunter und öffne sie im Browser. Das Werkzeugverzeichnis und die Oberfläche in den 20 eingebauten Sprachen funktionieren ohne Internet; die KI-Übersetzung benötigt eine Internetverbindung und einen Anthropic-API-Schlüssel.
 
 ## Verlauf / Changelog
+
+### 19. Oktober 2026 — Version 1.3.1
+- Die Prüfung auf personenbezogene Daten vor „Translate“, die Anzeige „was geht raus“ und der optionale lokale Verlauf (siehe 1.1.0) sind in der aktuellen Version vorhanden: Sie waren bei einer früheren Bereinigung versehentlich entfernt worden und wurden (1.3.0) mit demselben Verhalten und neuen Tests neu implementiert. Die Beschreibungen der Werkzeugkarten und die Hinweis-/Bestätigungsmeldungen sind in die 8 Sprachen (ro, en, fr, it, es, pt, de, hu) übersetzt.
 
 ### 14. Oktober 2026 — Version 1.1.0
 - Lokale Prüfung auf personenbezogene Daten vor dem Senden, Anzeige „was geht raus", optionaler durchsuchbarer lokaler Verlauf, verschlüsselte `.fff.json`-Sicherung, Transparenzlabel; Tests in `tests/fff-r8.test.mjs`.
