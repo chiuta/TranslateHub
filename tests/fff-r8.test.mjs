@@ -1,4 +1,4 @@
-// Teste pentru funcțiile noi din TranslateHub 1.3.3 (runda 8, reimplementate): scanare PII înainte de trimitere către api.anthropic.com,
+// Teste pentru funcțiile noi din TranslateHub 1.3.4 (runda 8, reimplementate): scanare PII înainte de trimitere către api.anthropic.com,
 // istoric local opțional și căutabil, indicator „ce pleacă”, copie .fff.json fără cheia API. Rulează: node tests/fff-r8.test.mjs
 // Rețea blocată; singurul „server” este un răspuns HTTP de test pentru api.anthropic.com (aplicația nu simulează nicio traducere).
 import {createRequire} from "module"; import {fileURLToPath} from "url"; import path from "path"; import fs from "fs";
@@ -19,7 +19,7 @@ async function open(opts={}){
   const p=await ctx.newPage(); const errs=[];
   p.on('pageerror',e=>errs.push('pageerror '+e.message)); p.on('console',m=>{ if(m.type()==='error'||/Content Security/i.test(m.text())) errs.push('console '+m.text()); });
   await p.addInitScript({content:fs.readFileSync(AXE,'utf8')});
-  await p.addInitScript(()=>{ try{ sessionStorage.setItem('th_apikey','sk-ant-test'); }catch(e){} });
+  await p.addInitScript(()=>{ try{ sessionStorage.setItem('th_apikey','sk-ant-test'); localStorage.setItem('translatehub.aiConsent','1'); }catch(e){} });
   if(opts.init) await p.addInitScript(opts.init);
   await p.goto(URL_); await p.waitForTimeout(opts.wait||3600);
   if(opts.lang!=='en'){ await p.evaluate(()=>{document.documentElement.lang='ro';}); await p.waitForTimeout(250); }
@@ -36,8 +36,8 @@ const realErrs=e=>e.filter(x=>!/Failed to fetch|net::|NetworkError/i.test(x));
 { const {ctx,p,errs,reqs}=await open({lang:'en'});
   ok(errs.length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='1.3.3'),'versiune 1.3.3 în meta');
-  ok(await p.evaluate(()=>document.body.textContent.includes('v 1.3.3 · 2026-10-22')),'versiune vizibilă');
+  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='1.3.4'),'versiune 1.3.4 în meta');
+  ok(await p.evaluate(()=>document.body.textContent.includes('v 1.3.4 · 2026-10-22')),'versiune vizibilă');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală 1280');
   const c=await p.textContent('#c5-chip'); ok(/↗/.test(c)&&c.includes('api.anthropic.com'),'indicator: '+c);
   ok((await p.getAttribute('#c5-chip','title')||'').includes('api.anthropic.com'),'indicator are explicație');

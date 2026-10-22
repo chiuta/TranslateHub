@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.3.3 · **Zuletzt aktualisiert:** 2026-10-22
+**Version:** 1.3.4 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 Lade `index.html` (und für `.docx`-Dateien den Ordner `vendor/`) herunter und öffne sie im Browser. Das Werkzeugverzeichnis und die Oberfläche in den 20 eingebauten Sprachen funktionieren ohne Internet; die KI-Übersetzung benötigt eine Internetverbindung und einen Anthropic-API-Schlüssel.
 
 ## Verlauf / Changelog
+
+### 1.3.4 — 2026-10-22
+- Kein API-Schlüssel, keine Anfrage: „Übersetzen“ ohne Schlüssel ruft api.anthropic.com nicht mehr auf (kein Preflight, keine Wiederholungen) und zeigt sofort die Schlüsselleiste samt Hinweis.
+- Einwilligung beim ersten Senden: Ein Dialog erklärt, dass der Text mit deinem eigenen Schlüssel an api.anthropic.com geht; vor der Bestätigung wird nichts gesendet.
+- Optionales, geprüftes Modellfeld neben dem Schlüssel; alert()/confirm() bei großen Texten wurden durch Dialoge und Hinweise in der Seite ersetzt.
+- Mobil: kein Text unter 12 px und Touch-Ziele von mindestens 24 px (WCAG 2.5.8).
 
 ### 1.3.3 — 2026-10-22
 - Die Sprachnamen in der Auswahl der Oberflächensprache sind jetzt lokalisiert (Exonyme in der aktuellen Sprache, auch über englischen Namen und Endonym durchsuchbar); die beiden verbliebenen Überschriften (IATE, Glossar- und TM-Ressourcen), das aria-label „Rechtliche Abschnitte“ und der Hinweis Strg+Eingabe sind übersetzt. Auf Anfrage erzeugte Rechtstexte bleiben, wie die API sie liefert.

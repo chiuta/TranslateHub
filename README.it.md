@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.3.3 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 1.3.4 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ TranslateHub è una pagina unica (`index.html`) che combina due cose:
 Scarica `index.html` (e, per i file `.docx`, la cartella `vendor/`) e aprilo nel browser. L'elenco degli strumenti e l'interfaccia nelle 20 lingue integrate funzionano senza internet; la traduzione con IA richiede una connessione a internet e una chiave API Anthropic.
 
 ## Cronologia / Changelog
+
+### 1.3.4 — 2026-10-22
+- Senza chiave API, nessuna richiesta: premere Traduci senza chiave non chiama più api.anthropic.com (niente preflight né nuovi tentativi) e mostra subito la barra della chiave con un messaggio.
+- Consenso al primo invio: una finestra spiega che il testo va a api.anthropic.com con la tua chiave; nulla viene inviato prima della conferma.
+- Campo «modello» facoltativo e validato accanto alla chiave; gli alert()/confirm() per i testi grandi sono sostituiti da finestre e notifiche nella pagina.
+- Mobile: nessun testo sotto i 12 px e aree tattili di almeno 24 px (WCAG 2.5.8).
 
 ### 1.3.3 — 2026-10-22
 - I nomi delle lingue nel selettore della lingua dell'interfaccia sono ora localizzati (esonimi nella lingua corrente, ricercabili anche per nome inglese ed endonimo); le due intestazioni rimaste (IATE, risorse per glossari e memorie di traduzione), l'aria-label «Sezioni legali» e il suggerimento Ctrl+Invio sono tradotti. I testi legali generati su richiesta restano quelli restituiti dall'API.

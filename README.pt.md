@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.3.3 · **Última atualização:** 2026-10-22
+**Versão:** 1.3.4 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -37,6 +37,12 @@ O TranslateHub é uma página única (`index.html`) que combina duas coisas:
 - **Indicador «o que sai»:** «↗ Ao premir «Translate», o texto sai para api.anthropic.com», com uma explicação (a sua chave, guardada apenas no separador). O diretório de ferramentas e a pesquisa correm localmente.
 - **Histórico local de traduções, opcional (desligado por predefinição):** apenas resultados reais recebidos da API; painel «🗂 Histórico de traduções» com pesquisa semântica local (`FFF.search`), reutilização do texto de origem, cópia, exportação para Markdown, eliminação, análise/mascaramento de dados pessoais no histórico.
 - **Cópia cifrada** através da etiqueta de transparência (`FFF.bundle`). A chave API permanece em `sessionStorage` e **não** entra na cópia.
+
+### 1.3.4 — 2026-10-22
+- Sem chave API, sem pedido: premir Traduzir sem chave já não chama api.anthropic.com (sem preflight nem novas tentativas) e mostra logo a barra da chave com uma mensagem.
+- Consentimento no primeiro envio: uma caixa explica que o texto vai para api.anthropic.com com a sua própria chave; nada é enviado antes de confirmar.
+- Campo de modelo opcional e validado junto da chave; os alert()/confirm() para textos grandes foram substituídos por diálogos e avisos na página.
+- Telemóvel: nenhum texto abaixo de 12 px e áreas táteis de pelo menos 24 px (WCAG 2.5.8).
 
 ### Limites
 - A deteção de dados pessoais é heurística e pode falhar alguma coisa; o mascaramento substitui os valores por etiquetas, o que pode alterar a tradução.

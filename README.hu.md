@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.3 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 1.3.4 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 Töltsd le az `index.html` fájlt (és `.docx` fájlokhoz a `vendor/` mappát), és nyisd meg böngészőben. Az eszközcímtár és a 20 beépített nyelvű felület internet nélkül is működik; az MI-fordításhoz internetkapcsolat és Anthropic API-kulcs szükséges.
 
 ## Előzmények / Changelog
+
+### 1.3.4 — 2026-10-22
+- API-kulcs nélkül nincs kérés: a Fordítás gomb kulcs nélkül már nem hívja az api.anthropic.com-ot (nincs preflight, nincs újrapróba), hanem azonnal megjeleníti a kulcssávot és egy üzenetet.
+- Hozzájárulás az első küldéskor: egy párbeszédablak jelzi, hogy a szöveg a saját kulcsoddal az api.anthropic.com-ra kerül; megerősítésig semmi sem megy el.
+- Opcionális, ellenőrzött modellmező a kulcs mellett; a nagy szövegeknél használt alert()/confirm() helyett oldalon belüli ablakok és értesítések.
+- Mobil: nincs 12 px alatti szöveg, az érintési célpontok legalább 24 px-esek (WCAG 2.5.8).
 
 ### 1.3.3 — 2026-10-22
 - A felületnyelv-választó nyelvnevei lokalizáltak (exonimák az aktuális nyelven, angol névre és endonimára is kereshetők); a két megmaradt cím (IATE, szószedet- és fordításimemória-források), a „Jogi szakaszok” aria-label és a Ctrl+Enter-súgó le van fordítva. A kérésre generált jogi szövegek úgy maradnak, ahogy az API visszaadja.

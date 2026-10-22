@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.3 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 1.3.4 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 1.3.4 — 2026-10-22
+- Fără cheie API, nicio cerere: apăsarea Traduce fără cheie nu mai apelează api.anthropic.com (fără preflight, fără reîncercări) și afișează imediat bara pentru cheie și un mesaj.
+- Consimțământ la prima trimitere: un dialog explică faptul că textul pleacă la api.anthropic.com cu propria ta cheie; nu se trimite nimic până nu confirmi.
+- Câmp opțional, validat, pentru model, lângă cheie; alert()/confirm() pentru textele mari au fost înlocuite cu dialoguri și notificări în pagină.
+- Mobil: niciun text sub 12 px și ținte tactile de cel puțin 24 px (WCAG 2.5.8).
 
 ### 1.3.3 — 2026-10-22
 - Numele limbilor din selectorul limbii interfeței sunt acum localizate (exonime în limba curentă a interfeței, căutabile și după numele englez sau endonim); cele două antete rămase (IATE, Glossary & TM resources), aria-label-ul „Secțiuni juridice” și indiciul Ctrl+Enter sunt traduse. Textele juridice generate la cerere rămân cele returnate de API.

@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.3 · **Last updated:** 2026-10-22
+**Version:** 1.3.4 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ TranslateHub is a single page (`index.html`) that combines two things:
 Download `index.html` (and, for `.docx` files, the `vendor/` folder) and open it in a browser. The tool directory and the interface in the 20 built-in languages work without internet; AI translation requires an internet connection and an Anthropic API key.
 
 ## History / Changelog
+
+### 1.3.4 — 2026-10-22
+- No API key, no request: pressing Translate without a key no longer calls api.anthropic.com (no preflight, no retries) and immediately shows the key bar plus a message.
+- First-send consent: a dialog explains that the text goes to api.anthropic.com with your own key; nothing is sent until you confirm.
+- Optional, validated model field next to the key; the large-input alert()/confirm() were replaced by in-page dialogs and toasts.
+- Mobile: no text below 12 px and touch targets of at least 24 px (WCAG 2.5.8).
 
 ### 1.3.3 — 2026-10-22
 - Language names in the interface-language picker are now localized (exonyms in the current interface language, searchable also by English name and endonym); the two remaining headings (IATE, Glossary & TM resources), the “Legal sections” aria-label and the Ctrl+Enter hint are translated. Legal texts generated on request stay as returned by the API.
