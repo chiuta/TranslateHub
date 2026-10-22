@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.3.1 · **Última atualização:** 2026-10-19
+**Versão:** 1.3.2 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ O TranslateHub é uma página única (`index.html`) que combina duas coisas:
 Descarregue `index.html` (e, para ficheiros `.docx`, a pasta `vendor/`) e abra-o no navegador. O diretório de ferramentas e a interface nos 20 idiomas integrados funcionam sem internet; a tradução com IA requer ligação à internet e uma chave API da Anthropic.
 
 ## Histórico / Changelog
+
+### 1.3.2 — 2026-10-22
+- Correções de tradução: o título da página e as metaetiquetas seguem o idioma da interface; mensagens, avisos, texto de progresso, nomes de idiomas, etiquetas e faixa da chave API traduzidos; o contador de caracteres já não desaparece ao mudar de idioma. Os textos legais e os nomes de produtos ficam intencionalmente em inglês.
 
 ### 19 de outubro de 2026 — versão 1.3.1
 - A verificação de dados pessoais antes de «Translate», o indicador «o que sai» e o histórico local opcional (ver 1.1.0) estão presentes na versão atual: tinham sido removidos por engano numa limpeza anterior e foram reimplementados (1.3.0) com o mesmo comportamento e novos testes. As descrições dos cartões de ferramentas e as mensagens de alerta/confirmação estão traduzidas nos 8 idiomas (ro, en, fr, it, es, pt, de, hu).

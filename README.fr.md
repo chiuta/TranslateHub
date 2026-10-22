@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.3.1 · **Dernière mise à jour :** 2026-10-19
+**Version :** 1.3.2 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ TranslateHub est une page unique (`index.html`) qui réunit deux choses :
 Téléchargez `index.html` (et, pour les fichiers `.docx`, le dossier `vendor/`) et ouvrez-le dans un navigateur. L'annuaire d'outils et l'interface dans les 20 langues intégrées fonctionnent sans internet ; la traduction par IA nécessite une connexion internet et une clé API Anthropic.
 
 ## Historique / Changelog
+
+### 1.3.2 — 2026-10-22
+- Corrections de traduction : le titre de la page et les balises meta suivent la langue de l’interface ; messages, notifications, texte de progression, noms de langues, étiquettes et bandeau de clé API traduits ; le compteur de caractères ne disparaît plus au changement de langue. Les textes juridiques et les noms de produits restent volontairement en anglais.
 
 ### 19 octobre 2026 — version 1.3.1
 - La vérification des données personnelles avant « Translate », l'indicateur « ce qui part » et l'historique local facultatif (voir 1.1.0) sont présents dans la version actuelle : ils avaient été supprimés par erreur lors d'un nettoyage antérieur et ont été réimplémentés (1.3.0) avec le même comportement et de nouveaux tests. Les descriptions des cartes d'outils et les messages d'alerte/de confirmation sont traduits dans les 8 langues (ro, en, fr, it, es, pt, de, hu).

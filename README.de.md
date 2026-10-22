@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.3.1 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 1.3.2 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 Lade `index.html` (und für `.docx`-Dateien den Ordner `vendor/`) herunter und öffne sie im Browser. Das Werkzeugverzeichnis und die Oberfläche in den 20 eingebauten Sprachen funktionieren ohne Internet; die KI-Übersetzung benötigt eine Internetverbindung und einen Anthropic-API-Schlüssel.
 
 ## Verlauf / Changelog
+
+### 1.3.2 — 2026-10-22
+- Übersetzungskorrekturen: Seitentitel und Meta-Tags folgen der Oberflächensprache; Meldungen, Hinweise, Fortschrittstext, Sprachnamen, Tags und das API-Schlüssel-Banner sind übersetzt; der Zeichenzähler verschwindet beim Sprachwechsel nicht mehr. Rechtstexte und Produktnamen bleiben bewusst englisch.
 
 ### 19. Oktober 2026 — Version 1.3.1
 - Die Prüfung auf personenbezogene Daten vor „Translate“, die Anzeige „was geht raus“ und der optionale lokale Verlauf (siehe 1.1.0) sind in der aktuellen Version vorhanden: Sie waren bei einer früheren Bereinigung versehentlich entfernt worden und wurden (1.3.0) mit demselben Verhalten und neuen Tests neu implementiert. Die Beschreibungen der Werkzeugkarten und die Hinweis-/Bestätigungsmeldungen sind in die 8 Sprachen (ro, en, fr, it, es, pt, de, hu) übersetzt.
