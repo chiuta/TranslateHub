@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.3.6 · **Última atualização:** 2026-10-22
+**Versão:** 1.3.7 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -76,6 +76,9 @@ O TranslateHub é uma página única (`index.html`) que combina duas coisas:
 Descarregue `index.html` (e, para ficheiros `.docx`, a pasta `vendor/`) e abra-o no navegador. O diretório de ferramentas e a interface nos 20 idiomas integrados funcionam sem internet; a tradução com IA requer ligação à internet e uma chave API da Anthropic.
 
 ## Histórico / Changelog
+
+### 1.3.7 — 2026-10-22
+- fff-kit 1.1.4: alvos táteis e texto mínimo; alvos táteis/texto corrigidos
 
 ### 1.3.6 — 2026-10-22
 - Acessibilidade: anel de foco claro no painel do texto de origem, nos seletores de idioma e nos outros campos (contraste de pelo menos 3:1).

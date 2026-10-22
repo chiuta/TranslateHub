@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.3.6 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 1.3.7 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -33,6 +33,7 @@ TranslateHub è una pagina unica (`index.html`) che combina due cose:
 
 ## Novità (1.1.0)
 
+- 1.3.7 — 2026-10-22: fff-kit 1.1.4: bersagli touch e testo minimo; bersagli touch/testo corretti
 - **Verifica locale dei dati personali prima di «Translate»** (`FFF.pii`), in tutte e tre le modalità (testo semplice, testo formattato, file): se il testo contiene e-mail, telefoni, IBAN, CNP, carte, IP o chiavi, nulla parte verso `api.anthropic.com` finché non scegli «Maschera quelli selezionati e continua», «Continua senza mascherare» o «Annulla». Funziona anche con Ctrl+Invio. Si può disattivare (la preferenza viene conservata).
 - **Indicatore «cosa parte»:** «↗ Con «Translate», il testo parte verso api.anthropic.com», con una spiegazione (la tua chiave, conservata solo nella scheda). L'elenco degli strumenti e la ricerca girano in locale.
 - **Cronologia locale delle traduzioni, facoltativa (disattivata per impostazione predefinita):** solo risultati reali ricevuti dall'API; pannello «🗂 Cronologia delle traduzioni» con ricerca semantica locale (`FFF.search`), riutilizzo del testo di partenza, copia, esportazione Markdown, eliminazione, scansione/mascheratura dei dati personali nella cronologia.
