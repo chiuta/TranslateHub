@@ -2,7 +2,7 @@
   "schema": 1,
   "slug": "translatehub",
   "name": "TranslateHub — Best Free Translation Tools Directory",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "updated": "2026-10-23",
   "description": "Curated directory of 22 free translation tools — Google Translate, DeepL, MateCat, OmegaT, LibreTranslate and more. Plus a built-in AI translator powered by Claude.",
   "egress": [
@@ -20,21 +20,21 @@
     "localStorage"
   ],
   "storageKeys": [
-    "th_hist",
-    "th_piiguard",
-    "th_savehist",
     "translatehub.aiConsent",
-    "ui_",
-    "ui_lang_name",
-    "ui_lang_pref"
+    "translatehub.hist",
+    "translatehub.piiguard",
+    "translatehub.savehist",
+    "translatehub.ui_",
+    "translatehub.ui_lang_name",
+    "translatehub.ui_lang_pref"
   ],
-  "sizeBytes": 1136325,
-  "sha256": "4350a1f9df3c465b0cbb3a4e62ce358389dcd8533076a2d589b950ed5d919f11",
+  "sizeBytes": 1137039,
+  "sha256": "992da4b43cb72e3de1ded901f7058c689d6712b49ed1032e9fcdbd34d5e0b912",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'self'",
-      "script-src": "'self' sha256×6",
+      "script-src": "'self' sha256×7",
       "style-src": "'self' 'unsafe-inline'",
       "font-src": "'self' data:",
       "connect-src": "https://api.anthropic.com",

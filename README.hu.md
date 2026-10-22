@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.8 · **Utolsó frissítés:** 2026-10-23
+**Verzió:** 1.3.9 · **Utolsó frissítés:** 2026-10-23
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,7 +58,7 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 
 ## Adatvédelem és hálózat
 
-- **Helyi tárolás:** `localStorage` — a felület nyelvének kódja (`ui_lang_pref`, `ui_lang_name`) és a gyorsítótárazott felületi fordítások (`ui_<kód>`). `sessionStorage` — az Anthropic API-kulcs (`th_apikey`), a lap bezárásakor törlődik; szintén a `sessionStorage`-ban őrződik ideiglenesen a jogi/GDPR-szakaszok fordítása, ha az API-n keresztül kéred. Az alkalmazás nem állít be sütiket.
+- **Helyi tárolás:** `localStorage` — a felület nyelvének kódja (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) és a gyorsítótárazott felületi fordítások (`ui_<kód>`). `sessionStorage` — az Anthropic API-kulcs (`th_apikey`), a lap bezárásakor törlődik; szintén a `sessionStorage`-ban őrződik ideiglenesen a jogi/GDPR-szakaszok fordítása, ha az API-n keresztül kéred. Az alkalmazás nem állít be sütiket.
 - **Hálózat:** az alkalmazás a `https://api.anthropic.com/v1/messages` címet **csak** akkor keresi meg, ha MI-fordítást használsz, vagy olyan felületi nyelvet választasz, amelyhez nincs beépített fordítás. A megadott szöveg (vagy a fájl tartalma) és a kulcsod az Anthropichoz kerül; az alkalmazás szabályzata megemlíti, hogy az Anthropic az adatokat legfeljebb 30 napig megőrzi. Az oldal biztonsági szabályzata (CSP) csak erre a hostra engedélyez kapcsolatokat (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); a `script-src` csak az oldal saját, SHA-256 hash-sel azonosított szkriptjét engedi, beágyazott eseménykezelők nélkül.
 - **Látható figyelmeztetés az MI-mód előtt:** a módválasztó felett a fordítópanel megjegyzést jelenít meg (EN, RO, FR, ES, DE, IT, PT, HU; a többi nyelv angolul kapja), amely szerint a szöveg vagy a fájl a felhasználó kulcsával az Anthropichoz (USA) kerül, nem szabad személyes/érzékeny adatokat megadni, és a „Translate” előtt semmi sem kerül elküldésre. Az alkalmazás GDPR-szövege összhangba került (már nem állítja, hogy az alkalmazás „nem kezel személyes adatokat”).
 - A betűtípusok be vannak ágyazva a fájlba; a `.docx`-értelmező (mammoth.js) helyben, a `vendor/` mappában található.
@@ -70,6 +70,10 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 Töltsd le az `index.html` fájlt (és `.docx` fájlokhoz a `vendor/` mappát), és nyisd meg böngészőben. Az eszközcímtár és a 20 beépített nyelvű felület internet nélkül is működik; az MI-fordításhoz internetkapcsolat és Anthropic API-kulcs szükséges.
 
 ## Előzmények / Changelog
+
+### 1.3.9 — 2026-10-23
+
+- A helyi tárhely kulcsai mostantól a `translatehub.` előtagot használják (`FFF.store.migrate` induláskor, bármilyen olvasás előtt): a meglévő adatok automatikusan megmaradnak, a régi `.fff.json` mentések továbbra is importálhatók.
 
 ### 1.3.7 — 2026-10-22
 - fff-kit 1.1.4: érintési célpontok és minimális szövegméret; érintési célpontok/szöveg javítva

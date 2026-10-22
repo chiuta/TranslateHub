@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.8 · **Last updated:** 2026-10-23
+**Version:** 1.3.9 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,7 +58,7 @@ TranslateHub is a single page (`index.html`) that combines two things:
 
 ## Privacy and network
 
-- **Local storage:** `localStorage` — the interface language code (`ui_lang_pref`, `ui_lang_name`) and the cached interface translations (`ui_<code>`). `sessionStorage` — the Anthropic API key (`th_apikey`), deleted when the tab is closed; the translation of the legal/GDPR sections is also kept temporarily in `sessionStorage`, if you request it through the API. The app sets no cookies.
+- **Local storage:** `localStorage` — the interface language code (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) and the cached interface translations (`translatehub.ui_<code>`). `sessionStorage` — the Anthropic API key (`th_apikey`), deleted when the tab is closed; the translation of the legal/GDPR sections is also kept temporarily in `sessionStorage`, if you request it through the API. The app sets no cookies.
 - **Network:** the app contacts `https://api.anthropic.com/v1/messages` **only** when you use AI translation or when you choose an interface language with no built-in translation. The text you enter (or the file content) and your key are sent to Anthropic; the app's policy mentions Anthropic's retention of data for up to 30 days. The page's security policy (CSP) allows connections only to this host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` allows only the page's own script, identified by a SHA-256 hash, with no inline handlers.
 - **Visible warning before AI mode:** above the mode selector, the translation panel displays a note (EN, RO, FR, ES, DE, IT, PT, HU; the other languages get it in English) saying that the text or file is sent to Anthropic (USA), with the user's key, that no personal/sensitive data should be entered, and that nothing is sent before "Translate". The GDPR text in the app was aligned (it no longer states that the app "does not process personal data").
 - Fonts are embedded in the file; the `.docx` parser (mammoth.js) is included locally in `vendor/`.
@@ -70,6 +70,10 @@ TranslateHub is a single page (`index.html`) that combines two things:
 Download `index.html` (and, for `.docx` files, the `vendor/` folder) and open it in a browser. The tool directory and the interface in the 20 built-in languages work without internet; AI translation requires an internet connection and an Anthropic API key.
 
 ## History / Changelog
+
+### 1.3.9 — 2026-10-23
+
+- Local storage keys now use the `translatehub.` prefix (`FFF.store.migrate` at startup, before any read): existing data is kept automatically, and old `.fff.json` backups can still be imported.
 
 ### 1.3.7 — 2026-10-22
 - fff-kit 1.1.4: touch targets and minimum text size; touch targets/text fixed

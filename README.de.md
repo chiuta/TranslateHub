@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.3.8 · **Zuletzt aktualisiert:** 2026-10-23
+**Version:** 1.3.9 · **Zuletzt aktualisiert:** 2026-10-23
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -58,7 +58,7 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 
 ## Datenschutz und Netzwerk
 
-- **Lokaler Speicher:** `localStorage` — der Code der Oberflächensprache (`ui_lang_pref`, `ui_lang_name`) und die zwischengespeicherten Oberflächenübersetzungen (`ui_<Code>`). `sessionStorage` — der Anthropic-API-Schlüssel (`th_apikey`), beim Schließen des Tabs gelöscht; ebenfalls im `sessionStorage` wird vorübergehend die Übersetzung der rechtlichen/DSGVO-Abschnitte gehalten, wenn du sie über die API anforderst. Die Anwendung setzt keine Cookies.
+- **Lokaler Speicher:** `localStorage` — der Code der Oberflächensprache (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) und die zwischengespeicherten Oberflächenübersetzungen (`ui_<Code>`). `sessionStorage` — der Anthropic-API-Schlüssel (`th_apikey`), beim Schließen des Tabs gelöscht; ebenfalls im `sessionStorage` wird vorübergehend die Übersetzung der rechtlichen/DSGVO-Abschnitte gehalten, wenn du sie über die API anforderst. Die Anwendung setzt keine Cookies.
 - **Netzwerk:** Die Anwendung kontaktiert `https://api.anthropic.com/v1/messages` **nur**, wenn du die KI-Übersetzung nutzt oder eine Oberflächensprache ohne eingebaute Übersetzung wählst. Der eingegebene Text (oder der Dateiinhalt) und dein Schlüssel werden an Anthropic gesendet; die Richtlinie der Anwendung erwähnt die Aufbewahrung der Daten durch Anthropic bis zu 30 Tage. Die Sicherheitsrichtlinie der Seite (CSP) erlaubt Verbindungen nur zu diesem Host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` erlaubt nur das eigene Skript, identifiziert durch einen SHA-256-Hash, ohne Inline-Handler.
 - **Sichtbarer Hinweis vor dem KI-Modus:** Über der Modusauswahl zeigt das Übersetzungspanel einen Hinweis (EN, RO, FR, ES, DE, IT, PT, HU; die übrigen Sprachen erhalten ihn auf Englisch), dass Text oder Datei mit dem Schlüssel des Nutzers an Anthropic (USA) gesendet werden, dass keine personenbezogenen/sensiblen Daten eingegeben werden sollen und dass vor „Translate" nichts gesendet wird. Der DSGVO-Text der Anwendung wurde angeglichen (er behauptet nicht mehr, die Anwendung „verarbeite keine personenbezogenen Daten").
 - Die Schriften sind in die Datei eingebettet; der `.docx`-Parser (mammoth.js) ist lokal in `vendor/` enthalten.
@@ -70,6 +70,10 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 Lade `index.html` (und für `.docx`-Dateien den Ordner `vendor/`) herunter und öffne sie im Browser. Das Werkzeugverzeichnis und die Oberfläche in den 20 eingebauten Sprachen funktionieren ohne Internet; die KI-Übersetzung benötigt eine Internetverbindung und einen Anthropic-API-Schlüssel.
 
 ## Verlauf / Changelog
+
+### 1.3.9 — 2026-10-23
+
+- Die Schlüssel des lokalen Speichers verwenden jetzt das Präfix `translatehub.` (`FFF.store.migrate` beim Start, vor jedem Lesezugriff): vorhandene Daten bleiben automatisch erhalten, alte `.fff.json`-Sicherungen lassen sich weiterhin importieren.
 
 ### 1.3.7 — 2026-10-22
 - fff-kit 1.1.4: Touch-Ziele und Mindestschriftgröße; Touch-Ziele/Text korrigiert

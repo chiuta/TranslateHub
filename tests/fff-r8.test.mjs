@@ -36,8 +36,8 @@ const realErrs=e=>e.filter(x=>!/Failed to fetch|net::|NetworkError/i.test(x));
 { const {ctx,p,errs,reqs}=await open({lang:'en'});
   ok(errs.length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='1.3.8'),'versiune 1.3.8 în meta');
-  ok(await p.evaluate(()=>document.body.textContent.includes('v 1.3.8 · 2026-10-23')),'versiune vizibilă');
+  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='1.3.9'),'versiune 1.3.9 în meta');
+  ok(await p.evaluate(()=>document.body.textContent.includes('v 1.3.9 · 2026-10-23')),'versiune vizibilă');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală 1280');
   const c=await p.textContent('#c5-chip'); ok(/↗/.test(c)&&c.includes('api.anthropic.com'),'indicator: '+c);
   ok((await p.getAttribute('#c5-chip','title')||'').includes('api.anthropic.com'),'indicator are explicație');
@@ -77,7 +77,7 @@ const realErrs=e=>e.filter(x=>!/Failed to fetch|net::|NetworkError/i.test(x));
   ok(bodies.length===3,'Ctrl+Enter: tot dialog'); await p.keyboard.press('Escape');
   // verificare oprită
   await p.uncheck('#c5-pii'); await p.waitForTimeout(100);
-  ok(await p.evaluate(()=>localStorage.getItem('th_piiguard'))==='0','opțiunea se păstrează');
+  ok(await p.evaluate(()=>localStorage.getItem('translatehub.piiguard'))==='0','opțiunea se păstrează');
   await p.click('#translate-btn'); await p.waitForTimeout(1200);
   ok(await p.locator('dialog.fff-pii').count()===0&&bodies.length===4,'verificarea oprită: trimitere directă');
   ok(realErrs(errs).length===0,'fără erori JS: '+errs.join('|'));
@@ -85,13 +85,13 @@ const realErrs=e=>e.filter(x=>!/Failed to fetch|net::|NetworkError/i.test(x));
 
 // 3. istoric local
 { const {ctx,p,errs,bodies}=await open();
-  ok(await p.evaluate(()=>localStorage.getItem('th_hist'))===null,'implicit nu se salvează');
+  ok(await p.evaluate(()=>localStorage.getItem('translatehub.hist'))===null,'implicit nu se salvează');
   await p.fill('#tr-source','Bună ziua, doresc o cameră dublă pentru două nopți.'); await p.click('#translate-btn'); await p.waitForTimeout(1200);
-  ok(await p.evaluate(()=>localStorage.getItem('th_hist'))===null,'cu opțiunea oprită nu se scrie nimic');
-  await p.check('#c5-hist'); ok(await p.evaluate(()=>localStorage.getItem('th_savehist'))==='1','opțiunea se păstrează');
+  ok(await p.evaluate(()=>localStorage.getItem('translatehub.hist'))===null,'cu opțiunea oprită nu se scrie nimic');
+  await p.check('#c5-hist'); ok(await p.evaluate(()=>localStorage.getItem('translatehub.savehist'))==='1','opțiunea se păstrează');
   await p.fill('#tr-source','Bună ziua, doresc o cameră dublă pentru două nopți.'); await p.click('#translate-btn'); await p.waitForTimeout(1200);
   await p.fill('#tr-source','Unde este gara? Mă grăbesc spre aeroport.'); await p.click('#translate-btn'); await p.waitForTimeout(1200);
-  const h=await p.evaluate(()=>JSON.parse(localStorage.getItem('th_hist')||'[]')); ok(h.length===2,'2 intrări salvate: '+h.length);
+  const h=await p.evaluate(()=>JSON.parse(localStorage.getItem('translatehub.hist')||'[]')); ok(h.length===2,'2 intrări salvate: '+h.length);
   ok(h[0]&&h[0].out.includes('Traducere de test'),'rezultatul real al API-ului e salvat');
   await p.click('#c5-histbtn'); await p.waitForSelector('dialog.c5-dlg[open]'); await axe(p,'istoric');
   ok(await p.locator('dialog.c5-dlg li.c5-li').count()===2,'istoric listează 2');
@@ -112,22 +112,22 @@ const realErrs=e=>e.filter(x=>!/Failed to fetch|net::|NetworkError/i.test(x));
   const [dl]=await Promise.all([p.waitForEvent('download'),p.locator('dialog.c5-dlg button').filter({hasText:/Exportă tot/}).click()]);
   const md=fs.readFileSync(await dl.path(),'utf8'); ok(/gara/.test(md)&&/cameră/.test(md),'export Markdown conține intrările');
   // PII în istoric
-  await p.evaluate(()=>{ const l=JSON.parse(localStorage.getItem('th_hist')); l[0].src+=' Scrieți la test.user@example.org'; localStorage.setItem('th_hist',JSON.stringify(l)); });
+  await p.evaluate(()=>{ const l=JSON.parse(localStorage.getItem('translatehub.hist')); l[0].src+=' Scrieți la test.user@example.org'; localStorage.setItem('translatehub.hist',JSON.stringify(l)); });
   await p.keyboard.press('Escape'); await p.click('#c5-histbtn'); await p.waitForSelector('dialog.c5-dlg[open]');
   await p.locator('dialog.c5-dlg button').filter({hasText:/Caută date personale/}).click(); await p.waitForTimeout(400);
   await p.locator('dialog.c5-dlg').last().locator('button').filter({hasText:/^Da$/}).click(); await p.waitForTimeout(600);
-  ok(!(await p.evaluate(()=>localStorage.getItem('th_hist'))).includes('test.user@example.org'),'datele personale din istoric au fost mascate');
+  ok(!(await p.evaluate(()=>localStorage.getItem('translatehub.hist'))).includes('test.user@example.org'),'datele personale din istoric au fost mascate');
   // copie kit: fără cheia API
   const keys=await p.evaluate(async()=>{ const b=await FFF.bundle.export({encrypt:false,returnOnly:true}).catch(()=>null); return b; });
   const idx=await p.evaluate(()=>FFF.store.indexKeys());
-  ok(idx.includes('th_hist'),'cheia th_hist e indexată în copie: '+idx.join(','));
+  ok(idx.includes('translatehub.hist'),'cheia translatehub.hist e indexată în copie: '+idx.join(','));
   ok(!idx.some(k=>/apikey/i.test(k)),'cheia API nu e în localStorage/copie');
   ok(await p.evaluate(()=>!Object.keys(localStorage).some(k=>/apikey/i.test(k))),'cheia API doar în sessionStorage');
   // ștergere
   await p.keyboard.press('Escape'); await p.click('#c5-histbtn'); await p.waitForSelector('dialog.c5-dlg[open]');
   await p.locator('dialog.c5-dlg details summary').first().click();
   await p.locator('dialog.c5-dlg button').filter({hasText:/^Șterge$/}).first().click(); await p.waitForTimeout(500);
-  ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('th_hist')||'[]').length)===1,'ștergerea unei intrări');
+  ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('translatehub.hist')||'[]').length)===1,'ștergerea unei intrări');
   ok(realErrs(errs).length===0,'fără erori JS în istoric: '+errs.join('|'));
   await ctx.close(); }
 
@@ -190,25 +190,25 @@ const realErrs=e=>e.filter(x=>!/Failed to fetch|net::|NetworkError/i.test(x));
   await ctx.close(); }
 
 // 6. istoric: doar rezultate reale (eroare API => nu se salvează), plafon, rich/fișier
-{ const {ctx,p,errs,bodies}=await open({fail:true,init:()=>{ try{ localStorage.setItem('th_savehist','1'); }catch(e){} }});
+{ const {ctx,p,errs,bodies}=await open({fail:true,init:()=>{ try{ localStorage.setItem('translatehub.savehist','1'); }catch(e){} }});
   await p.fill('#tr-source','Bună ziua, vreau o cameră.'); await p.click('#translate-btn'); await p.waitForTimeout(1500);
   ok(bodies.length>=1,'cererea a plecat (simulat 401)');
-  ok(await p.evaluate(()=>localStorage.getItem('th_hist'))===null,'eroare API: nimic salvat în istoric');
+  ok(await p.evaluate(()=>localStorage.getItem('translatehub.hist'))===null,'eroare API: nimic salvat în istoric');
   await ctx.close(); }
-{ const {ctx,p,errs}=await open({init:()=>{ try{ localStorage.setItem('th_savehist','1'); }catch(e){} }});
+{ const {ctx,p,errs}=await open({init:()=>{ try{ localStorage.setItem('translatehub.savehist','1'); }catch(e){} }});
   await p.click('.mode-tab[data-mode="rich"]'); await p.evaluate(()=>{ document.getElementById('rt-source').innerHTML='<p>Unde este gara?</p>'; });
   await p.click('#translate-btn'); await p.waitForTimeout(1500);
   await p.click('.mode-tab[data-mode="file"]'); await p.setInputFiles('#file-input',{name:'n.txt',mimeType:'text/plain',buffer:Buffer.from('Fișier de test fără date personale.')}); await p.waitForTimeout(400);
   await p.click('#translate-btn'); await p.waitForTimeout(1500);
-  const h=await p.evaluate(()=>JSON.parse(localStorage.getItem('th_hist')||'[]')); ok(h.length===2&&h[0].mode==='file'&&h[1].mode==='rich','rich + fișier salvate: '+h.map(x=>x.mode));
+  const h=await p.evaluate(()=>JSON.parse(localStorage.getItem('translatehub.hist')||'[]')); ok(h.length===2&&h[0].mode==='file'&&h[1].mode==='rich','rich + fișier salvate: '+h.map(x=>x.mode));
   ok(h[0].file==='n.txt','numele fișierului păstrat');
   // plafon 200 intrări
-  const n=await p.evaluate(()=>{ const l=[]; for(let i=0;i<260;i++)l.push({id:'x'+i,ts:i,mode:'text',file:'',from:'a',to:'b',src:'s'+i,out:'o'+i}); localStorage.setItem('th_hist',JSON.stringify(l)); return 1; });
+  const n=await p.evaluate(()=>{ const l=[]; for(let i=0;i<260;i++)l.push({id:'x'+i,ts:i,mode:'text',file:'',from:'a',to:'b',src:'s'+i,out:'o'+i}); localStorage.setItem('translatehub.hist',JSON.stringify(l)); return 1; });
   await p.click('.mode-tab[data-mode="text"]'); await p.fill('#tr-source','Încă o frază.'); await p.click('#translate-btn'); await p.waitForTimeout(1500);
-  const c=await p.evaluate(()=>JSON.parse(localStorage.getItem('th_hist')).length); ok(c===200,'plafon 200 intrări: '+c);
-  await p.evaluate(()=>{ const l=[]; for(let i=0;i<150;i++)l.push({id:'y'+i,ts:i,mode:'text',file:'',from:'a',to:'b',src:'s'.repeat(9000),out:'o'.repeat(9000)}); localStorage.setItem('th_hist',JSON.stringify(l)); });
+  const c=await p.evaluate(()=>JSON.parse(localStorage.getItem('translatehub.hist')).length); ok(c===200,'plafon 200 intrări: '+c);
+  await p.evaluate(()=>{ const l=[]; for(let i=0;i<150;i++)l.push({id:'y'+i,ts:i,mode:'text',file:'',from:'a',to:'b',src:'s'.repeat(9000),out:'o'.repeat(9000)}); localStorage.setItem('translatehub.hist',JSON.stringify(l)); });
   await p.fill('#tr-source','Încă o frază doi.'); await p.click('#translate-btn'); await p.waitForTimeout(1500);
-  const sz=await p.evaluate(()=>localStorage.getItem('th_hist').length); ok(sz<=1500000,'plafon ~1,5 M caractere: '+sz);
+  const sz=await p.evaluate(()=>localStorage.getItem('translatehub.hist').length); ok(sz<=1500000,'plafon ~1,5 M caractere: '+sz);
   ok(realErrs(errs).length===0,'fără erori JS: '+errs.join('|'));
   await ctx.close(); }
 
