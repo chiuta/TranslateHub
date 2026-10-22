@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.4 · **Last updated:** 2026-10-22
+**Version:** 1.3.5 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ TranslateHub is a single page (`index.html`) that combines two things:
 Download `index.html` (and, for `.docx` files, the `vendor/` folder) and open it in a browser. The tool directory and the interface in the 20 built-in languages work without internet; AI translation requires an internet connection and an Anthropic API key.
 
 ## History / Changelog
+
+### 1.3.5 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 600,000 iterations, anti-clickjacking protection.
 
 ### 1.3.4 — 2026-10-22
 - No API key, no request: pressing Translate without a key no longer calls api.anthropic.com (no preflight, no retries) and immediately shows the key bar plus a message.

@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 1.3.4 · **Última atualização:** 2026-10-22
+**Versão:** 1.3.5 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -76,6 +76,9 @@ O TranslateHub é uma página única (`index.html`) que combina duas coisas:
 Descarregue `index.html` (e, para ficheiros `.docx`, a pasta `vendor/`) e abra-o no navegador. O diretório de ferramentas e a interface nos 20 idiomas integrados funcionam sem internet; a tradução com IA requer ligação à internet e uma chave API da Anthropic.
 
 ## Histórico / Changelog
+
+### 1.3.5 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 com 600.000 iterações, proteção anti-clickjacking.
 
 ### 1.3.3 — 2026-10-22
 - Os nomes dos idiomas no seletor de idioma da interface estão agora localizados (exónimos no idioma atual, pesquisáveis também pelo nome inglês e pelo endónimo); os dois títulos restantes (IATE, recursos de glossários e memórias de tradução), o aria-label «Secções jurídicas» e a indicação Ctrl+Enter estão traduzidos. Os textos jurídicos gerados a pedido ficam como devolvidos pela API.

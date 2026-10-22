@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.4 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 1.3.5 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 Töltsd le az `index.html` fájlt (és `.docx` fájlokhoz a `vendor/` mappát), és nyisd meg böngészőben. Az eszközcímtár és a 20 beépített nyelvű felület internet nélkül is működik; az MI-fordításhoz internetkapcsolat és Anthropic API-kulcs szükséges.
 
 ## Előzmények / Changelog
+
+### 1.3.5 — 2026-10-22
+- fff-kit 1.1.2: PBKDF2 600 000 iterációval, clickjacking elleni védelem.
 
 ### 1.3.4 — 2026-10-22
 - API-kulcs nélkül nincs kérés: a Fordítás gomb kulcs nélkül már nem hívja az api.anthropic.com-ot (nincs preflight, nincs újrapróba), hanem azonnal megjeleníti a kulcssávot és egy üzenetet.
