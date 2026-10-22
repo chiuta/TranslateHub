@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.2 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 1.3.3 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 1.3.3 — 2026-10-22
+- Numele limbilor din selectorul limbii interfeței sunt acum localizate (exonime în limba curentă a interfeței, căutabile și după numele englez sau endonim); cele două antete rămase (IATE, Glossary & TM resources), aria-label-ul „Secțiuni juridice” și indiciul Ctrl+Enter sunt traduse. Textele juridice generate la cerere rămân cele returnate de API.
 
 ### 1.3.2 — 2026-10-22
 - Corecturi de traducere: titlul paginii și meta-etichetele urmează limba interfeței; mesajele, notificările, textul de progres, numele limbilor, etichetele și bannerul cheii API sunt traduse; contorul de caractere nu mai dispare la schimbarea limbii. Textele juridice și numele produselor rămân intenționat în engleză.

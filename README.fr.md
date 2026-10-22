@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.3.2 · **Dernière mise à jour :** 2026-10-22
+**Version :** 1.3.3 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ TranslateHub est une page unique (`index.html`) qui réunit deux choses :
 Téléchargez `index.html` (et, pour les fichiers `.docx`, le dossier `vendor/`) et ouvrez-le dans un navigateur. L'annuaire d'outils et l'interface dans les 20 langues intégrées fonctionnent sans internet ; la traduction par IA nécessite une connexion internet et une clé API Anthropic.
 
 ## Historique / Changelog
+
+### 1.3.3 — 2026-10-22
+- Les noms de langues du sélecteur de langue de l'interface sont désormais localisés (exonymes dans la langue courante, recherchables aussi par le nom anglais et l'endonyme) ; les deux derniers intitulés (IATE, ressources de glossaires et mémoires de traduction), l'aria-label « Sections juridiques » et l'indication Ctrl+Entrée sont traduits. Les textes juridiques générés à la demande restent tels que renvoyés par l'API.
 
 ### 1.3.2 — 2026-10-22
 - Corrections de traduction : le titre de la page et les balises meta suivent la langue de l’interface ; messages, notifications, texte de progression, noms de langues, étiquettes et bandeau de clé API traduits ; le compteur de caractères ne disparaît plus au changement de langue. Les textes juridiques et les noms de produits restent volontairement en anglais.

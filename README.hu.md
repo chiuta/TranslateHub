@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.3.2 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 1.3.3 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,9 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 Töltsd le az `index.html` fájlt (és `.docx` fájlokhoz a `vendor/` mappát), és nyisd meg böngészőben. Az eszközcímtár és a 20 beépített nyelvű felület internet nélkül is működik; az MI-fordításhoz internetkapcsolat és Anthropic API-kulcs szükséges.
 
 ## Előzmények / Changelog
+
+### 1.3.3 — 2026-10-22
+- A felületnyelv-választó nyelvnevei lokalizáltak (exonimák az aktuális nyelven, angol névre és endonimára is kereshetők); a két megmaradt cím (IATE, szószedet- és fordításimemória-források), a „Jogi szakaszok” aria-label és a Ctrl+Enter-súgó le van fordítva. A kérésre generált jogi szövegek úgy maradnak, ahogy az API visszaadja.
 
 ### 1.3.2 — 2026-10-22
 - Fordítási javítások: az oldalcím és a meta címkék követik a felület nyelvét; az üzenetek, értesítések, folyamatszöveg, nyelvnevek, címkék és az API-kulcs sáv lefordítva; a karakterszámláló már nem tűnik el nyelvváltáskor. A jogi szövegek és a terméknevek szándékosan angolul maradnak.
