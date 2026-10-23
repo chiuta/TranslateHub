@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.9 · **Last updated:** 2026-10-23
+**Version:** 1.3.10 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,11 @@ TranslateHub is a single page (`index.html`) that combines two things:
 Download `index.html` (and, for `.docx` files, the `vendor/` folder) and open it in a browser. The tool directory and the interface in the 20 built-in languages work without internet; AI translation requires an internet connection and an Anthropic API key.
 
 ## History / Changelog
+
+### 1.3.10 — 2026-10-23
+
+- Accessibility: on touch screens (`pointer:coarse`) navigation links, tag chips, tool links, the language, copy, clear and history buttons are at least 44 px. No change on desktop.
+- Security (defence in depth): the sanitizer for the translated Legal & GDPR text now also removes `<noscript>` and `<template>`.
 
 ### 1.3.9 — 2026-10-23
 
