@@ -1,4 +1,4 @@
-// Teste 1.3.10 (23 oct. 2026): sanitizerul pentru textul juridic tradus elimină <noscript>/<template> (mXSS), ținte tactile ≥44 px pe ecrane tactile.
+// Teste 1.3.11 (23 oct. 2026): sanitizerul pentru textul juridic tradus elimină <noscript>/<template> (mXSS), ținte tactile ≥44 px pe ecrane tactile.
 // Rulare: node tests/audit-1310.test.mjs (Playwright din /opt/node-tools, Chromium local, rețea blocată)
 import {createRequire} from "module"; import {fileURLToPath} from "url"; import path from "path";
 const require=createRequire("/opt/node-tools/package.json"); const {chromium}=require("playwright");
