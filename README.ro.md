@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.3.11 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 2.0.0 — 2026-10-26
+
+- **Memorie de traducere locală** (opțională, oprită implicit; caseta „Memorie de traducere” lângă opțiunile de istoric): textul simplu și fișierele `txt`/`md`/`docx` sunt împărțite pe propoziții; segmentele deja traduse (potrivire exactă, pe perechea de limbi) sunt reutilizate din browser, iar spre traducătorul AI pleacă doar segmentele noi, în loturi numerotate (un segment lipsă din răspuns se reia separat).
+- Buton „Memorie și glosar”: căutare, editare și ștergere de intrări; **glosar propriu** pe perechea curentă (termenii prezenți intră în instrucțiunile trimise AI, iar abaterile sunt semnalate după traducere); **export/import TMX 1.4 și XLIFF 1.2/2.0**. Memoria stă în `localStorage` (`translatehub.tm`, `translatehub.tm.gl`), maximum 4000 de segmente (cele mai puțin folosite sunt eliminate).
+- Limite: necesită limbă sursă explicită (nu „Auto-detect”); nu se aplică modului Rich Text și fișierelor html/srt/po/csv/json; fără potrivire aproximată (fuzzy).
 
 ### 1.3.9 — 2026-10-23
 

@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.3.11 · **Last updated:** 2026-10-26
+**Version:** 2.0.0 · **Last updated:** 2026-10-26
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -70,6 +70,12 @@ TranslateHub is a single page (`index.html`) that combines two things:
 Download `index.html` (and, for `.docx` files, the `vendor/` folder) and open it in a browser. The tool directory and the interface in the 20 built-in languages work without internet; AI translation requires an internet connection and an Anthropic API key.
 
 ## History / Changelog
+
+### 2.0.0 — 2026-10-26
+
+- **Local translation memory** (optional, off by default; the "Translation memory" checkbox next to the history options): plain text and `txt`/`md`/`docx` files are split into sentences; segments already translated (exact match, per language pair) are reused in the browser, and only new segments are sent to the AI translator, in numbered batches (a segment missing from the reply is retried on its own).
+- "Memory & glossary" button: search, edit and delete entries; a **glossary** for the current pair (present terms are added to the instructions sent to the AI, and deviations are flagged afterwards); **TMX 1.4 and XLIFF 1.2/2.0 export/import**. The memory lives in `localStorage` (`translatehub.tm`, `translatehub.tm.gl`), up to 4000 segments (least-used entries are dropped first).
+- Limits: needs an explicit source language (not Auto-detect); not applied to Rich Text mode or html/srt/po/csv/json files; no fuzzy matching.
 
 ### 1.3.10 — 2026-10-23
 
