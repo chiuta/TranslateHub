@@ -1,10 +1,10 @@
 // Teste 1.3.11 (23 oct. 2026): sanitizerul pentru textul juridic tradus elimină <noscript>/<template> (mXSS), ținte tactile ≥44 px pe ecrane tactile.
 // Rulare: node tests/audit-1310.test.mjs (Playwright din /opt/node-tools, Chromium local, rețea blocată)
 import {createRequire} from "module"; import {fileURLToPath} from "url"; import path from "path";
-const require=createRequire("/opt/node-tools/package.json"); const {chromium}=require("playwright");
+const require=createRequire(process.env.PW_ROOT || import.meta.url); const {chromium}=require("playwright");
 const URL_='file://'+path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../index.html');
 let pass=0,fail=0; const ok=(c,m,i)=>{ if(c){pass++;console.log('  ok   '+m);} else {fail++;console.log('  FAIL '+m+(i===undefined?'':' '+JSON.stringify(i)));} };
-const browser=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
+const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH || undefined});
 async function open(touch){ const ctx=await browser.newContext({viewport:{width:390,height:800},hasTouch:touch,isMobile:touch}); await ctx.route(/^https?:/,r=>r.abort()); const p=await ctx.newPage(); await p.goto(URL_); await p.waitForTimeout(1500); return {ctx,p}; }
 { const {ctx,p}=await open(false);
   const out=await p.evaluate(()=>[
