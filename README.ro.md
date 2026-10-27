@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.1.0 · **Ultima actualizare:** 2026-10-27
+
+**Stare:** stabil · **Offline:** cere internet pentru traducerea AI cu Claude (și limbile fără traducere încorporată); cu motorul local Ollama nu trimite nimic pe internet, dar cere un server Ollama pornit pe acest calculator
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -30,6 +32,9 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 - Buton „Cancel" pentru o traducere în curs.
 - Limba interfeței: selector „EN" în bara de sus. Traduceri încorporate pentru 20 de limbi (en, ro, fr, es, de, it, pt, ru, zh-Hans, ja, ar, ko, tr, pl, nl, sv, cs, hu, el, hi); pentru alte limbi interfața este tradusă prin API-ul Claude și păstrată în cache local. Textele pentru verificarea datelor personale, indicatorul „ce pleacă” și istoric există în 8 limbi (ro, en, fr, it, es, pt, de, hu); în celelalte 12 limbi încorporate apar în engleză.
 - Secțiuni juridice/de confidențialitate în aplicație (GDPR, stocare în browser, transferuri către terți).
+- **Motor local: Ollama (opțional, 2.1.0):** în panoul „Motor de traducere” de deasupra modurilor poți trece de la Claude la un model care rulează pe propriul calculator, prin [Ollama](https://ollama.com/). Alegi adresa (`http://localhost:11434` sau `http://127.0.0.1:11434` - singurele două permise de CSP) și numele modelului, apoi „Testează conexiunea” listează modelele instalate. În acest mod nu e nevoie de cheie API și nici de consimțământul pentru prima trimitere, scanarea datelor personale este omisă (textul nu iese de pe calculator), avertismentul despre Anthropic este înlocuit de unul care spune că textul merge doar la Ollama, iar traducerile în modurile text simplu, text îmbogățit, fișier și memoria de traducere folosesc modelul local (prompt de sistem + text prin `/api/chat`, flux continuu pentru texte scurte). Traducerea interfeței și a secțiunilor Legal/GDPR (butoanele care cer API-ului) rămân la Claude, cu cheia lui. **Limite:** calitatea depinde de model - modelele mici traduc mai prost (mai ales limbile rare) și pot adăuga sau omite text, deci verifică traducerile importante; dacă browserul raportează o eroare CORS, Ollama trebuie pornit cu `OLLAMA_ORIGINS` setat la originea acestei pagini (vezi [FAQ Ollama](https://docs.ollama.com/faq)); unele browsere pot bloca cererile de la o pagină HTTPS către `http://localhost` (netestat); alte porturi sau servere Ollama la distanță nu sunt permise (ar cere schimbarea CSP). **Testat doar cu un server Ollama simulat** (`tests/ollama.test.mjs`), nu cu un Ollama real și modele reale - de verificat.
+- **Compararea traducerilor (2.1.0):** „⚖ Compară”, sub rezultatul din modul text simplu, deschide două coloane: A = rezultatul afișat, B = altă traducere pe care o lipești (de exemplu din DeepL sau Google Translate, ale căror linkuri sunt în director) sau pe care o obții traducând din nou cu *celălalt* motor (Claude ⇄ Ollama; se aplică consimțământul pentru prima trimitere către Claude și verificarea datelor personale). Diferențele sunt marcate cuvânt cu cuvânt (cea mai lungă subsecvență comună, local; majusculele ignorate; roșu = doar în A, verde = doar în B), cu un procent de similaritate; până la circa 2500 de cuvinte pe parte; textele sunt afișate ca text, niciodată ca HTML.
+- **Existente deja (2.0.0, neschimbate):** memoria de traducere cu glosar și export/import TMX/XLIFF; această versiune nu adaugă funcții noi de memorie.
 
 ## Funcții noi (1.1.0)
 
@@ -59,7 +64,7 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 ## Confidențialitate și rețea
 
 - **Stocare locală:** `localStorage` — codul limbii interfeței (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) și traducerile de interfață păstrate în cache (`ui_<cod>`). `sessionStorage` — cheia API Anthropic (`th_apikey`), ștearsă la închiderea filei; tot în `sessionStorage` se păstrează temporar traducerea secțiunilor juridice/GDPR, dacă o cereți prin API. Aplicația nu setează cookie-uri.
-- **Rețea:** aplicația contactează `https://api.anthropic.com/v1/messages` **doar** când folosiți traducerea cu AI sau când alegeți o limbă de interfață fără traducere încorporată. Textul introdus (sau conținutul fișierului) și cheia dumneavoastră sunt trimise către Anthropic; politica aplicației menționează păstrarea datelor de către Anthropic până la 30 de zile. Politica de securitate a paginii (CSP) permite conexiuni doar către acest host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` permite doar scriptul propriu, identificat prin hash SHA-256, fără handler-e inline.
+- **Rețea:** aplicația contactează `https://api.anthropic.com/v1/messages` **doar** când folosiți traducerea cu AI sau când alegeți o limbă de interfață fără traducere încorporată. Textul introdus (sau conținutul fișierului) și cheia dumneavoastră sunt trimise către Anthropic; politica aplicației menționează păstrarea datelor de către Anthropic până la 30 de zile. Politica de securitate a paginii (CSP) permite conexiuni doar către acest host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` permite doar scriptul propriu, identificat prin hash SHA-256, fără handler-e inline. Cu motorul local opțional (Ollama), CSP permite și `http://localhost:11434` și `http://127.0.0.1:11434` (nimic altceva).
 - **Avertisment vizibil înainte de modul AI:** deasupra selectorului de moduri, panoul de traducere afișează o notă (EN, RO, FR, ES, DE, IT, PT, HU; celelalte limbi o primesc în engleză) care spune că textul sau fișierul sunt trimise la Anthropic (SUA), cu cheia utilizatorului, că nu trebuie introduse date personale/sensibile și că nimic nu se trimite înainte de „Translate”. Textul GDPR din aplicație a fost aliniat (nu mai afirmă că aplicația „nu prelucrează date personale”).
 - Fonturile sunt încorporate în fișier; parserul `.docx` (mammoth.js) este inclus local în `vendor/`.
 - Link-urile din director către site-urile instrumentelor sunt simple legături; nu se face nicio cerere către ele până nu le deschideți.
@@ -70,6 +75,12 @@ TranslateHub este o pagină unică (`index.html`) care combină două lucruri:
 Descărcați `index.html` (și, pentru fișiere `.docx`, folderul `vendor/`) și deschideți-l în browser. Directorul de instrumente și interfața în cele 20 de limbi încorporate funcționează fără internet; traducerea AI necesită conexiune la internet și o cheie API Anthropic.
 
 ## Istoric / Changelog
+
+### 2.1.0 — 2026-10-27
+- Motor local opțional de traducere (Ollama), cu panou de setări, test de conexiune și avertismente clare; CSP permite acum și `http://localhost:11434` și `http://127.0.0.1:11434` (doar acestea).
+- Panou nou „Compară”: diferențe pe cuvinte între traducerea afișată și alta (lipită sau obținută cu celălalt motor).
+- Notat că memoria de traducere și glosarul existau deja. Teste: `tests/ollama.test.mjs` (53 de verificări, Ollama și API simulate; netestat cu un Ollama real).
+- Texte în 8 limbi (fr/it/es/pt/de/hu sunt automate, neverificate de vorbitori nativi).
 
 ### 2.0.0 — 2026-10-26
 

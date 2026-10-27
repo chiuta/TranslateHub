@@ -2,15 +2,27 @@
   "schema": 1,
   "slug": "translatehub",
   "name": "TranslateHub — Best Free Translation Tools Directory",
-  "version": "2.0.0",
-  "updated": "2026-10-26",
+  "version": "2.1.0",
+  "updated": "2026-10-27",
   "description": "Curated directory of 22 free translation tools — Google Translate, DeepL, MateCat, OmegaT, LibreTranslate and more. Plus a built-in AI translator powered by Claude.",
   "egress": [
+    {
+      "host": "127.0.0.1",
+      "via": [
+        "csp:connect-src"
+      ]
+    },
     {
       "host": "api.anthropic.com",
       "via": [
         "csp:connect-src",
         "fetch"
+      ]
+    },
+    {
+      "host": "localhost",
+      "via": [
+        "csp:connect-src"
       ]
     }
   ],
@@ -22,7 +34,10 @@
   "storageKeys": [
     "translatehub.aiConsent",
     "translatehub.hist",
+    "translatehub.ollama.model",
+    "translatehub.ollama.url",
     "translatehub.piiguard",
+    "translatehub.provider",
     "translatehub.savehist",
     "translatehub.tm",
     "translatehub.tm.gl",
@@ -31,16 +46,16 @@
     "translatehub.ui_lang_name",
     "translatehub.ui_lang_pref"
   ],
-  "sizeBytes": 1169993,
-  "sha256": "57c32c4ba0059c09bc6d44dfe204be7011ea004608660a63fc19f7c8bf070017",
+  "sizeBytes": 1209400,
+  "sha256": "ac1271fc2a3fd6d8c9b119e9100e9e0c016f4a6232f14bc7bbf50e4cd4bf1a98",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'self'",
-      "script-src": "'self' sha256×8",
+      "script-src": "'self' sha256×9",
       "style-src": "'self' 'unsafe-inline'",
       "font-src": "'self' data:",
-      "connect-src": "https://api.anthropic.com",
+      "connect-src": "https://api.anthropic.com http://localhost:11434 http://127.0.0.1:11434",
       "img-src": "'self' data:",
       "object-src": "'none'",
       "base-uri": "'self'",
@@ -49,7 +64,7 @@
       "worker-src": "'self'"
     },
     "scriptInline": "hash",
-    "connect": "https://api.anthropic.com"
+    "connect": "https://api.anthropic.com http://localhost:11434 http://127.0.0.1:11434"
   },
   "features": {
     "export": true,
