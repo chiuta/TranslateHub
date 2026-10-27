@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 2.0.0 · **Utolsó frissítés:** 2026-10-26
+**Verzió:** 2.1.0 · **Utolsó frissítés:** 2026-10-27
+
+**Állapot:** stabil · **Offline:** internet szükséges ehhez: a Claude-os MI-fordításhoz (és a beépített fordítás nélküli felületi nyelvekhez); a helyi Ollama motorral semmi sem megy az interneten, de kell egy ezen a gépen futó Ollama szerver
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -59,7 +61,7 @@ A TranslateHub egyetlen oldal (`index.html`), amely két dolgot egyesít:
 ## Adatvédelem és hálózat
 
 - **Helyi tárolás:** `localStorage` — a felület nyelvének kódja (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) és a gyorsítótárazott felületi fordítások (`ui_<kód>`). `sessionStorage` — az Anthropic API-kulcs (`th_apikey`), a lap bezárásakor törlődik; szintén a `sessionStorage`-ban őrződik ideiglenesen a jogi/GDPR-szakaszok fordítása, ha az API-n keresztül kéred. Az alkalmazás nem állít be sütiket.
-- **Hálózat:** az alkalmazás a `https://api.anthropic.com/v1/messages` címet **csak** akkor keresi meg, ha MI-fordítást használsz, vagy olyan felületi nyelvet választasz, amelyhez nincs beépített fordítás. A megadott szöveg (vagy a fájl tartalma) és a kulcsod az Anthropichoz kerül; az alkalmazás szabályzata megemlíti, hogy az Anthropic az adatokat legfeljebb 30 napig megőrzi. Az oldal biztonsági szabályzata (CSP) csak erre a hostra engedélyez kapcsolatokat (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); a `script-src` csak az oldal saját, SHA-256 hash-sel azonosított szkriptjét engedi, beágyazott eseménykezelők nélkül.
+- **Hálózat:** az alkalmazás a `https://api.anthropic.com/v1/messages` címet **csak** akkor keresi meg, ha MI-fordítást használsz, vagy olyan felületi nyelvet választasz, amelyhez nincs beépített fordítás. A megadott szöveg (vagy a fájl tartalma) és a kulcsod az Anthropichoz kerül; az alkalmazás szabályzata megemlíti, hogy az Anthropic az adatokat legfeljebb 30 napig megőrzi. Az oldal biztonsági szabályzata (CSP) csak erre a hostra engedélyez kapcsolatokat (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); a `script-src` csak az oldal saját, SHA-256 hash-sel azonosított szkriptjét engedi, beágyazott eseménykezelők nélkül. Az opcionális helyi motorral (Ollama) a CSP engedi még a `http://localhost:11434` és a `http://127.0.0.1:11434` címet (mást nem).
 - **Látható figyelmeztetés az MI-mód előtt:** a módválasztó felett a fordítópanel megjegyzést jelenít meg (EN, RO, FR, ES, DE, IT, PT, HU; a többi nyelv angolul kapja), amely szerint a szöveg vagy a fájl a felhasználó kulcsával az Anthropichoz (USA) kerül, nem szabad személyes/érzékeny adatokat megadni, és a „Translate” előtt semmi sem kerül elküldésre. Az alkalmazás GDPR-szövege összhangba került (már nem állítja, hogy az alkalmazás „nem kezel személyes adatokat”).
 - A betűtípusok be vannak ágyazva a fájlba; a `.docx`-értelmező (mammoth.js) helyben, a `vendor/` mappában található.
 - A címtár hivatkozásai az eszközök oldalaira egyszerű linkek; amíg meg nem nyitod őket, nem indul feléjük kérés.

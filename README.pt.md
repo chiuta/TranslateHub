@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 2.0.0 · **Última atualização:** 2026-10-26
+**Versão:** 2.1.0 · **Última atualização:** 2026-10-27
+
+**Estado:** estável · **Offline:** requer Internet para a tradução com IA do Claude (e os idiomas da interface sem tradução integrada); com o motor local Ollama nada passa pela Internet, mas é preciso um servidor Ollama neste computador
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -65,7 +67,7 @@ O TranslateHub é uma página única (`index.html`) que combina duas coisas:
 ## Privacidade e rede
 
 - **Armazenamento local:** `localStorage` — o código do idioma da interface (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) e as traduções da interface em cache (`ui_<código>`). `sessionStorage` — a chave API da Anthropic (`th_apikey`), apagada ao fechar o separador; também fica temporariamente em `sessionStorage` a tradução das secções jurídicas/RGPD, se a solicitar através da API. A aplicação não define cookies.
-- **Rede:** a aplicação contacta `https://api.anthropic.com/v1/messages` **apenas** quando usa a tradução com IA ou quando escolhe um idioma de interface sem tradução integrada. O texto introduzido (ou o conteúdo do ficheiro) e a sua chave são enviados para a Anthropic; a política da aplicação menciona a retenção de dados pela Anthropic até 30 dias. A política de segurança da página (CSP) permite ligações apenas a este anfitrião (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` permite apenas o script próprio, identificado por um hash SHA-256, sem manipuladores inline.
+- **Rede:** a aplicação contacta `https://api.anthropic.com/v1/messages` **apenas** quando usa a tradução com IA ou quando escolhe um idioma de interface sem tradução integrada. O texto introduzido (ou o conteúdo do ficheiro) e a sua chave são enviados para a Anthropic; a política da aplicação menciona a retenção de dados pela Anthropic até 30 dias. A política de segurança da página (CSP) permite ligações apenas a este anfitrião (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` permite apenas o script próprio, identificado por um hash SHA-256, sem manipuladores inline. Com o motor local opcional (Ollama), a CSP também permite `http://localhost:11434` e `http://127.0.0.1:11434` (nada mais).
 - **Aviso visível antes do modo IA:** acima do seletor de modos, o painel de tradução apresenta uma nota (EN, RO, FR, ES, DE, IT, PT, HU; os restantes idiomas recebem-na em inglês) que diz que o texto ou o ficheiro são enviados para a Anthropic (EUA), com a chave do utilizador, que não devem ser introduzidos dados pessoais/sensíveis e que nada é enviado antes de «Translate». O texto do RGPD da aplicação foi alinhado (já não afirma que a aplicação «não trata dados pessoais»).
 - Os tipos de letra estão incorporados no ficheiro; o analisador de `.docx` (mammoth.js) está incluído localmente em `vendor/`.
 - As ligações do diretório para os sites das ferramentas são ligações simples; não é feito nenhum pedido para elas até as abrir.

@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Zuletzt aktualisiert:** 2026-10-26
+**Version:** 2.1.0 · **Zuletzt aktualisiert:** 2026-10-27
+
+**Status:** stabil · **Offline:** braucht Internet für die KI-Übersetzung mit Claude (und Oberflächensprachen ohne eingebaute Übersetzung); mit dem lokalen Ollama-Modul geht nichts über das Internet, aber es braucht einen laufenden Ollama-Server auf diesem Computer
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -59,7 +61,7 @@ TranslateHub ist eine einzelne Seite (`index.html`), die zwei Dinge verbindet:
 ## Datenschutz und Netzwerk
 
 - **Lokaler Speicher:** `localStorage` — der Code der Oberflächensprache (`translatehub.ui_lang_pref`, `translatehub.ui_lang_name`) und die zwischengespeicherten Oberflächenübersetzungen (`ui_<Code>`). `sessionStorage` — der Anthropic-API-Schlüssel (`th_apikey`), beim Schließen des Tabs gelöscht; ebenfalls im `sessionStorage` wird vorübergehend die Übersetzung der rechtlichen/DSGVO-Abschnitte gehalten, wenn du sie über die API anforderst. Die Anwendung setzt keine Cookies.
-- **Netzwerk:** Die Anwendung kontaktiert `https://api.anthropic.com/v1/messages` **nur**, wenn du die KI-Übersetzung nutzt oder eine Oberflächensprache ohne eingebaute Übersetzung wählst. Der eingegebene Text (oder der Dateiinhalt) und dein Schlüssel werden an Anthropic gesendet; die Richtlinie der Anwendung erwähnt die Aufbewahrung der Daten durch Anthropic bis zu 30 Tage. Die Sicherheitsrichtlinie der Seite (CSP) erlaubt Verbindungen nur zu diesem Host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` erlaubt nur das eigene Skript, identifiziert durch einen SHA-256-Hash, ohne Inline-Handler.
+- **Netzwerk:** Die Anwendung kontaktiert `https://api.anthropic.com/v1/messages` **nur**, wenn du die KI-Übersetzung nutzt oder eine Oberflächensprache ohne eingebaute Übersetzung wählst. Der eingegebene Text (oder der Dateiinhalt) und dein Schlüssel werden an Anthropic gesendet; die Richtlinie der Anwendung erwähnt die Aufbewahrung der Daten durch Anthropic bis zu 30 Tage. Die Sicherheitsrichtlinie der Seite (CSP) erlaubt Verbindungen nur zu diesem Host (`connect-src https://api.anthropic.com`, `img-src 'self' data:`); `script-src` erlaubt nur das eigene Skript, identifiziert durch einen SHA-256-Hash, ohne Inline-Handler. Mit dem optionalen lokalen Modul (Ollama) erlaubt die CSP zusätzlich `http://localhost:11434` und `http://127.0.0.1:11434` (sonst nichts).
 - **Sichtbarer Hinweis vor dem KI-Modus:** Über der Modusauswahl zeigt das Übersetzungspanel einen Hinweis (EN, RO, FR, ES, DE, IT, PT, HU; die übrigen Sprachen erhalten ihn auf Englisch), dass Text oder Datei mit dem Schlüssel des Nutzers an Anthropic (USA) gesendet werden, dass keine personenbezogenen/sensiblen Daten eingegeben werden sollen und dass vor „Translate" nichts gesendet wird. Der DSGVO-Text der Anwendung wurde angeglichen (er behauptet nicht mehr, die Anwendung „verarbeite keine personenbezogenen Daten").
 - Die Schriften sind in die Datei eingebettet; der `.docx`-Parser (mammoth.js) ist lokal in `vendor/` enthalten.
 - Die Links im Verzeichnis zu den Websites der Werkzeuge sind einfache Verweise; an sie wird keine Anfrage gestellt, bis du sie öffnest.
