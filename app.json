@@ -2,8 +2,8 @@
   "schema": 1,
   "slug": "translatehub",
   "name": "TranslateHub — Best Free Translation Tools Directory",
-  "version": "2.1.0",
-  "updated": "2026-10-27",
+  "version": "2.1.1",
+  "updated": "2026-10-31",
   "description": "Curated directory of 22 free translation tools — Google Translate, DeepL, MateCat, OmegaT, LibreTranslate and more. Plus a built-in AI translator powered by Claude.",
   "egress": [
     {
@@ -46,8 +46,8 @@
     "translatehub.ui_lang_name",
     "translatehub.ui_lang_pref"
   ],
-  "sizeBytes": 1209400,
-  "sha256": "ac1271fc2a3fd6d8c9b119e9100e9e0c016f4a6232f14bc7bbf50e4cd4bf1a98",
+  "sizeBytes": 1209472,
+  "sha256": "ecfe48b6dfbde6ff8dcd6aa70bab447afb5441f6d732e4577c1aa3c282634a15",
   "csp": {
     "present": true,
     "directives": {
