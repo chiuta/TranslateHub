@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 2.1.0 · **Dernière mise à jour :** 2026-10-27
+**Version :** 2.1.1 · **Dernière mise à jour :** 2026-10-31
 
 **Statut:** stable · **Offline:** nécessite Internet pour la traduction IA avec Claude (et les langues d'interface sans traduction intégrée) ; avec le moteur local Ollama rien ne passe par Internet, mais un serveur Ollama doit tourner sur cet ordinateur
 
