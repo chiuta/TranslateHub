@@ -46,8 +46,8 @@
     "translatehub.ui_lang_name",
     "translatehub.ui_lang_pref"
   ],
-  "sizeBytes": 1229486,
-  "sha256": "91ec006ba443aba155bdcefdc86e99e2287b389343cecc6b7f1343d66ec5f902",
+  "sizeBytes": 1229529,
+  "sha256": "7b9f05d661ddefb46a153e7f6951ad7e08501acd5badc78d441f667f951f6ac7",
   "csp": {
     "present": true,
     "directives": {
