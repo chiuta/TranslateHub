@@ -46,8 +46,8 @@
     "translatehub.ui_lang_name",
     "translatehub.ui_lang_pref"
   ],
-  "sizeBytes": 1315131,
-  "sha256": "a9c0f4c51e17be5a04ec6e35c9aaea405cbe9804b5425710bd7529b125101709",
+  "sizeBytes": 1455565,
+  "sha256": "ed896d43dad25ee17e18684069bc1afab4451327aaa407d5ae763c2eab6001bc",
   "csp": {
     "present": true,
     "directives": {
@@ -89,6 +89,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge",
       "pii",
       "search"
@@ -102,6 +106,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge",
       "pii",
       "search"
