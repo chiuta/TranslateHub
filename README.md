@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.1.1 · **Last updated:** 2026-10-31
+**Version:** 2.2.0 · **Last updated:** 2026-11-02
 
 **Status:** stable · **Offline:** needs internet for AI translation with Claude (and interface languages with no built-in translation); with the local Ollama engine nothing goes over the internet, but it needs an Ollama server running on this computer
 
