@@ -2,6 +2,14 @@
 
 Format: [SemVer](https://semver.org/lang/ro/) (MAJOR.MINOR.PATCH). Istoricul complet al versiunilor anterioare este în secțiunea „Istoric / Changelog” din [README.ro.md](README.ro.md).
 
+## 2.2.1 — 2026-11-02
+
+Actualizare surse (verificate la 2026-11-02). Fără schimbări de logică.
+
+- Linkul „Get key” către cheile API Anthropic: `console.anthropic.com/settings/keys` -> `platform.claude.com/settings/keys` (consola s-a mutat; vechiul URL doar redirecționează).
+- Verificate fără modificări: modelul `claude-sonnet-5-5` (activ), păstrarea datelor API de 30 de zile, Google Translate (249 de limbi), documentația Ollama (docs.ollama.com/faq).
+- Fereastra Legal & GDPR (GDPR, Cookies, Impressum, Accesibilitate, Tehnologie, Termeni) are acum traduceri încorporate în ro, fr, de, es, it, pt, hu (127 de texte × 7 limbi), afișate instant și fără cheie API; celelalte limbi rămân traduse prin API, ca înainte. Descrierile, taguri-le și textele de ajutor ale cardurilor erau deja traduse în cele 7 limbi.
+
 ## 2.2.0 — 2026-11-01
 
 - Corectat: adaptorul «Trimite la…» nu mai aruncă eroare când kitul FFF lipsește (gardian pe fiecare bloc; găsit de testul «fără kit» din CI).
