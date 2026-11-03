@@ -2,6 +2,10 @@
 
 Format: [SemVer](https://semver.org/lang/ro/) (MAJOR.MINOR.PATCH). Istoricul complet al versiunilor anterioare este în secțiunea „Istoric / Changelog” din [README.ro.md](README.ro.md).
 
+## 2.2.2 — 2026-11-03
+
+Etapa 9: versiunea API Anthropic (anthropic-version 2026-10-21, verificată în documentația oficială la 2026-11-03) și modelele vin dintr-un singur loc, nucleul AI comun (FFF.ai); temperature/top_p/top_k nu se mai trimit niciodată (eliminate în 2026-10-21); modele retrase înlocuite.
+
 ## 2.2.1 — 2026-11-02 (reîmprospătare kit)
 
 - Nou (kit): **Sincronizare între dispozitive** (`FFF.sync`) — în dialogul «Transparență» (clic pe versiune → Copie de siguranță): conectezi două dispozitive direct (WebRTC, cod/QR, fără server și fără cont) și își schimbă datele aplicației; cea mai recentă valoare câștigă, secretele (chei API, parole) nu se trimit, ștergerile nu se propagă. Aplicarea trece prin importul kitului (confirmare, chei permise, rollback).
