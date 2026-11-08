@@ -2,6 +2,10 @@
 
 Format: [SemVer](https://semver.org/lang/ro/) (MAJOR.MINOR.PATCH). Istoricul complet al versiunilor anterioare este în secțiunea „Istoric / Changelog” din [README.ro.md](README.ro.md).
 
+## 2.2.5 — 2026-11-08
+
+- Nou: contor «~N caractere / ~N tokeni» (caractere ÷ 4) lângă «Traduce», pentru textul sursă din modul curent; fără prețuri (se schimbă), fără rețea (8 limbi).
+
 ## 2.2.2 — 2026-11-03
 
 Etapa 9: versiunea API Anthropic (anthropic-version 2026-10-21, verificată în documentația oficială la 2026-11-03) și modelele vin dintr-un singur loc, nucleul AI comun (FFF.ai); temperature/top_p/top_k nu se mai trimit niciodată (eliminate în 2026-10-21); modele retrase înlocuite.

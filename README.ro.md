@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.2.4 · **Ultima actualizare:** 2026-11-08
+**Versiune:** 2.2.5 · **Ultima actualizare:** 2026-11-08
 
 **Stare:** stabil · **Offline:** cere internet pentru traducerea AI cu Claude (și limbile fără traducere încorporată); cu motorul local Ollama nu trimite nimic pe internet, dar cere un server Ollama pornit pe acest calculator
 

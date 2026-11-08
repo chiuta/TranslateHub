@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 2.2.4 · **Zuletzt aktualisiert:** 2026-11-08
+**Version:** 2.2.5 · **Zuletzt aktualisiert:** 2026-11-08
 
 **Status:** stabil · **Offline:** braucht Internet für die KI-Übersetzung mit Claude (und Oberflächensprachen ohne eingebaute Übersetzung); mit dem lokalen Ollama-Modul geht nichts über das Internet, aber es braucht einen laufenden Ollama-Server auf diesem Computer
 
