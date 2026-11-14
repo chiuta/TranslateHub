@@ -29,7 +29,8 @@
   "permissions": [
     "clipboard",
     "serviceWorker",
-    "localStorage"
+    "localStorage",
+    "WebGL"
   ],
   "storageKeys": [
     "translatehub.aiConsent",
@@ -46,13 +47,13 @@
     "translatehub.ui_lang_name",
     "translatehub.ui_lang_pref"
   ],
-  "sizeBytes": 1524304,
-  "sha256": "b3df4c1f6a3feab44c97aea2d0581c781acbef5a3ee18a885a672e9e86e0b33c",
+  "sizeBytes": 1575943,
+  "sha256": "80d5a67523c029a0d80fe9dd4088be8847f85ee0a06519cbfb2da8de71ad020c",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'self'",
-      "script-src": "'self' sha256×11",
+      "script-src": "'self' sha256×12",
       "style-src": "'self' 'unsafe-inline'",
       "font-src": "'self' data:",
       "connect-src": "https://api.anthropic.com http://localhost:11434 http://127.0.0.1:11434",
